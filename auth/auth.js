@@ -30,29 +30,6 @@ if (registerForm) {
       
       console.log("Usuario creado:", data);
       
-     // const user = data.user;
-      
-      // if (user) {
-      //   const { error: profileError } = await supabaseClient
-      //     .from("profiles")
-      //     .insert({
-      //       id: user.id,
-      //       name: name,
-      //       plan: "free"
-      //     });
-      
-      //   if (profileError) {
-      //     console.error(
-      //       "Error creando perfil:",
-      //       profileError
-      //     );
-      
-      //     status.textContent =
-      //       "La cuenta se creó, pero hubo un problema creando el perfil.";
-      
-      //     return;
-      //   }
-      // }
       
       status.textContent = "Cuenta creada correctamente, confirma tu email.";
 
@@ -84,8 +61,52 @@ if (loginForm) {
         password
       });
 
+/*     if (error) {
+      console.error(error);
+      status.textContent = error.message;
+      return;
+    } */
+
     if (error) {
       console.error(error);
+    
+      if (error.message === "Email not confirmed") {
+        status.innerHTML = `
+          Tu correo aún no ha sido confirmado.<br><br>
+          <button type="button" id="resendConfirmationBtn">
+            Reenviar correo de confirmación
+          </button>
+        `;
+    
+        const resendBtn =
+          document.querySelector("#resendConfirmationBtn");
+    
+        resendBtn.addEventListener("click", async () => {
+          resendBtn.disabled = true;
+          resendBtn.textContent = "Enviando...";
+    
+          const { error: resendError } =
+            await supabaseClient.auth.resend({
+              type: "signup",
+              email
+            });
+    
+          if (resendError) {
+            console.error("Error reenviando correo:", resendError);
+    
+            status.textContent =
+              `Error: ${resendError.message}`;
+    
+            return;
+          }
+    
+          status.textContent =
+            "Correo de confirmación reenviado. Revisa tu bandeja de entrada.";
+        });
+    
+        return;
+      }
+    
       status.textContent = error.message;
       return;
     }
