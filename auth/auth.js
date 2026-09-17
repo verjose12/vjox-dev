@@ -12,15 +12,28 @@ if (registerForm) {
 
     status.textContent = "Creando cuenta...";
 
+    // const { data, error } = await supabaseClient.auth.signUp({
+    //     email,
+    //     password,
+    //     options: {
+    //       data: {
+    //         name
+    //       }
+    //     }
+    //   });
+
     const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name
-          }
+      email,
+      password,
+      options: {
+        emailRedirectTo:
+          "https://verjose12.github.io/vjox-dev/auth/login.html",
+    
+        data: {
+          name
         }
-      });
+      }
+    });
       
       if (error) {
         console.error(error);
@@ -86,9 +99,17 @@ if (loginForm) {
           resendBtn.textContent = "Enviando...";
     
           const { error: resendError } =
+            // await supabaseClient.auth.resend({
+            //   type: "signup",
+            //   email
+            // });
             await supabaseClient.auth.resend({
               type: "signup",
-              email
+              email,
+              options: {
+                emailRedirectTo:
+                  "https://verjose12.github.io/vjox-dev/auth/login.html"
+              }
             });
     
           if (resendError) {
