@@ -153,7 +153,7 @@
         Cancelar
       </a>
     
-      <h2>Agregar producto</h2>
+      <h2>Agregar Inventario</h2>
     
       <button
         id="saveTopBtn"
@@ -165,42 +165,40 @@
     </div>
 
     <section class="product-form-section">
-      <h3>Información básica</h3>
+      <h3>Información básica </h3>
 
       <div class="form-grid">
         <div class="form-field form-field--full">
-          <label for="titleInput">Título del producto</label>
+          <label for="titleInput">Nombre o Titulo del inventario</label>
           <input
             id="titleInput"
             type="text"
-            placeholder="Ej. Perfume de dama"
+            placeholder="Ej. Nuevos ingresos, Temporada septiembre, Lote 01"
           />
         </div>
 
         <div class="form-field form-field--full">
-          <label for="descInput">Descripción (opcional)</label>
+          <label for="descInput">Detalles adicionales (opcional)</label>
           <textarea
             id="descInput"
             rows="3"
-            placeholder="Marca, modelo, tamaño…"
+            placeholder="Ej. Marca, modelo, talla, color, características u otros detalles"
           ></textarea>
         </div>
-
+        
         <div class="form-field">
-          <label for="categoryInput">Categoría</label>
-          <select id="categoryInput">
-            <option value="">Selecciona</option>
-            <option value="perfumes">Perfumes</option>
-            <option value="audifonos">Audífonos</option>
-            <option value="carteras">Carteras</option>
-            <option value="telefonos">Teléfonos</option>
-            <option value="ropa">Ropa</option>
-            <option value="otros">Otros</option>
-          </select>
+          <label for="categoryInput">Categoría (opcional)</label>
+        
+          <input
+            id="categoryInput"
+            type="text"
+            placeholder="Ej. Marca, línea o tipo de producto"
+            autocomplete="off"
+          >
         </div>
 
         <div class="form-field">
-          <label for="priceInput">Precio general</label>
+          <label for="priceInput">Precio base</label>
           <input
             id="priceInput"
             type="number"
@@ -222,6 +220,13 @@
           />
         </div>
       </div>
+    </section>
+
+    <section class="product-form-section">
+      <label class="per-photo-option">
+        <input id="perPhotoChk" type="checkbox" />
+        <span>Usar precio diferente por fotografía</span>
+      </label>
     </section>
 
     <section class="product-form-section">
@@ -253,13 +258,6 @@
 />
 
       <div id="preview" class="preview"></div>
-    </section>
-
-    <section class="product-form-section">
-      <label class="per-photo-option">
-        <input id="perPhotoChk" type="checkbox" />
-        <span>Usar precio diferente por fotografía</span>
-      </label>
     </section>
 
     <section class="product-form-note">

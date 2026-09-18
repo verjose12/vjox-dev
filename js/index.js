@@ -53,6 +53,24 @@ function formatPrice(n) {
   }
 }
 
+function getProductPriceLabel(product) {
+  if (product.price != null && product.price !== "") {
+    return formatPrice(product.price);
+  }
+
+  const hasIndividualPrices =
+    Array.isArray(product.perPhotoPrices) &&
+    product.perPhotoPrices.some(
+      price => price !== null && price !== ""
+    );
+
+  if (hasIndividualPrices) {
+    return "Varios precios";
+  }
+
+  return "Sin precio";
+}
+
 
 function setStatus(msg, isError=false){
   statusEl.textContent = msg;
@@ -69,6 +87,7 @@ function adaptProductFromDatabase(product) {
     urls: product.image_urls || [],
     perPhoto: product.per_photo,
     perPhotoPrices: product.per_photo_prices || [],
+    perPhotoStock: product.per_photo_stock || [],
     stock: product.stock ?? 0,
     category: product.category || "",
     createdAt: product.created_at
@@ -316,7 +335,7 @@ function renderList(items = state.items) {
         </p>
   
         <strong class="product-card__price">
-          ${formatPrice(product.price)}
+        ${getProductPriceLabel(product)}
         </strong>
       </div>
   
@@ -452,16 +471,44 @@ function updateInventorySummary() {
   }, 0);
 
   const inventoryValue = state.items.reduce((total, product) => {
-  const photoPrices = Array.isArray(product.perPhotoPrices)
+// PRECIO GENERAL
+    if (!product.perPhoto) {
+      const generalPrice = Number(product.price);
+      const generalStock = Number(product.stock || 0);
+    
+      const productValue =
+        Number.isFinite(generalPrice)
+          ? generalPrice * generalStock
+          : 0;
+    
+      return total + productValue;
+    }
+  // PRECIOS DIFERENTES POR FOTO
+    const photoPrices = Array.isArray(product.perPhotoPrices)
     ? product.perPhotoPrices
     : [];
+  
+  const photoStock = Array.isArray(product.perPhotoStock)
+    ? product.perPhotoStock
+    : [];
 
-  const productValue = photoPrices.reduce((subtotal, price) => {
+  // const productValue = photoPrices.reduce((subtotal, price) => {
+  //   const numericPrice = Number(price);
+
+  //   return subtotal + (
+  //     Number.isFinite(numericPrice)
+  //       ? numericPrice
+  //       : 0
+  //   );
+  // }, 0);
+
+  const productValue = photoPrices.reduce((subtotal, price, index) => {
     const numericPrice = Number(price);
-
+    const quantity = Number(photoStock[index] || 1);
+  
     return subtotal + (
       Number.isFinite(numericPrice)
-        ? numericPrice
+        ? numericPrice * quantity
         : 0
     );
   }, 0);
@@ -471,7 +518,7 @@ function updateInventorySummary() {
 
   totalProductsEl.textContent = totalProducts;
   totalStockEl.textContent = totalStock;
-  const formattedValue = formatPrice(inventoryValue);
+const formattedValue = formatPrice(inventoryValue);
 
 inventoryValueEl.dataset.visibleValue = formattedValue;
 
