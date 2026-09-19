@@ -295,6 +295,45 @@ Planeado
 
 ---
 
+## [4.2.1] - 2026-09
+
+### Mejorado
+
+- Se mejoró el flujo de confirmación de correo electrónico.
+- Se agregó la opción para reenviar el correo de confirmación.
+- Se mejoró el manejo del proceso de activación de nuevas cuentas.
+
+
+---
+
+## [4.2.2] - 2026-09
+
+### Mejorado
+
+- Se mejoró el formulario para agregar inventario.
+- Se optimizó el manejo de productos con precio general y precios diferentes por fotografía.
+- Se mejoró el manejo de stock y cantidades de productos.
+- Se actualizaron los iconos de instalación de la PWA.
+- Se agregaron versiones `maskable` de los iconos para mejorar su visualización en dispositivos móviles.
+- Se corrigió la integración del `manifest.json` en las pantallas de inicio de sesión y registro.
+- Se mejoró la experiencia de instalación de VJOX como PWA.
+
+## [4.2.3] - 2026-09-18
+
+### Mejorado
+
+- Se mejoró el flujo para agregar nuevos productos desde la edición de un inventario existente.
+- Las nuevas fotografías permiten definir precio y cantidad antes de agregarse.
+- El precio general del inventario se utiliza como valor inicial cuando existe.
+- Se agregó soporte para cantidades independientes por fotografía.
+- Se corrigió el cálculo del stock total al agregar nuevas unidades.
+- Se agregó previsualización de las nuevas fotografías antes de guardarlas.
+- Se agregó la opción de quitar fotografías seleccionadas antes de subirlas.
+- Se mejoró visualmente la interfaz de las nuevas fotografías con campos de precio y cantidad.
+- Los nuevos precios, cantidades y fotografías se almacenan correctamente y permanecen sincronizados con el inventario.
+
+---
+
 ## v5.0.0
 
 Planeado

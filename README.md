@@ -49,7 +49,7 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 - 🖼️ Galerías públicas independientes.
 - ☁️ Organización de imágenes por usuario en Cloudinary.
 
-## v4.2.0
+## Versión: 4.2.3
 
 - 🔵 Integración multiusuario con Facebook.
 - 🔐 Conexión segura mediante Meta OAuth.
@@ -60,7 +60,10 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 - 🏪 Visualización del nombre de la página conectada dentro de VJOX.
 - 🔒 Page Access Tokens protegidos y utilizados exclusivamente desde el backend.
 
+
+
 ---
+
 
 # Tecnologías utilizadas
 
