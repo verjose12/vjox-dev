@@ -34,6 +34,8 @@ const finishEditBtn = $("#finishEditBtn");
 const addProductPhotos = $("#addProductPhotos");
 const addProductPhotosBtn = $("#addProductPhotosBtn");
 const addProductStatus = $("#addProductStatus");
+const newPhotosPreview = $("#newPhotosPreview");
+let pendingNewPhotos = [];
 
 
 
@@ -199,15 +201,110 @@ async function deleteProductPhoto(photoIndex) {
   setStatus("Imagen eliminada y stock actualizado.");
 }
 
+addProductPhotos.addEventListener("change", () => {
+  const selectedFiles = Array.from(
+    addProductPhotos.files || []
+  );
+
+  pendingNewPhotos = [...selectedFiles];
+
+  newPhotosPreview.innerHTML = "";
+
+  selectedFiles.forEach((file) => {
+    const imageUrl = URL.createObjectURL(file);
+  
+    const photoCard = document.createElement("div");
+    photoCard.className = "new-photo-card";
+
+    const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "new-photo-remove";
+      removeBtn.innerHTML = "×";
+      removeBtn.setAttribute("aria-label", "Quitar fotografía");
+
+photoCard.appendChild(removeBtn);
+
+removeBtn.addEventListener("click", () => {
+  pendingNewPhotos = pendingNewPhotos.filter(
+    pendingFile => pendingFile !== file
+  );
+
+  const dataTransfer = new DataTransfer();
+
+pendingNewPhotos.forEach(pendingFile => {
+  dataTransfer.items.add(pendingFile);
+});
+
+addProductPhotos.files = dataTransfer.files;
+
+  photoCard.remove();
+});
+  
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.alt = "Nuevo producto";
+  
+    photoCard.appendChild(img);
+    const fields = document.createElement("div");
+fields.className = "new-photo-fields";
+
+fields.innerHTML = `
+  <label>
+    Precio
+    <input
+      type="number"
+      class="new-photo-price"
+      min="0"
+      step="0.01"
+      placeholder="$"
+      value="${state.editingProduct?.price ?? ""}"
+    >
+  </label>
+
+  <label>
+    Cant.
+    <input
+      type="number"
+      class="new-photo-stock"
+      min="1"
+      value="1"
+    >
+  </label>
+`;
+
+photoCard.appendChild(fields);
+    newPhotosPreview.appendChild(photoCard);
+  });
+});
+
 async function addPhotosToProduct() {
+
   const product = state.editingProduct;
 
   if (!product) {
     return;
   }
 
-  const selectedFiles = Array.from(
-    addProductPhotos.files || []
+  // const selectedFiles = Array.from(
+  //   addProductPhotos.files || []
+  // );
+
+  const selectedFiles = [...pendingNewPhotos];
+
+  const priceInputs = Array.from(
+    newPhotosPreview.querySelectorAll(".new-photo-price")
+  );
+  
+  const stockInputs = Array.from(
+    newPhotosPreview.querySelectorAll(".new-photo-stock")
+  );
+
+  const newPrices = priceInputs.map(input =>
+    input.value === "" ? null : Number(input.value)
+  );
+  
+  const newPhotoStock = stockInputs.map(input =>
+    Math.max(1, Number(input.value) || 1)
   );
 
   if (selectedFiles.length === 0) {
@@ -235,14 +332,37 @@ async function addPhotosToProduct() {
       ...newUrls
     ];
 
-    const newStock = updatedUrls.length;
+    const updatedPrices = [
+      ...(product.perPhotoPrices || []),
+      ...newPrices
+    ];
+    
+    const updatedPhotoStock = [
+      ...(product.perPhotoStock || []),
+      ...newPhotoStock
+    ];
+
+    // const newStock = updatedUrls.length;
+    const newStock = updatedPhotoStock.reduce(
+      (total, quantity) => total + Number(quantity || 0),
+      0
+    );
+
+    // const updatedProduct =
+    //   await updateProductPhotos(
+    //     product.id,
+    //     updatedUrls,
+    //     newStock
+    //   );
 
     const updatedProduct =
-      await updateProductPhotos(
-        product.id,
-        updatedUrls,
-        newStock
-      );
+     await updateProductPhotos(
+      product.id,
+      updatedUrls,
+      newStock,
+      updatedPrices,
+      updatedPhotoStock
+  );
 
     if (!updatedProduct) {
       throw new Error(
@@ -252,9 +372,12 @@ async function addPhotosToProduct() {
 
     product.urls = updatedUrls;
     product.stock = newStock;
+    product.perPhotoPrices = updatedPrices;
+    product.perPhotoStock = updatedPhotoStock;
     updateInventorySummary();
 
     addProductPhotos.value = "";
+    newPhotosPreview.innerHTML = "";
 
     addProductStatus.textContent =
       `${newUrls.length} producto(s) agregado(s) correctamente.`;

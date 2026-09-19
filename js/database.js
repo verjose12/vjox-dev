@@ -90,12 +90,26 @@ async function saveProduct(product) {
     return true;
   }
 
-  async function updateProductPhotos(productId, imageUrls, newStock) {
+  // async function updateProductPhotos(productId, imageUrls, newStock) {
+    async function updateProductPhotos(
+      productId,
+      imageUrls,
+      newStock,
+      perPhotoPrices = null,
+      perPhotoStock = null
+    ) {
     const { data, error } = await supabaseClient
       .from("products")
+
+      // .update({
+      //   image_urls: imageUrls,
+      //   stock: newStock
+      // })
       .update({
         image_urls: imageUrls,
-        stock: newStock
+        stock: newStock,
+        per_photo_prices: perPhotoPrices,
+        per_photo_stock: perPhotoStock
       })
       .eq("id", productId)
       .select()

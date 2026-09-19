@@ -276,6 +276,21 @@ main {
   border-radius: 8px;
 }
 
+.new-photos-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.new-photos-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .modal-photo button,
 .delete-photo-btn {
   width: 100%;
@@ -1055,4 +1070,54 @@ body {
 
 .add-product-card{
   width:100%;
+}
+
+.new-photo-card {
+  overflow: hidden;
+  background: #121316;
+  border: 1px solid #2a2d33;
+  border-radius: 12px;
+}
+
+.new-photo-card > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.new-photo-fields {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 8px;
+  padding: 8px;
+}
+
+.new-photo-fields label {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.new-photo-fields input {
+  width: 100%;
+  min-width: 0;
+  margin-top: 5px;
+  padding: 8px;
+  color: var(--text);
+  background: #0f1115;
+  border: 1px solid #34373e;
+  border-radius: 7px;
+}
+
+/* Quitar flechas de inputs numéricos */
+.new-photo-fields input[type="number"]::-webkit-inner-spin-button,
+.new-photo-fields input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.new-photo-fields input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
