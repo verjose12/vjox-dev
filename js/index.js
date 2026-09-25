@@ -1,10 +1,9 @@
-const state ={
+const state = {
   items: [],
-  editingProduct: null
+  editingProduct: null,
 };
 
-const $ = s => document.querySelector(s);
-
+const $ = (s) => document.querySelector(s);
 
 const list = $("#list");
 const statusEl = $("#status");
@@ -15,15 +14,14 @@ const totalProductsEl = $("#totalProducts");
 const totalStockEl = $("#totalStock");
 const inventoryValueEl = $("#inventoryValue");
 
-const toggleInventoryValueBtn =
-  $("#toggleInventoryValue");
+const toggleInventoryValueBtn = $("#toggleInventoryValue");
 
 // const logoutBtn = $("#logoutBtn");
 
 // Estado
 let isInventoryValueVisible = true;
 
-//obtenemos los elementos del modal 
+//obtenemos los elementos del modal
 
 const editModal = $("#editModal");
 const modalTitle = $("#modalTitle");
@@ -37,8 +35,6 @@ const addProductStatus = $("#addProductStatus");
 const newPhotosPreview = $("#newPhotosPreview");
 let pendingNewPhotos = [];
 
-
-
 function formatPrice(n) {
   if (n == null || n === "") return "";
 
@@ -48,33 +44,58 @@ function formatPrice(n) {
     return value.toLocaleString("es-MX", {
       style: "currency",
       currency: "MXN",
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     });
   } catch {
     return `MXN ${value.toFixed(2)}`;
   }
 }
 
+// function getProductPriceLabel(product) {
+//   if (product.price != null && product.price !== "") {
+//     return formatPrice(product.price);
+//   }
+
+//   const hasIndividualPrices =
+//     Array.isArray(product.perPhotoPrices) &&
+//     product.perPhotoPrices.some(
+//       price => price !== null && price !== ""
+//     );
+
+//   if (hasIndividualPrices) {
+//     return "Varios precios";
+//   }
+
+//   return "Sin precio";
+// }
+
 function getProductPriceLabel(product) {
-  if (product.price != null && product.price !== "") {
-    return formatPrice(product.price);
+  const photoPrices = Array.isArray(product.perPhotoPrices)
+    ? product.perPhotoPrices.filter((price) => price !== null && price !== "")
+    : [];
+
+  // Si tiene precios individuales, usamos esos para decidir
+  if (photoPrices.length > 0) {
+    const uniquePrices = [
+      ...new Set(photoPrices.map((price) => Number(price))),
+    ];
+
+    if (uniquePrices.length === 1) {
+      return formatPrice(uniquePrices[0]);
+    }
+
+    return "Varios precios";
   }
 
-  const hasIndividualPrices =
-    Array.isArray(product.perPhotoPrices) &&
-    product.perPhotoPrices.some(
-      price => price !== null && price !== ""
-    );
-
-  if (hasIndividualPrices) {
-    return "Varios precios";
+  // Si no hay precios individuales, usamos el precio general
+  if (product.price != null && product.price !== "") {
+    return formatPrice(product.price);
   }
 
   return "Sin precio";
 }
 
-
-function setStatus(msg, isError=false){
+function setStatus(msg, isError = false) {
   statusEl.textContent = msg;
   statusEl.className = isError ? "muted bad" : "muted ok";
 }
@@ -92,7 +113,7 @@ function adaptProductFromDatabase(product) {
     perPhotoStock: product.per_photo_stock || [],
     stock: product.stock ?? 0,
     category: product.category || "",
-    createdAt: product.created_at
+    createdAt: product.created_at,
   };
 }
 
@@ -102,18 +123,18 @@ async function loadProductsFromDatabase() {
   // const products = await getProducts();
 
   const {
-    data: { user }
+    data: { user },
   } = await supabaseClient.auth.getUser();
-  
+
   if (!user) {
     setStatus("Debes iniciar sesión.");
     return;
   }
-  
+
   const products = await getMyProducts(user.id);
 
-  state.items = products.map(adaptProductFromDatabase); 
- 
+  state.items = products.map(adaptProductFromDatabase);
+
   updateInventorySummary();
   renderList();
 
@@ -167,22 +188,43 @@ async function deleteProductPhoto(photoIndex) {
 
   if (!product) return;
 
-  const confirmed = confirm(
-    "¿Seguro que quieres eliminar esta imagen?"
-  );
+  const confirmed = confirm("¿Seguro que quieres eliminar esta imagen?");
 
   if (!confirmed) return;
 
-  const updatedUrls = product.urls.filter(
-    (_, index) => index !== photoIndex
+  // const updatedUrls = product.urls.filter(
+  //   (_, index) => index !== photoIndex
+  // );
+
+  // const newStock = updatedUrls.length;
+
+  const updatedUrls = product.urls.filter((_, index) => index !== photoIndex);
+
+  const updatedPrices = (product.perPhotoPrices || []).filter(
+    (_, index) => index !== photoIndex,
   );
 
-  const newStock = updatedUrls.length;
+  const updatedPhotoStock = (product.perPhotoStock || []).filter(
+    (_, index) => index !== photoIndex,
+  );
+
+  const newStock = updatedPhotoStock.reduce(
+    (total, quantity) => total + Number(quantity || 0),
+    0,
+  );
+
+  // const updatedProduct = await updateProductPhotos(
+  //   product.id,
+  //   updatedUrls,
+  //   newStock,
+  // );
 
   const updatedProduct = await updateProductPhotos(
     product.id,
     updatedUrls,
-    newStock
+    newStock,
+    updatedPrices,
+    updatedPhotoStock,
   );
 
   if (!updatedProduct) {
@@ -190,8 +232,12 @@ async function deleteProductPhoto(photoIndex) {
     return;
   }
 
+  // product.urls = updatedUrls;
+  // product.stock = newStock;
   product.urls = updatedUrls;
   product.stock = newStock;
+  product.perPhotoPrices = updatedPrices;
+  product.perPhotoStock = updatedPhotoStock;
 
   updateInventorySummary();
 
@@ -202,9 +248,7 @@ async function deleteProductPhoto(photoIndex) {
 }
 
 addProductPhotos.addEventListener("change", () => {
-  const selectedFiles = Array.from(
-    addProductPhotos.files || []
-  );
+  const selectedFiles = Array.from(addProductPhotos.files || []);
 
   pendingNewPhotos = [...selectedFiles];
 
@@ -212,43 +256,43 @@ addProductPhotos.addEventListener("change", () => {
 
   selectedFiles.forEach((file) => {
     const imageUrl = URL.createObjectURL(file);
-  
+
     const photoCard = document.createElement("div");
     photoCard.className = "new-photo-card";
 
     const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "new-photo-remove";
-      removeBtn.innerHTML = "×";
-      removeBtn.setAttribute("aria-label", "Quitar fotografía");
+    removeBtn.type = "button";
+    removeBtn.className = "new-photo-remove";
+    removeBtn.innerHTML = "×";
+    removeBtn.setAttribute("aria-label", "Quitar fotografía");
 
-photoCard.appendChild(removeBtn);
+    photoCard.appendChild(removeBtn);
 
-removeBtn.addEventListener("click", () => {
-  pendingNewPhotos = pendingNewPhotos.filter(
-    pendingFile => pendingFile !== file
-  );
+    removeBtn.addEventListener("click", () => {
+      pendingNewPhotos = pendingNewPhotos.filter(
+        (pendingFile) => pendingFile !== file,
+      );
 
-  const dataTransfer = new DataTransfer();
+      const dataTransfer = new DataTransfer();
 
-pendingNewPhotos.forEach(pendingFile => {
-  dataTransfer.items.add(pendingFile);
-});
+      pendingNewPhotos.forEach((pendingFile) => {
+        dataTransfer.items.add(pendingFile);
+      });
 
-addProductPhotos.files = dataTransfer.files;
+      addProductPhotos.files = dataTransfer.files;
 
-  photoCard.remove();
-});
-  
+      photoCard.remove();
+    });
+
     const img = document.createElement("img");
     img.src = imageUrl;
     img.alt = "Nuevo producto";
-  
+
     photoCard.appendChild(img);
     const fields = document.createElement("div");
-fields.className = "new-photo-fields";
+    fields.className = "new-photo-fields";
 
-fields.innerHTML = `
+    fields.innerHTML = `
   <label>
     Precio
     <input
@@ -272,13 +316,12 @@ fields.innerHTML = `
   </label>
 `;
 
-photoCard.appendChild(fields);
+    photoCard.appendChild(fields);
     newPhotosPreview.appendChild(photoCard);
   });
 });
 
 async function addPhotosToProduct() {
-
   const product = state.editingProduct;
 
   if (!product) {
@@ -292,60 +335,52 @@ async function addPhotosToProduct() {
   const selectedFiles = [...pendingNewPhotos];
 
   const priceInputs = Array.from(
-    newPhotosPreview.querySelectorAll(".new-photo-price")
-  );
-  
-  const stockInputs = Array.from(
-    newPhotosPreview.querySelectorAll(".new-photo-stock")
+    newPhotosPreview.querySelectorAll(".new-photo-price"),
   );
 
-  const newPrices = priceInputs.map(input =>
-    input.value === "" ? null : Number(input.value)
+  const stockInputs = Array.from(
+    newPhotosPreview.querySelectorAll(".new-photo-stock"),
   );
-  
-  const newPhotoStock = stockInputs.map(input =>
-    Math.max(1, Number(input.value) || 1)
+
+  const newPrices = priceInputs.map((input) =>
+    input.value === "" ? null : Number(input.value),
+  );
+
+  const newPhotoStock = stockInputs.map((input) =>
+    Math.max(1, Number(input.value) || 1),
   );
 
   if (selectedFiles.length === 0) {
-    addProductStatus.textContent =
-      "Selecciona al menos una fotografía.";
+    addProductStatus.textContent = "Selecciona al menos una fotografía.";
     return;
   }
 
   try {
     addProductPhotosBtn.disabled = true;
-    addProductStatus.textContent =
-      "Subiendo fotografías...";
+    addProductStatus.textContent = "Subiendo fotografías...";
 
     const newUrls = [];
 
     for (const file of selectedFiles) {
-      const imageUrl =
-        await uploadImageToCloudinary(file);
+      // const imageUrl = await uploadImageToCloudinary(file);
+      const imageUrl =await uploadImageToCloudinary(file, product.userId);
 
       newUrls.push(imageUrl);
     }
 
-    const updatedUrls = [
-      ...product.urls,
-      ...newUrls
-    ];
+    const updatedUrls = [...product.urls, ...newUrls];
 
-    const updatedPrices = [
-      ...(product.perPhotoPrices || []),
-      ...newPrices
-    ];
-    
+    const updatedPrices = [...(product.perPhotoPrices || []), ...newPrices];
+
     const updatedPhotoStock = [
       ...(product.perPhotoStock || []),
-      ...newPhotoStock
+      ...newPhotoStock,
     ];
 
     // const newStock = updatedUrls.length;
     const newStock = updatedPhotoStock.reduce(
       (total, quantity) => total + Number(quantity || 0),
-      0
+      0,
     );
 
     // const updatedProduct =
@@ -355,19 +390,16 @@ async function addPhotosToProduct() {
     //     newStock
     //   );
 
-    const updatedProduct =
-     await updateProductPhotos(
+    const updatedProduct = await updateProductPhotos(
       product.id,
       updatedUrls,
       newStock,
       updatedPrices,
-      updatedPhotoStock
-  );
+      updatedPhotoStock,
+    );
 
     if (!updatedProduct) {
-      throw new Error(
-        "No se pudo actualizar el producto."
-      );
+      throw new Error("No se pudo actualizar el producto.");
     }
 
     product.urls = updatedUrls;
@@ -379,18 +411,14 @@ async function addPhotosToProduct() {
     addProductPhotos.value = "";
     newPhotosPreview.innerHTML = "";
 
-    addProductStatus.textContent =
-      `${newUrls.length} producto(s) agregado(s) correctamente.`;
+    addProductStatus.textContent = `${newUrls.length} producto(s) agregado(s) correctamente.`;
 
     renderModalPhotos();
     renderList();
-
   } catch (error) {
     console.error(error);
 
-    addProductStatus.textContent =
-      `Error: ${error.message}`;
-
+    addProductStatus.textContent = `Error: ${error.message}`;
   } finally {
     addProductPhotosBtn.disabled = false;
   }
@@ -411,10 +439,7 @@ editModal.addEventListener("click", (event) => {
   }
 });
 
-addProductPhotosBtn.addEventListener(
-  "click",
-  addPhotosToProduct
-);
+addProductPhotosBtn.addEventListener("click", addPhotosToProduct);
 
 function renderList(items = state.items) {
   list.innerHTML = "";
@@ -534,32 +559,23 @@ function renderList(items = state.items) {
     });
 
     btnDel.addEventListener("click", async () => {
-      const confirmed = confirm(
-        `¿Eliminar "${product.title}"?`
-      );
+      const confirmed = confirm(`¿Eliminar "${product.title}"?`);
 
       if (!confirmed) return;
 
       const deleted = await deleteProduct(product.id);
 
       if (!deleted) {
-        setStatus(
-          "No se pudo eliminar el producto.",
-          true
-        );
+        setStatus("No se pudo eliminar el producto.", true);
         return;
       }
 
-      state.items = state.items.filter(
-        item => item.id !== product.id
-      );
-      
+      state.items = state.items.filter((item) => item.id !== product.id);
+
       updateInventorySummary();
       renderList();
 
-      setStatus(
-        "Producto eliminado correctamente."
-      );
+      setStatus("Producto eliminado correctamente.");
     });
 
     list.appendChild(div);
@@ -567,11 +583,9 @@ function renderList(items = state.items) {
 }
 
 searchInput.addEventListener("input", () => {
-  const searchTerm = searchInput.value
-    .trim()
-    .toLowerCase();
+  const searchTerm = searchInput.value.trim().toLowerCase();
 
-  const filteredProducts = state.items.filter(product => {
+  const filteredProducts = state.items.filter((product) => {
     const title = product.title?.toLowerCase() || "";
     const category = product.category?.toLowerCase() || "";
     const description = product.desc?.toLowerCase() || "";
@@ -594,59 +608,55 @@ function updateInventorySummary() {
   }, 0);
 
   const inventoryValue = state.items.reduce((total, product) => {
-// PRECIO GENERAL
+    // PRECIO GENERAL
     if (!product.perPhoto) {
       const generalPrice = Number(product.price);
       const generalStock = Number(product.stock || 0);
-    
-      const productValue =
-        Number.isFinite(generalPrice)
-          ? generalPrice * generalStock
-          : 0;
-    
+
+      const productValue = Number.isFinite(generalPrice)
+        ? generalPrice * generalStock
+        : 0;
+
       return total + productValue;
     }
-  // PRECIOS DIFERENTES POR FOTO
+    // PRECIOS DIFERENTES POR FOTO
     const photoPrices = Array.isArray(product.perPhotoPrices)
-    ? product.perPhotoPrices
-    : [];
-  
-  const photoStock = Array.isArray(product.perPhotoStock)
-    ? product.perPhotoStock
-    : [];
+      ? product.perPhotoPrices
+      : [];
 
-  // const productValue = photoPrices.reduce((subtotal, price) => {
-  //   const numericPrice = Number(price);
+    const photoStock = Array.isArray(product.perPhotoStock)
+      ? product.perPhotoStock
+      : [];
 
-  //   return subtotal + (
-  //     Number.isFinite(numericPrice)
-  //       ? numericPrice
-  //       : 0
-  //   );
-  // }, 0);
+    // const productValue = photoPrices.reduce((subtotal, price) => {
+    //   const numericPrice = Number(price);
 
-  const productValue = photoPrices.reduce((subtotal, price, index) => {
-    const numericPrice = Number(price);
-    const quantity = Number(photoStock[index] || 1);
-  
-    return subtotal + (
-      Number.isFinite(numericPrice)
-        ? numericPrice * quantity
-        : 0
-    );
+    //   return subtotal + (
+    //     Number.isFinite(numericPrice)
+    //       ? numericPrice
+    //       : 0
+    //   );
+    // }, 0);
+
+    const productValue = photoPrices.reduce((subtotal, price, index) => {
+      const numericPrice = Number(price);
+      const quantity = Number(photoStock[index] || 1);
+
+      return (
+        subtotal + (Number.isFinite(numericPrice) ? numericPrice * quantity : 0)
+      );
+    }, 0);
+
+    return total + productValue;
   }, 0);
-
-  return total + productValue;
-}, 0);
 
   totalProductsEl.textContent = totalProducts;
   totalStockEl.textContent = totalStock;
-const formattedValue = formatPrice(inventoryValue);
+  const formattedValue = formatPrice(inventoryValue);
 
-inventoryValueEl.dataset.visibleValue = formattedValue;
+  inventoryValueEl.dataset.visibleValue = formattedValue;
 
-inventoryValueEl.textContent =
-  isInventoryValueVisible
+  inventoryValueEl.textContent = isInventoryValueVisible
     ? formattedValue
     : "••••••";
 }
@@ -654,8 +664,7 @@ inventoryValueEl.textContent =
 toggleInventoryValueBtn.addEventListener("click", () => {
   isInventoryValueVisible = !isInventoryValueVisible;
 
-  const icon =
-    toggleInventoryValueBtn.querySelector("i");
+  const icon = toggleInventoryValueBtn.querySelector("i");
 
   if (isInventoryValueVisible) {
     inventoryValueEl.textContent =
@@ -665,11 +674,10 @@ toggleInventoryValueBtn.addEventListener("click", () => {
 
     toggleInventoryValueBtn.setAttribute(
       "aria-label",
-      "Ocultar valor del inventario"
+      "Ocultar valor del inventario",
     );
 
-    toggleInventoryValueBtn.title =
-      "Ocultar valor";
+    toggleInventoryValueBtn.title = "Ocultar valor";
   } else {
     inventoryValueEl.textContent = "••••••";
 
@@ -677,11 +685,10 @@ toggleInventoryValueBtn.addEventListener("click", () => {
 
     toggleInventoryValueBtn.setAttribute(
       "aria-label",
-      "Mostrar valor del inventario"
+      "Mostrar valor del inventario",
     );
 
-    toggleInventoryValueBtn.title =
-      "Mostrar valor";
+    toggleInventoryValueBtn.title = "Mostrar valor";
   }
 });
 
