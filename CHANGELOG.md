@@ -282,16 +282,6 @@ Resumen
 - Configuración individual de páginas.
 - Tokens independientes.
 
----
-
-## v4.5.0
-
-Planeado
-
-- Dashboard.
-- Reportes.
-- Estadísticas.
-- Inventario avanzado.
 
 ---
 
@@ -332,6 +322,55 @@ Planeado
 - Se mejoró visualmente la interfaz de las nuevas fotografías con campos de precio y cantidad.
 - Los nuevos precios, cantidades y fotografías se almacenan correctamente y permanecen sincronizados con el inventario.
 
+
+
+## [4.3.0] - 2026-09-24
+
+### QR promocional
+
+Se agregó un nuevo sistema para que cada vendedor pueda generar y compartir un código QR asociado a su catálogo público.
+
+### Agregado
+
+- Generación de códigos QR promocionales por usuario.
+- Nueva vista pública `viewer_qr.html`.
+- Enlace QR permanente identificado mediante el `user_id` del vendedor.
+- Acceso desde la landing QR hacia el catálogo público correspondiente.
+- Modal de generación y administración del QR desde VJOX.
+- Opción para copiar el enlace promocional.
+- Opción para compartir mediante las capacidades nativas del dispositivo.
+- Fallback visual cuando Clipboard API o Web Share API no están disponibles.
+- Generación de cartel promocional mediante Canvas API.
+- Descarga del material promocional en formato PNG.
+- Integración local de QRCode.js.
+- Inclusión de la licencia MIT correspondiente a QRCode.js.
+
+### Mejorado
+
+- Separación de la lógica QR en `trigger_qr.js`.
+- Separación de los estilos QR en `trigger_qr.css`.
+- El QR utiliza un enlace asociado al vendedor en lugar de depender de un producto individual.
+- La arquitectura del generador queda preparada para incorporar diferentes plantillas promocionales.
+
+### Dependencias
+
+- QRCode.js se incorpora localmente dentro de `js/vendor/`.
+- Se conserva el aviso de licencia correspondiente a la dependencia.
+
+
+
+
+---
+
+## v4.4.0
+
+Planeado
+
+- Dashboard.
+- Reportes.
+- Estadísticas.
+- Inventario avanzado.
+
 ---
 
 ## v5.0.0
@@ -343,3 +382,5 @@ Planeado
 - Pagos.
 - Planes.
 - Multiempresa.
+
+---

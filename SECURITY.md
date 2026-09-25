@@ -116,11 +116,11 @@ VJOX Ventas
 
 Versión actual:
 
-4.2.3
+4.3.0
 
 Última actualización:
 
-19 de septiembre de 2026
+24 de septiembre de 2026
 
 # Autora
 

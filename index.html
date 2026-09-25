@@ -1,333 +1,276 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#121316">
-<title>VJOX-Ventas</title>
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="css/vjox-design.css">
-<link rel="stylesheet" href="css/index.css?v=2.0.5">
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-/>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121316" />
+    <title>VJOX-Ventas</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="css/vjox-design.css" />
+    <link rel="stylesheet" href="css/trigger_qr.css" />
+    <link rel="stylesheet" href="css/index.css?v=2.0.5" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <button
+        id="openSideMenuBtn"
+        class="header-menu-btn"
+        type="button"
+        aria-label="Abrir menú"
+        aria-controls="sideMenu"
+        aria-expanded="false"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>VJOX · Panel de Inventario</h1>
+      <span class="version">v4.2.3</span>
+    </header>
 
-</head>
-<body>
-<header>
-  <button id="openSideMenuBtn" class="header-menu-btn" type="button" aria-label="Abrir menú" aria-controls="sideMenu" aria-expanded="false">
-  <i class="bi bi-list"></i>
-</button>
-  <h1>VJOX · Panel de Inventario</h1>
-  <span class="version">v4.2.3</span>
-</header>
+    <!-- Fondo oscuro detrás del menú -->
+    <div id="sideMenuOverlay" class="side-menu-overlay hidden"></div>
 
-<!-- Fondo oscuro detrás del menú -->
-<div
-  id="sideMenuOverlay"
-  class="side-menu-overlay hidden"
-></div>
+    <!-- Menú lateral -->
+    <aside
+      id="sideMenu"
+      class="side-menu"
+      aria-label="Menú principal"
+      aria-hidden="true"
+    >
+      <div class="side-menu__header">
+        <div>
+          <strong class="side-menu__brand"> VJOX Ventas </strong>
 
-<!-- Menú lateral -->
-<aside
-  id="sideMenu"
-  class="side-menu"
-  aria-label="Menú principal"
-  aria-hidden="true"
->
-  <div class="side-menu__header">
-    <div>
-      <strong class="side-menu__brand">
-        VJOX Ventas
-      </strong>
-
-      <!-- <span class="side-menu__subtitle">
+          <!-- <span class="side-menu__subtitle">
         Mi negocio
       </span> -->
-      <span
-        id="sideMenuBusinessName"
-        class="side-menu__subtitle"
+          <span id="sideMenuBusinessName" class="side-menu__subtitle">
+            Mi negocio
+          </span>
+        </div>
+
+        <button
+          id="closeSideMenuBtn"
+          class="side-menu__close"
+          type="button"
+          aria-label="Cerrar menú"
         >
-          Mi negocio
-      </span>
-    </div>
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
 
-    <button
-      id="closeSideMenuBtn"
-      class="side-menu__close"
-      type="button"
-      aria-label="Cerrar menú"
-    >
-      <i class="bi bi-x-lg"></i>
-    </button>
-  </div>
+      <nav class="side-menu__nav">
+        <p class="side-menu__section-title">Principal</p>
 
-  <nav class="side-menu__nav">
-    <p class="side-menu__section-title">
-      Principal
-    </p>
+        <a href="./index.html" class="side-menu__link active">
+          <i class="bi bi-box-seam"></i>
+          <span>Inventario</span>
+        </a>
 
-    <a
-      href="./index.html"
-      class="side-menu__link active"
-    >
-      <i class="bi bi-box-seam"></i>
-      <span>Inventario</span>
-    </a>
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-bar-chart"></i>
+          <span>Estadísticas</span>
+        </a>
 
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-bar-chart"></i>
-      <span>Estadísticas</span>
-    </a>
+        <a href="./add_product.html" class="side-menu__link">
+          <i class="bi bi-plus-circle"></i>
+          <span>Agregar producto</span>
+        </a>
+
+        <p class="side-menu__section-title">Herramientas</p>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-share"></i>
+          <span>Compartir catálogo</span>
+        </a>
+
+        <a href="#" class="side-menu__link" id="openQrPromoBtn">
+          <i class="bi bi-qr-code"></i>
+          <span>QR promocional</span>
+        </a>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-facebook"></i>
+          <span>Publicar en Facebook</span>
+        </a>
+
+        <p class="side-menu__section-title">Configuración</p>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-tags"></i>
+          <span>Categorías</span>
+        </a>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-gear"></i>
+          <span>Configuración</span>
+        </a>
+
+        <a href="#" class="side-menu__link" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+          Cerrar sesión
+        </a>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-info-circle"></i>
+          <span>Acerca de VJOX</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="inventory-page">
+      <!-- Publicaciones generadas -->
+      <section class="card">
+        <div class="inventory-header">
+          <div>
+            <h2>Inventario</h2>
+            <p class="muted">Administra y comparte tus productos.</p>
+          </div>
+        </div>
+
+        <div class="inventory-summary">
+          <article class="summary-card">
+            <i class="bi bi-box-seam summary-icon"></i>
+
+            <span class="summary-card__label"> Categorias </span>
+
+            <strong id="totalProducts" class="summary-card__value"> 0 </strong>
+          </article>
+
+          <article class="summary-card">
+            <i class="bi bi-boxes summary-icon"></i>
+
+            <span class="summary-card__label"> Total Productos </span>
+
+            <strong id="totalStock" class="summary-card__value"> 0 </strong>
+          </article>
+
+          <article class="summary-card summary-card--value">
+            <button
+              id="toggleInventoryValue"
+              class="summary-visibility-btn"
+              type="button"
+              aria-label="Ocultar valor del inventario"
+              title="Ocultar valor"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+
+            <i class="bi bi-currency-dollar summary-icon"></i>
+
+            <span class="summary-card__label"> Valor </span>
+
+            <strong
+              id="inventoryValue"
+              class="summary-card__value"
+              data-visible-value="$0"
+            >
+              $0
+            </strong>
+          </article>
+        </div>
+
+        <div class="inventory-search">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="🔍 Buscar productos..."
+          />
+        </div>
+
+        <div id="status" class="muted"></div>
+        <div id="list" class="grid list"></div>
+      </section>
+    </main>
 
     <a
       href="./add_product.html"
-      class="side-menu__link"
+      class="floating-add-btn"
+      aria-label="Agregar producto"
+      title="Agregar producto"
     >
-      <i class="bi bi-plus-circle"></i>
-      <span>Agregar producto</span>
+      +
     </a>
 
-    <p class="side-menu__section-title">
-      Herramientas
-    </p>
+    <div id="editModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Editar producto</h2>
+          <button id="closeModalBtn" class="modal-close" type="button">
+            ×
+          </button>
+        </div>
 
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-share"></i>
-      <span>Compartir catálogo</span>
-    </a>
-
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-facebook"></i>
-      <span>Publicar en Facebook</span>
-    </a>
-
-    <p class="side-menu__section-title">
-      Configuración
-    </p>
-
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-tags"></i>
-      <span>Categorías</span>
-    </a>
-
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-gear"></i>
-      <span>Configuración</span>
-    </a>
-
-    <a href="#" class="side-menu__link" id="logoutBtn">
-      <i class="bi bi-box-arrow-right"></i>
-      Cerrar sesión
-    </a>
-
-    <a
-      href="#"
-      class="side-menu__link"
-    >
-      <i class="bi bi-info-circle"></i>
-      <span>Acerca de VJOX</span>
-    </a>
-  </nav>
-</aside>
-
-<main class="inventory-page">
-
-
-
-  <!-- Publicaciones generadas -->
-  <section class="card">
-    <div class="inventory-header">
-      <div>
-        <h2>Inventario</h2>
         <p class="muted">
-          Administra y comparte tus productos.
+          Elimina las fotos de los productos que ya no estén disponibles.
         </p>
+
+        <div id="modalPhotos" class="modal-photos"></div>
+
+        <div class="modal-add-products">
+          <label for="addProductPhotos"> Agregar nuevas fotos </label>
+
+          <input id="addProductPhotos" type="file" accept="image/*" multiple />
+
+          <div id="newPhotosPreview" class="new-photos-preview"></div>
+
+          <button
+            id="addProductPhotosBtn"
+            class="btn btn-primary"
+            type="button"
+          >
+            Agregar producto
+          </button>
+
+          <div id="addProductStatus" class="muted"></div>
+        </div>
+
+        <div class="modal-footer">
+          <span id="modalStock" class="muted"></span>
+
+          <button id="finishEditBtn" class="btn btn-primary" type="button">
+            Terminar
+          </button>
+        </div>
       </div>
-    
     </div>
 
-    <div class="inventory-summary">
-      <article class="summary-card">
-        <i class="bi bi-box-seam summary-icon"></i>
+    <footer>
+      Hecho con ♥ por Vjox • Control de Inventario • Ventas.
+      <p>
+        © 2026 VJOX Ventas. Desarrollado por Veronica J. Narciso. Todos los
+        derechos reservados.
+      </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/images.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/share.js?v=2.0"></script>
+    <script src="js/database.js"></script>
+
+    <script src="js/vendor/qrcode.min.js"></script>
+    <script src="js/trigger_qr.js"></script>
     
-        <span class="summary-card__label">
-          Categorias
-        </span>
-    
-        <strong
-          id="totalProducts"
-          class="summary-card__value"
-        >
-          0
-        </strong>
-      </article>
-    
-      <article class="summary-card">
-        <i class="bi bi-boxes summary-icon"></i>
-    
-        <span class="summary-card__label">
-          Total Productos
-        </span>
-    
-        <strong
-          id="totalStock"
-          class="summary-card__value"
-        >
-          0
-        </strong>
-      </article>
-    
-      <article class="summary-card summary-card--value">
-        <button
-          id="toggleInventoryValue"
-          class="summary-visibility-btn"
-          type="button"
-          aria-label="Ocultar valor del inventario"
-          title="Ocultar valor"
-        >
-          <i class="bi bi-eye"></i>
-        </button>
-      
-        <i class="bi bi-currency-dollar summary-icon"></i>
-      
-        <span class="summary-card__label">
-          Valor
-        </span>
-      
-        <strong
-          id="inventoryValue"
-          class="summary-card__value"
-          data-visible-value="$0"
-        >
-          $0
-        </strong>
-      </article>
-    </div>
-
-    <div class="inventory-search">
-
-      <input
-          id="searchInput"
-          type="text"
-          placeholder="🔍 Buscar productos..."
-      >
-  
-  </div>
-
-    <div id="status" class="muted"></div>
-    <div id="list" class="grid list"></div>
-  </section>
-</main>
-
-<a
-  href="./add_product.html"
-  class="floating-add-btn"
-  aria-label="Agregar producto"
-  title="Agregar producto"
->
-  +
-</a>
-
-<div id="editModal" class="modal hidden">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modalTitle">Editar producto</h2>
-      <button id="closeModalBtn" class="modal-close" type="button">
-        ×
-      </button>
-    </div>
-
-    <p class="muted">
-      Elimina las fotos de los productos que ya no estén disponibles.
-    </p>
-
-    <div id="modalPhotos" class="modal-photos"></div>
-
-    <div class="modal-add-products">
-      <label for="addProductPhotos">
-        Agregar nuevas fotos
-      </label>
-    
-      <input
-        id="addProductPhotos"
-        type="file"
-        accept="image/*"
-        multiple
-      />
-
-      <div
-      id="newPhotosPreview"
-      class="new-photos-preview"
-      ></div>
-    
-      <button
-        id="addProductPhotosBtn"
-        class="btn btn-primary"
-        type="button"
-      >
-        Agregar producto
-      </button>
-    
-      <div id="addProductStatus" class="muted"></div>
-    </div>
-
-    <div class="modal-footer">
-      <span id="modalStock" class="muted"></span>
-
-      <button id="finishEditBtn" class="btn btn-primary" type="button">
-        Terminar
-      </button>
-    </div>
-  </div>
-</div>
-
-<footer>
-  Hecho con ♥ por Vjox • Control de Inventario • Ventas.
-  <p>
-    © 2026 VJOX Ventas. Desarrollado por Veronica J. Narciso.
-    Todos los derechos reservados.
-  </p>
-</footer>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script src="js/images.js"></script>
-  <script src="js/cloudinary.js" ></script>
-  <script src="js/share.js?v=2.0" ></script>
-  <script src="js/database.js" ></script>
-  <script src="./js/auth-guard.js"></script>
-  <script src="js/menu.js?v=2"></script>
-  <script src="js/index.js?v=4.0.0"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("./service-worker.js")
-          .then(() => {
-            console.log("Service Worker registrado correctamente.");
-          })
-          .catch((error) => {
-            console.error("Error registrando Service Worker:", error);
-          });
-      });
-    }
-  </script>
-</body>
+    <script src="./js/auth-guard.js"></script>
+    <script src="js/menu.js?v=2"></script>
+    <script src="js/index.js?v=4.0.0"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => {
+              console.log("Service Worker registrado correctamente.");
+            })
+            .catch((error) => {
+              console.error("Error registrando Service Worker:", error);
+            });
+        });
+      }
+    </script>
+  </body>
 </html>
- 

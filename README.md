@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.2.0
+**Versión:** 4.3.0
 
 **Estado:** En desarrollo activo.
 
@@ -28,6 +28,10 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 * Publicación automática en Facebook mediante Meta Graph API.
 * Progressive Web App (PWA).
 * Diseño adaptable para dispositivos móviles.
+* Generación de QR promocional permanente por vendedor.
+* Landing pública para acceso al catálogo mediante QR.
+* Generación de material promocional descargable para impresión.
+
 
 ## v4.0.0
 
@@ -61,8 +65,19 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 - 🔒 Page Access Tokens protegidos y utilizados exclusivamente desde el backend.
 
 
+## Versión: 4.3.0
+
+- 🔳 Generación de códigos QR promocionales por usuario.
+- 🔗 Enlace permanente asociado al catálogo del vendedor.
+- 📱 Landing pública para visitantes provenientes del QR.
+- 🖨️ Generación de material promocional descargable en PNG.
+- 📤 Opciones para copiar y compartir el enlace promocional.
+- 🛡️ Fallback visual cuando las APIs de copiar o compartir no están disponibles.
+- 📦 QRCode.js integrado localmente como dependencia de terceros.
 
 ---
+
+
 
 
 # Tecnologías utilizadas

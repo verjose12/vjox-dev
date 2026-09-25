@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0f0f10"
+  >
+
+  <title>Descubre productos | VJOX</title>
+
+  <!-- Sistema de diseño general de VJOX -->
+  <link
+    rel="stylesheet"
+    href="css/vjox-design.css"
+  >
+
+  <!-- Estilos exclusivos de esta landing -->
+  <link
+    rel="stylesheet"
+    href="css/viewer_qr.css"
+  >
+</head>
+
+<body>
+
+  <main class="qr-landing">
+
+    <section class="qr-landing__card">
+
+      <!-- Marca -->
+      <div class="qr-brand">
+        <img
+          src="icons/icon-master.png"
+          alt="VJOX"
+          class="qr-brand__logo"
+        >
+
+        <span class="qr-brand__name">
+          VJOX
+        </span>
+      </div>
+
+      <!-- Estado -->
+      <div class="qr-status">
+        <span class="qr-status__dot"></span>
+        Catálogo disponible
+      </div>
+
+      <!-- Contenido principal -->
+      <div class="qr-content">
+
+        <p class="qr-content__eyebrow">
+          DESCUBRE ALGO NUEVO
+        </p>
+
+        <h1 class="qr-content__title">
+          Productos que podrían interesarte
+        </h1>
+
+        <p class="qr-content__description">
+          Explora el catálogo, descubre productos disponibles
+          y contacta directamente al vendedor.
+        </p>
+
+      </div>
+
+      <!-- CTA -->
+      <button
+        id="openCatalogBtn"
+        class="qr-catalog-btn"
+        type="button"
+      >
+        Ver catálogo
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <!-- Mensaje dinámico -->
+      <p
+        id="qrMessage"
+        class="qr-message"
+        aria-live="polite"
+      ></p>
+
+      <!-- Confianza -->
+      <div class="qr-trust">
+
+        <div class="qr-trust__item">
+          <span class="qr-trust__icon">✓</span>
+          Catálogo actualizado
+        </div>
+
+        <div class="qr-trust__item">
+          <span class="qr-trust__icon">✓</span>
+          Contacto directo
+        </div>
+
+      </div>
+
+    </section>
+
+    <footer class="qr-footer">
+      <span>Powered by</span>
+      <strong>VJOX</strong>
+    </footer>
+
+  </main>
+
+  <!--  -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/database.js"></script>
+  <script src="js/viewer_qr.js"></script>
+ 
+
+</body>
+</html>

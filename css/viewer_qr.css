@@ -1,0 +1,316 @@
+/* =====================================================
+   VJOX — QR PUBLIC LANDING
+   Archivo: viewer_qr.css
+===================================================== */
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(34, 197, 94, 0.08),
+      transparent 38%
+    ),
+    var(--color-bg);
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.qr-landing {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-5);
+}
+
+
+/* =========================
+   TARJETA PRINCIPAL
+========================= */
+
+.qr-landing__card {
+  width: 100%;
+  max-width: 430px;
+
+  padding: var(--space-6);
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-card);
+}
+
+
+/* =========================
+   MARCA
+========================= */
+
+.qr-brand {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-3);
+
+  margin-bottom: var(--space-6);
+}
+
+.qr-brand__logo {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+
+  border-radius: var(--radius-md);
+}
+
+.qr-brand__name {
+  color: var(--color-text);
+
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extra-bold);
+
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================
+   ESTADO DEL CATÁLOGO
+========================= */
+
+.qr-status {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-5);
+
+  padding: 7px 11px;
+
+  color: var(--color-success);
+  background: var(--color-primary-soft);
+
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: var(--radius-pill);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.qr-status__dot {
+  width: 7px;
+  height: 7px;
+
+  background: var(--color-primary);
+  border-radius: var(--radius-circle);
+
+  box-shadow:
+    0 0 0 4px rgba(34, 197, 94, 0.1);
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.qr-content__eyebrow {
+  margin: 0 0 var(--space-2);
+
+  color: var(--color-primary);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+
+  letter-spacing: 0.12em;
+}
+
+.qr-content__title {
+  margin: 0;
+
+  max-width: 350px;
+
+  color: var(--color-text);
+
+  font-size: clamp(28px, 8vw, 38px);
+  line-height: 1.08;
+
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: -0.035em;
+}
+
+.qr-content__description {
+  margin:
+    var(--space-4)
+    0
+    var(--space-6);
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+
+/* =========================
+   BOTÓN PRINCIPAL
+========================= */
+
+.qr-catalog-btn {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-2);
+
+  padding: 14px var(--space-4);
+
+  color: #062d1e;
+  background: var(--color-primary);
+
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.qr-catalog-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.qr-catalog-btn:active {
+  transform: scale(0.98);
+}
+
+.qr-catalog-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   MENSAJES
+========================= */
+
+.qr-message {
+  min-height: 18px;
+
+  margin:
+    var(--space-3)
+    0
+    0;
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+  text-align: center;
+}
+
+
+/* =========================
+   CONFIANZA
+========================= */
+
+.qr-trust {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap:
+    var(--space-3)
+    var(--space-4);
+
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.qr-trust__item {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+}
+
+.qr-trust__icon {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.qr-footer {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: var(--space-4);
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+}
+
+.qr-footer strong {
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .qr-landing {
+    justify-content: flex-start;
+
+    padding:
+      max(32px, env(safe-area-inset-top))
+      var(--space-4)
+      var(--space-5);
+  }
+
+  .qr-landing__card {
+    padding:
+      var(--space-5)
+      var(--space-4);
+  }
+
+  .qr-brand {
+    margin-bottom: var(--space-5);
+  }
+
+  .qr-brand__logo {
+    width: 44px;
+    height: 44px;
+  }
+}

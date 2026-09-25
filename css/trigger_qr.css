@@ -1,0 +1,457 @@
+/* =====================================================
+   VJOX — QR PROMOCIONAL
+   Archivo: trigger_qr.css
+===================================================== */
+
+
+/* =========================
+   OVERLAY
+========================= */
+
+.qr-promo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-4);
+
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(5px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity var(--transition-fast),
+    visibility var(--transition-fast);
+}
+
+.qr-promo-modal.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.qr-promo-modal__panel {
+  width: min(100%, 430px);
+  max-height: 92vh;
+  overflow-y: auto;
+
+  padding: var(--space-5);
+
+  color: var(--color-text);
+  background: var(--color-surface);
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-modal);
+
+  transform: translateY(12px) scale(0.98);
+
+  transition:
+    transform var(--transition-normal);
+}
+
+.qr-promo-modal.show
+.qr-promo-modal__panel {
+  transform: translateY(0) scale(1);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.qr-promo-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+}
+
+.qr-promo-modal__eyebrow {
+  display: block;
+
+  margin-bottom: var(--space-2);
+
+  color: var(--color-primary);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+
+  letter-spacing: 0.1em;
+}
+
+.qr-promo-modal__header h2 {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-xl);
+  line-height: 1.15;
+
+  font-weight: var(--font-weight-extra-bold);
+}
+
+.qr-promo-modal__close {
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: var(--color-text-muted);
+  background: var(--color-surface-soft);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-circle);
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   DESCRIPCIÓN
+========================= */
+
+.qr-promo-modal__description {
+  margin:
+    var(--space-3)
+    0
+    var(--space-5);
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+
+/* =========================
+   PREVIEW QR
+========================= */
+
+.qr-promo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: var(--space-4);
+
+  padding: var(--space-5);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(34, 197, 94, 0.08),
+      transparent 65%
+    ),
+    var(--color-surface-muted);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.qr-promo-preview__code {
+  width: 180px;
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-primary);
+  background: #ffffff;
+
+  border: 4px solid #ffffff;
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-card);
+
+  font-size: 120px;
+  line-height: 1;
+}
+
+.qr-promo-preview__status {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-2);
+
+  color: var(--color-success);
+}
+
+.qr-promo-preview__status > i {
+  color: var(--color-primary);
+
+  font-size: var(--font-size-lg);
+}
+
+.qr-promo-preview__status div {
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-promo-preview__status strong {
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.qr-promo-preview__status span {
+  margin-top: 2px;
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+}
+
+
+/* =========================
+   DESCARGAR
+========================= */
+
+.qr-promo-download {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-2);
+
+  margin-top: var(--space-4);
+  padding: 13px var(--space-4);
+
+  color: #062d1e;
+  background: var(--color-primary);
+
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+
+  cursor: pointer;
+}
+
+.qr-promo-download:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   ACCIONES
+========================= */
+
+.qr-promo-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: var(--space-3);
+
+  margin-top: var(--space-3);
+}
+
+.qr-promo-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-2);
+
+  padding: 11px;
+
+  color: var(--color-text);
+  background: var(--color-surface-soft);
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+
+  font-size: var(--font-size-sm);
+
+  cursor: pointer;
+}
+
+.qr-promo-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   DESTINO
+========================= */
+
+.qr-promo-destination {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-2);
+
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+
+  background: var(--color-surface-soft);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.qr-promo-destination > span {
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+}
+
+.qr-promo-destination strong {
+  display: flex;
+  align-items: center;
+
+  gap: var(--space-2);
+
+  color: var(--color-text);
+
+  font-size: var(--font-size-sm);
+}
+
+.qr-promo-destination strong i {
+  color: var(--color-primary);
+}
+
+
+/* =========================
+   INFORMACIÓN
+========================= */
+
+.qr-promo-info {
+  display: flex;
+  align-items: flex-start;
+
+  gap: var(--space-2);
+
+  margin-top: var(--space-4);
+
+  color: var(--color-primary);
+
+  font-size: var(--font-size-xs);
+  line-height: 1.45;
+}
+
+.qr-promo-info i {
+  flex: 0 0 auto;
+
+  margin-top: 1px;
+}
+
+
+/* =========================
+   MENSAJES
+========================= */
+
+.qr-promo-message {
+  min-height: 16px;
+
+  margin:
+    var(--space-3)
+    0
+    0;
+
+  color: var(--color-text-muted);
+
+  font-size: var(--font-size-xs);
+  text-align: center;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .qr-promo-modal {
+    align-items: flex-end;
+
+    padding:
+      var(--space-3)
+      var(--space-3)
+      max(
+        var(--space-3),
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .qr-promo-modal__panel {
+    width: 100%;
+    max-height: 94vh;
+
+    padding: var(--space-4);
+
+    border-radius:
+      var(--radius-xl)
+      var(--radius-xl)
+      var(--radius-lg)
+      var(--radius-lg);
+  }
+
+  .qr-promo-modal__header h2 {
+    font-size: 22px;
+  }
+
+  .qr-promo-preview {
+    padding: var(--space-4);
+  }
+
+  .qr-promo-preview__code {
+    width: 160px;
+    height: 160px;
+
+    font-size: 105px;
+  }
+}
+
+.qr-promo-preview__code canvas,
+.qr-promo-preview__code img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qr-promo-fallback-link {
+  width: 100%;
+
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+
+  color: var(--color-text);
+  background: var(--color-surface-muted);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+
+  font-size: var(--font-size-xs);
+}
+
+.qr-promo-message span {
+  display: block;
+  line-height: 1.4;
+}
