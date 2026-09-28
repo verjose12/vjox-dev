@@ -45,7 +45,7 @@ function showError(message) {
       ">
         ${message}
       </div>
-    `
+    `,
   );
 }
 let selectedImageIndex = 0;
@@ -58,17 +58,13 @@ function renderGallery(product, sellerProfile) {
   const askButton = document.querySelector("#askBtn");
   const copyButton = document.querySelector("#copyBtn");
 
-  const imageLightbox =
-  document.querySelector("#imageLightbox");
+  const imageLightbox = document.querySelector("#imageLightbox");
 
-const imageLightboxPhoto =
-  document.querySelector("#imageLightboxPhoto");
+  const imageLightboxPhoto = document.querySelector("#imageLightboxPhoto");
 
-const imageLightboxPrice =
-  document.querySelector("#imageLightboxPrice");
+  const imageLightboxPrice = document.querySelector("#imageLightboxPrice");
 
-const closeImageLightboxBtn =
-  document.querySelector("#closeImageLightbox");
+  const closeImageLightboxBtn = document.querySelector("#closeImageLightbox");
 
   titleElement.textContent = product.title || "Producto";
   descriptionElement.textContent = product.description || "";
@@ -79,17 +75,17 @@ const closeImageLightboxBtn =
   const perPhotoPrices = product.per_photo_prices || [];
 
   const params = new URLSearchParams(window.location.search);
-const photoFromUrl = Number(params.get("photo"));
+  const photoFromUrl = Number(params.get("photo"));
 
-if (
-  Number.isInteger(photoFromUrl) &&
-  photoFromUrl >= 1 &&
-  photoFromUrl <= imageUrls.length
-) {
-  selectedImageIndex = photoFromUrl - 1;
-} else {
-  selectedImageIndex = 0;
-}
+  if (
+    Number.isInteger(photoFromUrl) &&
+    photoFromUrl >= 1 &&
+    photoFromUrl <= imageUrls.length
+  ) {
+    selectedImageIndex = photoFromUrl - 1;
+  } else {
+    selectedImageIndex = 0;
+  }
 
   imageUrls.forEach((imageUrl, index) => {
     const card = document.createElement("div");
@@ -124,41 +120,38 @@ if (
         .forEach((c) => c.classList.remove("selected"));
 
       card.classList.add("selected");
-              imageLightboxPhoto.src = imageUrl;
-        imageLightboxPhoto.alt =
-          product.title || "Producto";
+      imageLightboxPhoto.src = imageUrl;
+      imageLightboxPhoto.alt = product.title || "Producto";
 
-        imageLightboxPrice.textContent =
-          price ? formatPrice(price) : "Pregunta por precio";
+      imageLightboxPrice.textContent = price
+        ? formatPrice(price)
+        : "Pregunta por precio";
 
-        imageLightbox.classList.add("show");
-        imageLightbox.setAttribute("aria-hidden", "false");
+      imageLightbox.classList.add("show");
+      imageLightbox.setAttribute("aria-hidden", "false");
 
-        document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     });
   });
 
   function closeImageLightbox() {
     imageLightbox.classList.remove("show");
     imageLightbox.setAttribute("aria-hidden", "true");
-  
+
     imageLightboxPhoto.src = "";
     imageLightboxPhoto.alt = "";
-  
+
     document.body.style.overflow = "";
   }
-  
-  closeImageLightboxBtn.addEventListener(
-    "click",
-    closeImageLightbox
-  );
-  
+
+  closeImageLightboxBtn.addEventListener("click", closeImageLightbox);
+
   imageLightbox.addEventListener("click", (event) => {
     if (event.target === imageLightbox) {
       closeImageLightbox();
     }
   });
-  
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeImageLightbox();
@@ -171,69 +164,67 @@ if (
     pricesElement.textContent = `Precio: ${formatPrice(product.price)}`;
   }
 
-//   askButton.addEventListener("click", () => {
+  //   askButton.addEventListener("click", () => {
 
-//     const selectedPhotoNumber = selectedImageIndex + 1;
+  //     const selectedPhotoNumber = selectedImageIndex + 1;
 
-//     const selectedPhotoUrl = new URL(window.location.href);
-//     selectedPhotoUrl.searchParams.set("photo", selectedPhotoNumber);
+  //     const selectedPhotoUrl = new URL(window.location.href);
+  //     selectedPhotoUrl.searchParams.set("photo", selectedPhotoNumber);
 
-//     const message = encodeURIComponent(
-//       `Hola 👋
+  //     const message = encodeURIComponent(
+  //       `Hola 👋
 
-// Me interesa este producto:
+  // Me interesa este producto:
 
-// ${product.title}
+  // ${product.title}
 
-// 📸 Fotografía seleccionada:
-// ${selectedPhotoUrl.toString()}`
-//     );
+  // 📸 Fotografía seleccionada:
+  // ${selectedPhotoUrl.toString()}`
+  //     );
 
-//     const base = DEFAULT_PHONE
-//       ? `https://wa.me/${DEFAULT_PHONE}?text=`
-//       : "https://api.whatsapp.com/send?text=";
+  //     const base = DEFAULT_PHONE
+  //       ? `https://wa.me/${DEFAULT_PHONE}?text=`
+  //       : "https://api.whatsapp.com/send?text=";
 
-//     window.open(base + message, "_blank");
-//   });
+  //     window.open(base + message, "_blank");
+  //   });
 
-askButton.addEventListener("click", () => {
+  askButton.addEventListener("click", () => {
+    const phone = sellerProfile?.whatsapp_phone;
 
-  const phone = sellerProfile?.whatsapp_phone;
+    if (!phone) {
+      alert("Este vendedor todavía no ha configurado su WhatsApp.");
+      return;
+    }
 
-  if (!phone) {
-    alert("Este vendedor todavía no ha configurado su WhatsApp.");
-    return;
-  }
+    // const cleanPhone = phone.replace(/\D/g, "");
 
-  // const cleanPhone = phone.replace(/\D/g, "");
+    let cleanPhone = phone.replace(/\D/g, "");
 
-  let cleanPhone = phone.replace(/\D/g, "");
+    if (cleanPhone.length === 10) {
+      cleanPhone = `52${cleanPhone}`;
+    }
 
-  if (cleanPhone.length === 10) {
-    cleanPhone = `52${cleanPhone}`;
-  }
+    const selectedPhotoNumber = selectedImageIndex + 1;
 
-  const selectedPhotoNumber = selectedImageIndex + 1;
+    const selectedPhotoUrl = new URL(window.location.href);
+    selectedPhotoUrl.searchParams.set("photo", selectedPhotoNumber);
 
-  const selectedPhotoUrl = new URL(window.location.href);
-  selectedPhotoUrl.searchParams.set("photo", selectedPhotoNumber);
-
-  const message = encodeURIComponent(
-    `Hola 👋
+    const message = encodeURIComponent(
+      `Hola 👋
 
 Me interesa este producto:
 
 ${product.title}
 
 📸 Fotografía seleccionada:
-${selectedPhotoUrl.toString()}`
-  );
+${selectedPhotoUrl.toString()}`,
+    );
 
-  const whatsappUrl =
-    `https://wa.me/${cleanPhone}?text=${message}`;
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${message}`;
 
-  window.open(whatsappUrl, "_blank");
-});
+    window.open(whatsappUrl, "_blank");
+  });
 
   copyButton.addEventListener("click", async () => {
     try {
@@ -256,12 +247,12 @@ async function renderGalleryNavigation(currentProductId) {
 
   const userId = getUserIdFromUrl();
 
-if (!userId) {
-  console.warn("No se encontró el usuario de la galería.");
-  return;
-}
+  if (!userId) {
+    console.warn("No se encontró el usuario de la galería.");
+    return;
+  }
 
-const products = await getProductsByUser(userId);
+  const products = await getProductsByUser(userId);
 
   galleryNav.innerHTML = "";
 
@@ -269,8 +260,7 @@ const products = await getProductsByUser(userId);
     const link = document.createElement("a");
 
     // link.href = `viewer.html?id=${product.id}`;
-    link.href =
-  `viewer.html?id=${product.id}&user=${encodeURIComponent(userId)}`;
+    link.href = `viewer.html?id=${product.id}&user=${encodeURIComponent(userId)}`;
     link.textContent = product.title || "Producto";
 
     if (String(product.id) === String(currentProductId)) {
@@ -303,12 +293,12 @@ async function loadProduct() {
     return;
   }
 
-const sellerProfile = await getPublicProfile(userId);
+  const sellerProfile = await getPublicProfile(userId);
 
-if (!sellerProfile) {
-  showError("No se pudo cargar la información del vendedor.");
-  return;
-}
+  if (!sellerProfile) {
+    showError("No se pudo cargar la información del vendedor.");
+    return;
+  }
 
   // if (!product) {
   //   showError("No se pudo cargar el producto.");
@@ -322,9 +312,32 @@ if (!sellerProfile) {
     return;
   }
 
+  // renderGallery(product, sellerProfile);
+
+  // await renderGalleryNavigation(productId);
+
   renderGallery(product, sellerProfile);
 
+  await trackGalleryView(userId, productId);
+
   await renderGalleryNavigation(productId);
+}
+
+async function trackGalleryView(userId, productId) {
+  const params = new URLSearchParams(window.location.search);
+
+  const source = params.get("source") || "direct";
+
+  const { error } = await supabaseClient.from("analytics_events").insert({
+    user_id: userId,
+    event_type: "gallery_view",
+    product_id: productId,
+    source: source,
+  });
+
+  if (error) {
+    console.error("Error registrando visita:", error);
+  }
 }
 
 loadProduct();

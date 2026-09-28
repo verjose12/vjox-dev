@@ -359,16 +359,33 @@ Se agregó un nuevo sistema para que cada vendedor pueda generar y compartir un 
 
 
 
+## [4.4.0] - 2026-09-28
+
+### Añadido
+- Sistema de métricas para catálogos.
+- Registro de vistas al catálogo.
+- Seguimiento de origen de visitas: directo, QR y compartir.
+- Registro de escaneos QR.
+- Registro de entradas al catálogo desde la landing.
+- Métricas de uso de "Compartir catálogo".
+- Modal de estadísticas por usuario.
+- Métricas de escaneos, vistas, compartidos y conversión QR.
+- Función "Compartir catálogo" con enlace público permanente.
+
+### Mejorado
+- La landing pública conserva el origen de la visita.
+- Los enlaces compartidos permanecen funcionales aunque cambie el inventario.
+- Separación entre escaneos QR, entradas al catálogo y vistas de productos.
+
 
 ---
 
-## v4.4.0
+## v4.5.0
 
 Planeado
 
 - Dashboard.
 - Reportes.
-- Estadísticas.
 - Inventario avanzado.
 
 ---

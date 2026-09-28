@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.3.0
+**Versión:** 4.4.0
 
 **Estado:** En desarrollo activo.
 
@@ -74,6 +74,22 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 - 📤 Opciones para copiar y compartir el enlace promocional.
 - 🛡️ Fallback visual cuando las APIs de copiar o compartir no están disponibles.
 - 📦 QRCode.js integrado localmente como dependencia de terceros.
+
+
+
+###  Versión: 4.4.0 📊 Estadísticas del catálogo
+
+VJOX incluye métricas para conocer cómo interactúan los clientes con el catálogo público.
+
+- Visitas al catálogo.
+- Escaneos del QR promocional.
+- Entradas al catálogo desde QR.
+- Visitas provenientes de enlaces compartidos.
+- Uso de la función "Compartir catálogo".
+- Visitas directas.
+- Conversión del QR.
+
+Las estadísticas se registran por usuario y se muestran desde el panel de VJOX.
 
 ---
 

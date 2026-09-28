@@ -202,6 +202,7 @@ async function buildPermanentQrUrl() {
   const qrUrl = new URL("viewer_qr.html", window.location.href);
 
   qrUrl.searchParams.set("user", user.id);
+  qrUrl.searchParams.set("source", "qr");
 
   return qrUrl.toString();
 }

@@ -7,7 +7,8 @@
     <title>VJOX-Ventas</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="css/vjox-design.css" />
-    <link rel="stylesheet" href="css/trigger_qr.css" />
+    <link rel="stylesheet" href="css/trigger_qr.css?v=1.1" />
+    <link rel="stylesheet" href="css/analytics.css?v=1.0" />
     <link rel="stylesheet" href="css/index.css?v=2.0.5" />
     <link
       rel="stylesheet"
@@ -27,7 +28,7 @@
         <i class="bi bi-list"></i>
       </button>
       <h1>VJOX · Panel de Inventario</h1>
-      <span class="version">v4.3.1</span>
+      <span class="version">v4.4.0</span>
     </header>
 
     <!-- Fondo oscuro detrás del menú -->
@@ -70,7 +71,7 @@
           <span>Inventario</span>
         </a>
 
-        <a href="#" class="side-menu__link">
+        <a href="#" class="side-menu__link" id="openAnalyticsBtn">
           <i class="bi bi-bar-chart"></i>
           <span>Estadísticas</span>
         </a>
@@ -82,7 +83,7 @@
 
         <p class="side-menu__section-title">Herramientas</p>
 
-        <a href="#" class="side-menu__link">
+        <a href="#" class="side-menu__link" id="shareCatalogBtn">
           <i class="bi bi-share"></i>
           <span>Compartir catálogo</span>
         </a>
@@ -247,16 +248,25 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Utilidades / servicios -->
+
     <script src="js/images.js"></script>
     <script src="js/cloudinary.js"></script>
     <script src="js/share.js?v=2.0"></script>
     <script src="js/database.js"></script>
-
+    <!-- Librerías externas -->
     <script src="js/vendor/qrcode.min.js"></script>
-    <script src="js/trigger_qr.js"></script>
-    
+
+    <!-- Funciones VJOX -->
+
+    <script src="js/trigger_qr.js?v=1.1"></script>
+    <script src="./js/analytics.js?v=1.0"></script>
+
+    <!-- Sesión e interfaz -->
     <script src="./js/auth-guard.js"></script>
-    <script src="js/menu.js?v=2"></script>
+    <script src="js/menu.js?v=3"></script>
+
+    <!-- Lógica principal -->
     <script src="js/index.js?v=4.0.0"></script>
     <script>
       if ("serviceWorker" in navigator) {
