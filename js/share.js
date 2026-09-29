@@ -60,72 +60,198 @@ function buildMessage(item) {
   return lines.join("\n");
 }
 
-async function shareFacebook(product, button) {
-  const confirmPublish = confirm(
-    `¿Quieres publicar "${product.title}" en Facebook?`
-  );
+// async function shareFacebook(product, button) {
 
-  if (!confirmPublish) {
+async function shareFacebook(product, button) {
+  if (
+    typeof openFacebookForProduct !== "function"
+  ) {
+    console.error(
+      "El módulo de Facebook no está disponible."
+    );
+
     return;
   }
 
-  const originalContent = button.innerHTML;
+  await openFacebookForProduct(
+    product,
+    button
+  );
+}
 
-  button.disabled = true;
-  button.innerHTML = `
-    <span class="spinner-border spinner-border-sm"></span>
-  `;
+
+async function publishFacebookProduct(product, button) {
+
+  /* -----------------------------------------
+     1. Verificar imagen
+  ----------------------------------------- */
 
   const imageUrl = product.urls?.[0];
 
   if (!imageUrl) {
-    alert("Este producto no tiene una imagen para publicar.");
+    alert(
+      "Este producto no tiene una imagen para publicar."
+    );
     return;
   }
 
-  const galleryLink = buildGalleryLink(product);
+
+  /* -----------------------------------------
+     2. Estado del botón
+  ----------------------------------------- */
+
+  const originalContent = button.innerHTML;
+
+  button.disabled = true;
+
+  button.innerHTML = `
+    <span class="spinner-border spinner-border-sm"></span>
+  `;
+
+
+  /* -----------------------------------------
+     3. Link de la galería
+  ----------------------------------------- */
+
+  const galleryLink =
+    buildGalleryLink(product);
+
+
+  /* -----------------------------------------
+     4. Calcular precio
+  ----------------------------------------- */
+
+  const photoPrices =
+    Array.isArray(product.perPhotoPrices)
+      ? product.perPhotoPrices
+          .map(Number)
+          .filter(
+            (price) =>
+              Number.isFinite(price) &&
+              price > 0
+          )
+      : [];
+
+  const uniquePrices =
+    [...new Set(photoPrices)];
+
+
+  let priceText =
+    "Consulta precio";
+
+  let priceNote =
+    "Contacta al vendedor para conocer el precio.";
+
+
+  // Diferentes precios por fotografía
+  if (uniquePrices.length > 1) {
+
+    priceText =
+      "Varios precios";
+
+    priceNote =
+      "Consulta cada opción en el catálogo.";
+
+  }
+
+  // Todas las fotografías tienen el mismo precio
+  else if (uniquePrices.length === 1) {
+
+    priceText =
+      formatPrice(uniquePrices[0]);
+
+    priceNote =
+      "Todos los artículos de este producto tienen el mismo precio.";
+
+  }
+
+  // Precio general del producto
+  else if (Number(product.price) > 0) {
+
+    priceText =
+      formatPrice(product.price);
+
+    priceNote =
+      "Todos los artículos de este producto tienen el mismo precio.";
+
+  }
+
+
+  /* -----------------------------------------
+     5. Crear mensaje para Facebook
+  ----------------------------------------- */
 
   const message = [
     `🛍️ ${product.title}`,
     "",
-    `💰 ${formatPrice(product.price)}`,
-    product.desc ? `✨ ${product.desc}` : "",
+
+    `💰 ${priceText}`,
+    priceNote,
     "",
+
+    product.desc
+      ? `✨ ${product.desc}`
+      : "",
+
+    "",
+
     "📸 Ver todas las fotografías:",
     galleryLink,
+
     "",
+
     "📩 Consulta disponibilidad."
   ]
     .filter(Boolean)
     .join("\n");
 
+
+  /* -----------------------------------------
+     6. Publicar
+  ----------------------------------------- */
+
   try {
-    const { data, error } = await supabaseClient.functions.invoke(
-      "publish-facebook",
-      {
-        body: {
-          imageUrl,
-          message
+
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "publish-facebook",
+        {
+          body: {
+            imageUrl,
+            message
+          }
         }
-      }
-    );
+      );
+
+
+    /* ---------------------------------------
+       Error de Edge Function
+    --------------------------------------- */
 
     if (error) {
+
       let errorDetails = null;
-    
+
       try {
-        errorDetails = await error.context.json();
+
+        errorDetails =
+          await error.context.json();
+
       } catch {
+
         errorDetails = {
           message: error.message
         };
+
       }
-    
+
+
       console.error(
         "Respuesta completa de la Edge Function:",
         errorDetails
       );
-    
+
+
       throw new Error(
         errorDetails?.error?.error?.message ||
         errorDetails?.error?.message ||
@@ -133,27 +259,57 @@ async function shareFacebook(product, button) {
         errorDetails?.message ||
         error.message
       );
+
     }
 
+
+    /* ---------------------------------------
+       Error devuelto por Meta
+    --------------------------------------- */
+
     if (!data?.ok) {
+
       throw new Error(
         data?.error?.error?.message ||
         data?.error ||
         "Meta no pudo crear la publicación."
       );
+
     }
 
-    alert("✅ Producto publicado correctamente en Vjox-Ventas.");
+
+    /* ---------------------------------------
+       Publicación exitosa
+    --------------------------------------- */
+
+    alert(
+      "✅ Producto publicado correctamente en Facebook."
+    );
+
 
   } catch (error) {
-    console.error("Error publicando en Facebook:", error);
+
+    console.error(
+      "Error publicando en Facebook:",
+      error
+    );
+
 
     alert(
       `❌ No se pudo publicar en Facebook.\n\n${error.message}`
     );
+
+
   } finally {
+
+    /* ---------------------------------------
+       Restaurar botón
+    --------------------------------------- */
+
     button.disabled = false;
-    button.innerHTML = originalContent;
+    button.innerHTML =
+      originalContent;
+
   }
 }
 

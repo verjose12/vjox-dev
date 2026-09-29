@@ -26,11 +26,13 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 * Galerías públicas para compartir productos.
 * Compartir productos mediante WhatsApp.
 * Publicación automática en Facebook mediante Meta Graph API.
+* Conexión y publicación de productos en Facebook mediante Meta Graph API.
 * Progressive Web App (PWA).
 * Diseño adaptable para dispositivos móviles.
 * Generación de QR promocional permanente por vendedor.
 * Landing pública para acceso al catálogo mediante QR.
 * Generación de material promocional descargable para impresión.
+
 
 
 ## v4.0.0
@@ -91,6 +93,23 @@ VJOX incluye métricas para conocer cómo interactúan los clientes con el catá
 
 Las estadísticas se registran por usuario y se muestran desde el panel de VJOX.
 
+
+## Versión: 4.5.0 📘 Integración de Facebook
+
+VJOX mejora la integración con Facebook para permitir que cada vendedor administre su conexión y publique productos directamente desde su inventario.
+
+- 🔵 Conexión de Facebook desde el menú principal.
+- 🔐 Integración segura mediante Meta OAuth.
+- 📄 Detección automática de páginas administradas por el usuario.
+- 🔀 Selector de página cuando el usuario administra múltiples páginas.
+- 👤 Conexión independiente de Facebook por usuario.
+- ⚙️ Administración y desconexión de la página vinculada.
+- 🛍️ Publicación directa desde el botón de Facebook de cada producto.
+- 👁️ Vista previa del producto antes de publicar.
+- 💰 Soporte para precio único, múltiples precios y productos sin precio.
+- 🖼️ Publicación con imagen, descripción y enlace a la galería pública.
+- 🎨 Integración completa con el Design System de VJOX.
+
 ---
 
 
@@ -129,35 +148,16 @@ El objetivo a largo plazo es evolucionar hacia una plataforma SaaS que permita a
 
 ---
 
-## Versión 3.1
-
-* Sistema de autenticación.
-* Registro de usuarios.
-* Roles.
-* Configuración del negocio.
-
-## Versión 4.2
-
-* Integración de Facebook por usuario.
-* Administración de múltiples páginas.
-* Configuración individual de tokens.
-
 # Hoja de ruta
 
-## Versión 4.3
+## Próximas mejoras
 
-* Dashboard.
-* Reportes.
-* Estadísticas.
-* Mejoras de inventario.
-
-## Versión 4.4
-
-* Plataforma SaaS.
-* Suscripciones.
-* Pagos.
-* Multiempresa.
+* Mejoras del módulo inmobiliario.
+* Dashboard y reportes avanzados.
+* Suscripciones y pagos.
 * Funciones premium.
+* Mejoras de inventario.
+* Evolución de la plataforma SaaS.
 
 ---
 

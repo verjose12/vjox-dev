@@ -378,9 +378,28 @@ Se agregó un nuevo sistema para que cada vendedor pueda generar y compartir un 
 - Separación entre escaneos QR, entradas al catálogo y vistas de productos.
 
 
+## [4.5.0] - 2026-09-28
+
+### Añadido
+- Nuevo módulo de conexión con Facebook.
+- Conexión de páginas de Facebook desde el menú principal.
+- Detección automática del estado de conexión.
+- Soporte para usuarios con una o múltiples páginas de Facebook.
+- Selector de página cuando el usuario administra varias páginas.
+- Administración y desconexión de Facebook desde VJOX.
+- Nuevo modal para publicar productos en Facebook.
+- Vista previa del producto antes de publicar.
+- Soporte para precio único, múltiples precios y productos sin precio.
+
+### Mejorado
+- El botón de Facebook de cada producto ahora utiliza el flujo de conexión de VJOX.
+- Se reemplazaron confirmaciones del navegador por la interfaz de VJOX.
+- Mejor manejo de publicaciones con precios por fotografía.
+- Integración visual del módulo de Facebook con el sistema de diseño de VJOX.
+
 ---
 
-## v4.5.0
+## v4.6.0
 
 Planeado
 
