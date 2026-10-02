@@ -690,6 +690,16 @@ toggleInventoryValueBtn.addEventListener("click", () => {
 //   });
 // }
 
+// async function init() {
+//   const user = await requireAuth();
+
+//   if (!user) {
+//     return;
+//   }
+
+//   await loadProductsFromDatabase();
+// }
+
 async function init() {
   const user = await requireAuth();
 
@@ -697,10 +707,23 @@ async function init() {
     return;
   }
 
+  const profile = await getProfile(user.id);
+
+  if (!profile) {
+    window.location.replace("./profiles-setup.html");
+    return;
+  }
+
+  if (profile.business_type === "real_estate") {
+    window.location.replace("./real-estate/index.html");
+    return;
+  }
+
   await loadProductsFromDatabase();
 }
 
 init();
+
 // arranque
 // loadProductsFromDatabase();
 //renderList();
