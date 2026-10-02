@@ -4,14 +4,6 @@ function fileKey(f){ return [
     f.size, 
     f.lastModified].join("::"); }
 
-/* function addFiles(newFiles){
-  const map = new Map(state.files.map(f => [fileKey(f), f]));
-  for(const f of newFiles){
-    map.set(fileKey(f), f); // evita duplicados por nombre+tamaño+fecha
-  }
-  state.files = Array.from(map.values());
-} */
-
 function mergeFiles(currentFiles, newFiles) {
     const fileMap = new Map(
       currentFiles.map(file => [fileKey(file), file])

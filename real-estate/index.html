@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121316" />
+
+    <title>VJOX · Inmobiliaria</title>
+
+    <link rel="stylesheet" href="../css/vjox-design.css" />
+    <link rel="stylesheet" href="../css/index.css?v=2.0.5" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body data-login-url="../auth/login.html">
+
+    <header>
+      <button
+        id="openSideMenuBtn"
+        class="header-menu-btn"
+        type="button"
+        aria-label="Abrir menú"
+        aria-controls="sideMenu"
+        aria-expanded="false"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+
+      <h1>VJOX · Propiedades</h1>
+
+      <span class="version">v4.6.0</span>
+    </header>
+
+
+    <!-- Overlay menú -->
+
+    <div
+      id="sideMenuOverlay"
+      class="side-menu-overlay hidden"
+    ></div>
+
+
+    <!-- Menú lateral -->
+
+    <aside
+      id="sideMenu"
+      class="side-menu"
+      aria-label="Menú principal"
+      aria-hidden="true"
+    >
+
+      <div class="side-menu__header">
+
+        <div>
+          <strong class="side-menu__brand">
+            VJOX Inmobiliaria
+          </strong>
+
+          <span
+            id="sideMenuBusinessName"
+            class="side-menu__subtitle"
+          >
+            Mi negocio
+          </span>
+        </div>
+
+        <button
+          id="closeSideMenuBtn"
+          class="side-menu__close"
+          type="button"
+          aria-label="Cerrar menú"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+      </div>
+
+
+      <nav class="side-menu__nav">
+
+        <p class="side-menu__section-title">
+          Principal
+        </p>
+
+        <a
+          href="./index.html"
+          class="side-menu__link active"
+        >
+          <i class="bi bi-houses"></i>
+          <span>Propiedades</span>
+        </a>
+
+        <a
+          href="#"
+          class="side-menu__link"
+          id="openAnalyticsBtn"
+        >
+          <i class="bi bi-bar-chart"></i>
+          <span>Estadísticas</span>
+        </a>
+
+        <a
+          href="./add-property.html"
+          class="side-menu__link"
+        >
+          <i class="bi bi-plus-circle"></i>
+          <span>Agregar propiedad</span>
+        </a>
+
+
+        <p class="side-menu__section-title">
+          Herramientas
+        </p>
+
+        <a
+          href="#"
+          class="side-menu__link"
+          id="shareCatalogBtn"
+        >
+          <i class="bi bi-share"></i>
+          <span>Compartir catálogo</span>
+        </a>
+
+        <a
+          href="#"
+          class="side-menu__link"
+          id="openQrPromoBtn"
+        >
+          <i class="bi bi-qr-code"></i>
+          <span>QR promocional</span>
+        </a>
+
+        <a
+          href="#"
+          class="side-menu__link"
+          id="facebookMenuBtn"
+        >
+          <i class="bi bi-facebook"></i>
+          <span>Publicar en Facebook</span>
+        </a>
+
+
+        <p class="side-menu__section-title">
+          Configuración
+        </p>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-gear"></i>
+          <span>Configuración</span>
+        </a>
+
+        <a
+          href="#"
+          class="side-menu__link"
+          id="logoutBtn"
+        >
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Cerrar sesión</span>
+        </a>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-info-circle"></i>
+          <span>Acerca de VJOX</span>
+        </a>
+
+      </nav>
+
+    </aside>
+
+
+    <!-- Inventario inmobiliario -->
+
+    <main class="inventory-page">
+
+      <section class="card">
+
+        <div class="inventory-header">
+          <div>
+            <h2>Propiedades</h2>
+
+            <p class="muted">
+              Administra y comparte tus propiedades.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Resumen -->
+
+        <div class="inventory-summary">
+
+          <article class="summary-card">
+
+            <i class="bi bi-houses summary-icon"></i>
+
+            <span class="summary-card__label">
+              Venta
+            </span>
+
+            <strong
+              id="totalProperties"
+              class="summary-card__value"
+            >
+              0
+            </strong>
+
+          </article>
+
+
+          <article class="summary-card">
+
+            <i class="bi bi-house-check summary-icon"></i>
+
+            <span class="summary-card__label">
+              Renta
+            </span>
+
+            <strong
+              id="availableProperties"
+              class="summary-card__value"
+            >
+              0
+            </strong>
+
+          </article>
+
+
+          <article class="summary-card">
+
+            <i class="bi bi-key summary-icon"></i>
+
+            <span class="summary-card__label">
+              Vendidas / Rentadas
+            </span>
+
+            <strong
+              id="closedProperties"
+              class="summary-card__value"
+            >
+              0
+            </strong>
+
+          </article>
+
+        </div>
+
+
+        <!-- Buscador -->
+
+        <div class="inventory-search">
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="🔍 Buscar propiedades..."
+          />
+
+        </div>
+
+
+        <div id="status" class="muted"></div>
+
+        <div
+          id="propertyList"
+          class="grid list"
+        ></div>
+
+      </section>
+
+    </main>
+
+
+    <!-- Botón flotante -->
+
+    <a
+      href="./add-property.html"
+      class="floating-add-btn"
+      aria-label="Agregar propiedad"
+      title="Agregar propiedad"
+    >
+      +
+    </a>
+
+
+    <footer>
+      Hecho con ♥ por VJOX • Gestión Inmobiliaria.
+
+      <p>
+        © 2026 VJOX. Desarrollado por Veronica J. Narciso.
+        Todos los derechos reservados.
+      </p>
+    </footer>
+
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- Servicios compartidos -->
+
+    <script src="../js/database.js"></script>
+
+
+    <!-- Sesión e interfaz -->
+
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/menu.js?v=3"></script>
+
+
+    <!-- Inmobiliaria -->
+
+    <script src="./js/index.js?v=1.0"></script>
+
+  </body>
+</html>

@@ -74,6 +74,30 @@ function renderGallery(product, sellerProfile) {
   const imageUrls = product.image_urls || [];
   const perPhotoPrices = product.per_photo_prices || [];
 
+  function showLightboxImage(index) {
+    if (!imageUrls.length) return;
+
+    selectedImageIndex = (index + imageUrls.length) % imageUrls.length;
+
+    const imageUrl = imageUrls[selectedImageIndex];
+
+    const price =
+      product.per_photo && perPhotoPrices[selectedImageIndex]
+        ? perPhotoPrices[selectedImageIndex]
+        : product.price;
+
+    imageLightboxPhoto.src = imageUrl;
+    imageLightboxPhoto.alt = product.title || "Producto";
+
+    imageLightboxPrice.textContent = price
+      ? formatPrice(price)
+      : "Pregunta por precio";
+
+    galleryElement.querySelectorAll(".card").forEach((card, cardIndex) => {
+      card.classList.toggle("selected", cardIndex === selectedImageIndex);
+    });
+  }
+
   const params = new URLSearchParams(window.location.search);
   const photoFromUrl = Number(params.get("photo"));
 
@@ -113,19 +137,7 @@ function renderGallery(product, sellerProfile) {
     }
 
     card.addEventListener("click", () => {
-      selectedImageIndex = index;
-
-      galleryElement
-        .querySelectorAll(".card")
-        .forEach((c) => c.classList.remove("selected"));
-
-      card.classList.add("selected");
-      imageLightboxPhoto.src = imageUrl;
-      imageLightboxPhoto.alt = product.title || "Producto";
-
-      imageLightboxPrice.textContent = price
-        ? formatPrice(price)
-        : "Pregunta por precio";
+      showLightboxImage(index);
 
       imageLightbox.classList.add("show");
       imageLightbox.setAttribute("aria-hidden", "false");
@@ -144,6 +156,28 @@ function renderGallery(product, sellerProfile) {
     document.body.style.overflow = "";
   }
 
+  let touchStartX = 0;
+
+  imageLightbox.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  });
+
+  imageLightbox.addEventListener("touchend", (event) => {
+    const touchEndX = event.changedTouches[0].screenX;
+
+    const difference = touchStartX - touchEndX;
+
+    if (Math.abs(difference) < 50) {
+      return;
+    }
+
+    if (difference > 0) {
+      showLightboxImage(selectedImageIndex + 1);
+    } else {
+      showLightboxImage(selectedImageIndex - 1);
+    }
+  });
+
   closeImageLightboxBtn.addEventListener("click", closeImageLightbox);
 
   imageLightbox.addEventListener("click", (event) => {
@@ -152,9 +186,27 @@ function renderGallery(product, sellerProfile) {
     }
   });
 
+  // document.addEventListener("keydown", (event) => {
+  //   if (event.key === "Escape") {
+  //     closeImageLightbox();
+  //   }
+  // });
+
   document.addEventListener("keydown", (event) => {
+    if (!imageLightbox.classList.contains("show")) {
+      return;
+    }
+
     if (event.key === "Escape") {
       closeImageLightbox();
+    }
+
+    if (event.key === "ArrowLeft") {
+      showLightboxImage(selectedImageIndex - 1);
+    }
+
+    if (event.key === "ArrowRight") {
+      showLightboxImage(selectedImageIndex + 1);
     }
   });
 

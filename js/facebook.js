@@ -153,9 +153,8 @@ function renderFacebookConnection(connection) {
         <h3>Conecta tu página</h3>
 
         <p>
-          Vincula una página de Facebook para
-          publicar tus productos directamente
-          desde VJOX.
+          Vincula la página de Facebook de tu negocio
+          para publicar directamente desde VJOX.
         </p>
       </div>
 
@@ -243,7 +242,7 @@ function renderFacebookNoPages() {
         <p>
           Tu cuenta de Facebook funciona,
           pero VJOX necesita una Página de Facebook
-          para publicar tus productos.
+          para publicar.
         </p>
       </div>
 

@@ -12,41 +12,28 @@ if (registerForm) {
 
     status.textContent = "Creando cuenta...";
 
-    // const { data, error } = await supabaseClient.auth.signUp({
-    //     email,
-    //     password,
-    //     options: {
-    //       data: {
-    //         name
-    //       }
-    //     }
-    //   });
-
     const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo:
-          "https://verjose12.github.io/vjox-dev/auth/login.html",
-    
-        data: {
-          name
-        }
-      }
-    });
-      
-      if (error) {
-        console.error(error);
-        status.textContent = error.message;
-        return;
-      }
-      
-      console.log("Usuario creado:", data);
-      
-      
-      status.textContent = "Cuenta creada correctamente, confirma tu email.";
+        emailRedirectTo: "https://verjose12.github.io/vjox-dev/auth/login.html",
 
+        data: {
+          name,
+        },
+      },
     });
+
+    if (error) {
+      console.error(error);
+      status.textContent = error.message;
+      return;
+    }
+
+    console.log("Usuario creado:", data);
+
+    status.textContent = "Cuenta creada correctamente, confirma tu email.";
+  });
 }
 
 const loginForm = document.querySelector("#loginForm");
@@ -55,34 +42,22 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const email = document
-      .querySelector("#loginEmail")
-      .value
-      .trim();
+    const email = document.querySelector("#loginEmail").value.trim();
 
-    const password =
-      document.querySelector("#loginPassword").value;
+    const password = document.querySelector("#loginPassword").value;
 
-    const status =
-      document.querySelector("#loginStatus");
+    const status = document.querySelector("#loginStatus");
 
     status.textContent = "Iniciando sesión...";
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-
-/*     if (error) {
-      console.error(error);
-      status.textContent = error.message;
-      return;
-    } */
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
       console.error(error);
-    
+
       if (error.message === "Email not confirmed") {
         status.innerHTML = `
           Tu correo aún no ha sido confirmado.<br><br>
@@ -90,73 +65,80 @@ if (loginForm) {
             Reenviar correo de confirmación
           </button>
         `;
-    
-        const resendBtn =
-          document.querySelector("#resendConfirmationBtn");
-    
+
+        const resendBtn = document.querySelector("#resendConfirmationBtn");
+
         resendBtn.addEventListener("click", async () => {
           resendBtn.disabled = true;
           resendBtn.textContent = "Enviando...";
-    
-          const { error: resendError } =
-            // await supabaseClient.auth.resend({
-            //   type: "signup",
-            //   email
-            // });
-            await supabaseClient.auth.resend({
-              type: "signup",
-              email,
-              options: {
-                emailRedirectTo:
-                  "https://verjose12.github.io/vjox-dev/auth/login.html"
-              }
-            });
-    
+
+          const { error: resendError } = await supabaseClient.auth.resend({
+            type: "signup",
+            email,
+            options: {
+              emailRedirectTo:
+                "https://verjose12.github.io/vjox-dev/auth/login.html",
+            },
+          });
+
           if (resendError) {
             console.error("Error reenviando correo:", resendError);
-    
-            status.textContent =
-              `Error: ${resendError.message}`;
-    
+
+            status.textContent = `Error: ${resendError.message}`;
+
             return;
           }
-    
+
           status.textContent =
             "Correo de confirmación reenviado. Revisa tu bandeja de entrada.";
         });
-    
+
         return;
       }
-    
+
       status.textContent = error.message;
       return;
     }
 
     console.log("Sesión iniciada:", data);
 
-    status.textContent =
-      "Sesión iniciada correctamente.";
-    
+    status.textContent = "Sesión iniciada correctamente.";
+
     const user = data.user;
-    
+
+    // const profile = await getProfile(user.id);
+
+    // setTimeout(() => {
+    //   if (profile) {
+    //     window.location.href = "../index.html";
+    //   } else {
+    //     window.location.href = "../profiles-setup.html";
+    //   }
+    // }, 800);
     const profile = await getProfile(user.id);
-    
+
     setTimeout(() => {
-      if (profile) {
-        window.location.href = "../index.html";
-      } else {
+      if (!profile) {
         window.location.href = "../profiles-setup.html";
+        return;
       }
+
+      if (profile.business_type === "real_estate") {
+        window.location.href = "../real-estate/index.html";
+        return;
+      }
+
+      window.location.href = "../index.html";
     }, 800);
   });
 }
 
 async function checkSession() {
-    const {
-      data: { session }
-    } = await supabaseClient.auth.getSession();
-  
-    console.log("Sesión actual:", session);
-  }
-  
-  checkSession();
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+
+  console.log("Sesión actual:", session);
+}
+
+checkSession();

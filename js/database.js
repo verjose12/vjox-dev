@@ -186,3 +186,95 @@ async function saveProduct(product) {
   
     return data;
   }
+
+  // ============================================================
+// FUNCIONES PARA INMOBILIARIA
+// VJOX v4.6
+// ============================================================
+
+
+// Guardar propiedad
+
+async function saveProperty(property) {
+  console.log("Propiedad que se enviará:", property);
+
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .insert([property])
+    .select("*")
+    .single();
+
+  if (error) {
+    console.error("Error guardando propiedad:", error);
+    return null;
+  }
+
+  console.log("Propiedad guardada en Supabase:", data);
+
+  return data;
+}
+
+
+// Obtener propiedades del usuario
+
+async function getMyProperties(userId) {
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(
+      "Error obteniendo propiedades del usuario:",
+      error
+    );
+
+    return [];
+  }
+
+  return data;
+}
+
+
+// Obtener una propiedad
+
+async function getPropertyById(propertyId) {
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .select("*")
+    .eq("id", propertyId)
+    .single();
+
+  if (error) {
+    console.error(
+      "Error obteniendo propiedad:",
+      error
+    );
+
+    return null;
+  }
+
+  return data;
+}
+
+
+// Eliminar propiedad
+
+async function deleteProperty(propertyId) {
+  const { error } = await supabaseClient
+    .from("properties")
+    .delete()
+    .eq("id", propertyId);
+
+  if (error) {
+    console.error(
+      "Error eliminando propiedad:",
+      error
+    );
+
+    return false;
+  }
+
+  return true;
+}

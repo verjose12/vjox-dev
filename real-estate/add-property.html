@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121316" />
+
+    <title>Agregar propiedad | VJOX</title>
+
+    <!-- VJOX Design System -->
+    <link rel="stylesheet" href="../css/vjox-design.css" />
+    <link rel="stylesheet" href="../css/index.css?v=2.0.5" />
+
+    <!-- CSS específico -->
+    <link rel="stylesheet" href="./css/add-property.css?v=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body data-login-url="../auth/login.html">
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+      <button
+        id="openSideMenuBtn"
+        class="header-menu-btn"
+        type="button"
+        aria-label="Abrir menú"
+        aria-controls="sideMenu"
+        aria-expanded="false"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+
+      <h1>VJOX · Agregar propiedad</h1>
+
+      <span class="version">v4.6.0</span>
+    </header>
+
+    <!-- =========================
+         MENÚ LATERAL
+    ========================== -->
+
+    <div id="sideMenuOverlay" class="side-menu-overlay hidden"></div>
+
+    <aside
+      id="sideMenu"
+      class="side-menu"
+      aria-label="Menú principal"
+      aria-hidden="true"
+    >
+      <div class="side-menu__header">
+        <div>
+          <strong class="side-menu__brand"> VJOX Inmobiliaria </strong>
+
+          <span id="sideMenuBusinessName" class="side-menu__subtitle">
+            Mi negocio
+          </span>
+        </div>
+
+        <button
+          id="closeSideMenuBtn"
+          class="side-menu__close"
+          type="button"
+          aria-label="Cerrar menú"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <nav class="side-menu__nav">
+        <p class="side-menu__section-title">Principal</p>
+
+        <a href="./index.html" class="side-menu__link">
+          <i class="bi bi-houses"></i>
+          <span>Propiedades</span>
+        </a>
+
+        <a href="./add-property.html" class="side-menu__link active">
+          <i class="bi bi-plus-circle"></i>
+          <span>Agregar propiedad</span>
+        </a>
+
+        <p class="side-menu__section-title">Herramientas</p>
+
+        <a href="#" class="side-menu__link" id="shareCatalogBtn">
+          <i class="bi bi-share"></i>
+          <span>Compartir catálogo</span>
+        </a>
+
+        <a href="#" class="side-menu__link" id="facebookMenuBtn">
+          <i class="bi bi-facebook"></i>
+          <span>Publicar en Facebook</span>
+        </a>
+
+        <p class="side-menu__section-title">Configuración</p>
+
+        <a href="#" class="side-menu__link">
+          <i class="bi bi-gear"></i>
+          <span>Configuración</span>
+        </a>
+
+        <a href="#" class="side-menu__link" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Cerrar sesión</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- =========================
+         FORMULARIO
+    ========================== -->
+
+    <main class="property-form-page">
+      <section class="card property-form-card">
+        <!-- ========================================
+         ENCABEZADO
+    ========================================= -->
+
+        <div class="property-form-header">
+          <div>
+            <h2>Agregar propiedad</h2>
+            <p class="muted">
+              Completa la información para agregarla a tu inventario.
+            </p>
+          </div>
+        </div>
+
+        <!-- ========================================
+         PROGRESO
+    ========================================= -->
+
+        <div class="property-steps" aria-label="Progreso">
+          <div class="property-step active" data-step-indicator="1">
+            <span>1</span>
+            <small>Información</small>
+          </div>
+
+          <div class="property-step" data-step-indicator="2">
+            <span>2</span>
+            <small>Características</small>
+          </div>
+
+          <div class="property-step" data-step-indicator="3">
+            <span>3</span>
+            <small>Galería</small>
+          </div>
+
+          <div class="property-step" data-step-indicator="4">
+            <span>4</span>
+            <small>Publicación</small>
+          </div>
+        </div>
+
+        <form id="propertyForm">
+          <!-- ========================================
+           PASO 1
+           INFORMACIÓN BÁSICA
+      ========================================= -->
+
+          <section class="property-form-step active" data-step="1">
+            <div class="property-section-header">
+              <h3>Información básica</h3>
+
+              <p class="muted">Datos principales de la propiedad.</p>
+            </div>
+
+            <!-- Nombre -->
+
+            <div class="form-group">
+              <label for="title">
+                Nombre de la propiedad
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Ej. Casa Oasis Revolución"
+                required
+              />
+            </div>
+
+            <!-- Operación -->
+
+            <div class="form-group">
+              <label>
+                Tipo de operación
+                <span class="required">*</span>
+              </label>
+
+              <div class="operation-selector">
+                <label class="operation-option">
+                  <!-- <input
+                    type="radio"
+                    name="operationType"
+                    value="sale"
+                    required
+                  /> -->
+
+                  <input
+                    type="radio"
+                    name="operationType"
+                    value="sale"
+                    required
+                    checked
+                  />
+
+                  <span> Venta </span>
+                </label>
+
+                <label class="operation-option">
+                  <input
+                    type="radio"
+                    name="operationType"
+                    value="rent"
+                    required
+                  />
+
+                  <span> Renta </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Precio -->
+
+            <div class="form-group">
+              <label for="price">
+                Precio
+                <span class="required">*</span>
+              </label>
+
+              <div class="property-price-input">
+                <span class="property-price-input__currency"> $ </span>
+
+                <input
+                  id="price"
+                  name="price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="9,000"
+                  required
+                />
+
+                <span id="priceUnit" class="property-price-input__unit">
+                  MXN
+                </span>
+              </div>
+            </div>
+
+            <!-- Zona -->
+
+            <div class="form-group">
+              <label for="neighborhood">
+                Zona / Colonia
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="neighborhood"
+                name="neighborhood"
+                type="text"
+                placeholder="Ej. Oasis Revolución"
+                required
+              />
+            </div>
+
+            <!-- Ciudad -->
+
+            <div class="form-group">
+              <label for="city"> Ciudad </label>
+
+              <input
+                id="city"
+                name="city"
+                type="text"
+                value="Ciudad Juárez"
+              />
+            </div>
+
+            <!-- Ubicación -->
+
+            <div class="property-location-section">
+              <h3>
+                Ubicación
+                <span class="muted">(Google Maps)</span>
+              </h3>
+
+              <div class="form-group">
+                <label for="locationUrl"> Enlace de ubicación </label>
+
+                <div class="property-location-input">
+                  <i class="bi bi-link-45deg"></i>
+
+                  <input
+                    id="locationUrl"
+                    name="locationUrl"
+                    type="url"
+                    placeholder="https://maps.google.com/..."
+                  />
+                </div>
+              </div>
+
+              <a
+                id="openMapBtn"
+                class="btn btn--ghost btn--full property-map-btn"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled="true"
+              >
+                <i class="bi bi-geo-alt-fill"></i>
+
+                <span>Ver en Maps</span>
+
+                <i class="bi bi-box-arrow-up-right"></i>
+              </a>
+            </div>
+
+            <!-- Siguiente -->
+
+            <div class="property-form-actions">
+              <button
+                type="button"
+                class="btn btn--primary btn--full btn--lg"
+                data-next-step
+              >
+                Siguiente
+
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <!-- ========================================
+           PASO 2
+           CARACTERÍSTICAS
+      ========================================= -->
+
+          <section class="property-form-step" data-step="2" hidden>
+            <div class="property-section-header">
+              <h3>Características</h3>
+
+              <p class="muted">Describe las características principales.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="propertyType"> Tipo de propiedad </label>
+
+              <select id="propertyType" name="propertyType">
+                <option value="house">Casa</option>
+                <option value="apartment">Departamento</option>
+                <option value="land">Terreno</option>
+                <option value="commercial">Comercial</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+
+            <div class="property-features">
+              <div class="form-group">
+                <label for="bedrooms"> Recámaras </label>
+
+                <input
+                  id="bedrooms"
+                  name="bedrooms"
+                  type="number"
+                  min="0"
+                  placeholder="3"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="bathrooms"> Baños </label>
+
+                <input
+                  id="bathrooms"
+                  name="bathrooms"
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  placeholder="2.5"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="parkingSpaces"> Estacionamiento </label>
+
+                <input
+                  id="parkingSpaces"
+                  name="parkingSpaces"
+                  type="number"
+                  min="0"
+                  placeholder="2"
+                />
+              </div>
+            </div>
+
+            <div class="property-form-navigation">
+              <button type="button" class="btn btn--ghost" data-prev-step>
+                <i class="bi bi-chevron-left"></i>
+                Atrás
+              </button>
+
+              <button type="button" class="btn btn--primary" data-next-step>
+                Siguiente
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <!-- ========================================
+           PASO 3
+           GALERÍA
+      ========================================= -->
+
+          <section class="property-form-step" data-step="3" hidden>
+            <div class="property-section-header">
+              <h3>Galería</h3>
+
+              <p class="muted">
+                Agrega las mejores fotografías de la propiedad.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="propertyPhotos"> Fotografías </label>
+
+              <div class="property-photo-upload">
+                <input
+                  id="propertyPhotos"
+                  name="propertyPhotos"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                />
+
+                <div class="property-photo-upload__message">
+                  <i class="bi bi-images"></i>
+
+                  <div>
+                    <strong> Agregar fotografías </strong>
+
+                    <small class="muted">
+                      Selecciona varias imágenes de la propiedad.
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div id="photoPreview" class="property-photo-preview"></div>
+            </div>
+
+            <div class="property-form-navigation">
+              <button type="button" class="btn btn--ghost" data-prev-step>
+                <i class="bi bi-chevron-left"></i>
+                Atrás
+              </button>
+
+              <button type="button" class="btn btn--primary" data-next-step>
+                Siguiente
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <!-- ========================================
+           PASO 4
+           PUBLICACIÓN
+      ========================================= -->
+
+          <section class="property-form-step" data-step="4" hidden>
+            <div class="property-section-header">
+              <h3>Publicación</h3>
+
+              <p class="muted">Agrega los últimos detalles antes de guardar.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="description"> Descripción </label>
+
+              <textarea
+                id="description"
+                name="description"
+                rows="6"
+                placeholder="Describe la propiedad, amenidades, acabados y otros detalles..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="status"> Estado </label>
+
+              <select id="status" name="status">
+                <option value="available">Disponible</option>
+
+                <option value="sold">Vendida</option>
+
+                <option value="rented">Rentada</option>
+              </select>
+            </div>
+
+            <div id="propertyStatus" class="muted"></div>
+
+            <div class="property-form-navigation">
+              <button type="button" class="btn btn--ghost" data-prev-step>
+                <i class="bi bi-chevron-left"></i>
+                Atrás
+              </button>
+
+              <button
+                id="savePropertyBtn"
+                type="submit"
+                class="btn btn--primary"
+              >
+                <i class="bi bi-house-check"></i>
+                Guardar propiedad
+              </button>
+            </div>
+          </section>
+        </form>
+      </section>
+    </main>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+      Hecho con ♥ por VJOX • Gestión Inmobiliaria.
+
+      <p>
+        © 2026 VJOX. Desarrollado por Veronica J. Narciso. Todos los derechos
+        reservados.
+      </p>
+    </footer>
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Servicios VJOX -->
+
+    <script src="../js/images.js"></script>
+    <script src="../js/cloudinary.js"></script>
+    <script src="../js/database.js"></script>
+
+    <!-- Sesión / menú -->
+
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/menu.js?v=4"></script>
+
+    <!-- Inmobiliaria -->
+
+    <script src="./js/add-property.js?v=1.0"></script>
+  </body>
+</html>

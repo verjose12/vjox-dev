@@ -1,18 +1,11 @@
-
 const profileForm = document.querySelector("#profileForm");
 const statusEl = document.querySelector("#profileStatus");
 
-// const facebookSetup =
-//   document.querySelector("#facebookSetup");
-const facebookModal =
-  document.querySelector("#facebookModal");
+const facebookModal = document.querySelector("#facebookModal");
 
-const connectFacebookBtn =
-  document.querySelector("#connectFacebookBtn");
+const connectFacebookBtn = document.querySelector("#connectFacebookBtn");
 
-const skipFacebookBtn =
-  document.querySelector("#skipFacebookBtn");
-
+const skipFacebookBtn = document.querySelector("#skipFacebookBtn");
 
 profileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -21,7 +14,7 @@ profileForm.addEventListener("submit", async (e) => {
 
   const {
     data: { session },
-    error: sessionError
+    error: sessionError,
   } = await supabaseClient.auth.getSession();
 
   if (sessionError || !session) {
@@ -31,174 +24,122 @@ profileForm.addEventListener("submit", async (e) => {
 
   const user = session.user;
 
-  const name =
-    document.querySelector("#name").value.trim();
+  // const name = document.querySelector("#name").value.trim();
 
-  const businessName =
-    document.querySelector("#businessName").value.trim();
+  // const businessName = document.querySelector("#businessName").value.trim();
 
-  const whatsappPhone =
-    document.querySelector("#whatsappPhone").value.trim();
+  // const whatsappPhone = document.querySelector("#whatsappPhone").value.trim();
+
+  // const profile = {
+  //   id: user.id,
+  //   name: name,
+  //   business_name: businessName,
+  //   whatsapp_phone: whatsappPhone,
+  // };
+
+  const name = document.querySelector("#name").value.trim();
+
+  const businessName = document.querySelector("#businessName").value.trim();
+
+  const whatsappPhone = document.querySelector("#whatsappPhone").value.trim();
+
+  const businessType = document.querySelector(
+    'input[name="businessType"]:checked',
+  )?.value;
+
+  if (!businessType) {
+    statusEl.textContent = "Selecciona el giro de tu negocio.";
+    return;
+  }
 
   const profile = {
     id: user.id,
     name: name,
     business_name: businessName,
-    whatsapp_phone: whatsappPhone
+    whatsapp_phone: whatsappPhone,
+    business_type: businessType,
   };
-
   const savedProfile = await createProfile(profile);
 
   if (!savedProfile) {
-    statusEl.textContent =
-      "No se pudo guardar el perfil.";
+    statusEl.textContent = "No se pudo guardar el perfil.";
     return;
   }
 
-  statusEl.textContent =
-    "Perfil guardado correctamente.";
+  statusEl.textContent = "Perfil guardado correctamente.";
 
-//   profileForm.classList.add("hidden");
+  facebookModal.classList.add("is-open");
 
-//   facebookSetup.classList.remove("hidden");
- 
-      facebookModal.classList.add("is-open");
-
-      facebookModal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-    });
+  facebookModal.setAttribute("aria-hidden", "false");
+});
 
 // ESTE YA ESTÁ FUERA DEL FORMULARIO 👇
 
-skipFacebookBtn.addEventListener(
-  "click",
-  () => {
-    window.location.href = "index.html";
-  }
-);
+skipFacebookBtn.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
 
-// connectFacebookBtn.addEventListener(
-//   "click",
-//   () => {
-//     console.log(
-//       "Iniciar conexión con Facebook"
-//     );
-//   }
-// );
-connectFacebookBtn.addEventListener(
-  "click",
-  async () => {
+connectFacebookBtn.addEventListener("click", async () => {
+  const originalContent = connectFacebookBtn.innerHTML;
 
-    const originalContent =
-      connectFacebookBtn.innerHTML;
+  connectFacebookBtn.disabled = true;
 
-    connectFacebookBtn.disabled = true;
-
-    connectFacebookBtn.innerHTML = `
+  connectFacebookBtn.innerHTML = `
       <span class="spinner-border spinner-border-sm"></span>
     `;
 
-    try {
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "facebook-connect-start",
+    );
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.functions.invoke(
-          "facebook-connect-start"
-        );
+    if (error) {
+      console.error(error);
 
+      alert("No se pudo iniciar la conexión con Facebook.");
 
-      if (error) {
-        console.error(error);
-
-        alert(
-          "No se pudo iniciar la conexión con Facebook."
-        );
-
-        return;
-      }
-
-
-      if (!data?.url) {
-        alert(
-          "VJOX no recibió la URL de autorización."
-        );
-
-        return;
-      }
-
-
-      window.location.href =
-        data.url;
-
-
-    } catch (error) {
-
-      console.error(
-        "Error conectando Facebook:",
-        error
-      );
-
-      alert(
-        "Ocurrió un error al conectar Facebook."
-      );
-
-
-    } finally {
-
-      connectFacebookBtn.disabled = false;
-
-      connectFacebookBtn.innerHTML =
-        originalContent;
+      return;
     }
+
+    if (!data?.url) {
+      alert("VJOX no recibió la URL de autorización.");
+
+      return;
+    }
+
+    window.location.href = data.url;
+  } catch (error) {
+    console.error("Error conectando Facebook:", error);
+
+    alert("Ocurrió un error al conectar Facebook.");
+  } finally {
+    connectFacebookBtn.disabled = false;
+
+    connectFacebookBtn.innerHTML = originalContent;
   }
-);
+});
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+const params = new URLSearchParams(window.location.search);
 
-const facebookStatus =
-  params.get("facebook");
+const facebookStatus = params.get("facebook");
 
+if (facebookStatus === "select") {
+  facebookModal.classList.add("is-open");
 
-  if (facebookStatus === "select") {
+  facebookModal.setAttribute("aria-hidden", "false");
 
-    facebookModal.classList.add(
-      "is-open"
-    );
-  
-    facebookModal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-  
-    loadPendingFacebookPages();
-  }
+  loadPendingFacebookPages();
+}
 
-  if (facebookStatus === "connected") {
+if (facebookStatus === "connected") {
+  facebookModal.classList.add("is-open");
 
-    facebookModal.classList.add(
-      "is-open"
-    );
-  
-    facebookModal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-  
-    const modalContent =
-      facebookModal.querySelector(
-        ".setup-modal__content"
-      );
-  
-    if (modalContent) {
-  
-      modalContent.innerHTML = `
+  facebookModal.setAttribute("aria-hidden", "false");
+
+  const modalContent = facebookModal.querySelector(".setup-modal__content");
+
+  if (modalContent) {
+    modalContent.innerHTML = `
         <div class="setup-modal__icon">
           <i class="bi bi-check-circle"></i>
         </div>
@@ -219,36 +160,21 @@ const facebookStatus =
           Continuar a VJOX
         </button>
       `;
-  
-  
-      const finishBtn =
-        document.querySelector(
-          "#finishFacebookSetupBtn"
-        );
-  
-  
-      finishBtn.addEventListener(
-        "click",
-        () => {
-  
-          window.location.href =
-            "index.html";
-        }
-      );
-    }
-  }
-  
-  async function loadPendingFacebookPages() {
 
-    const modalContent =
-      facebookModal.querySelector(
-        ".setup-modal__content"
-      );
-  
-    if (!modalContent) return;
-  
-  
-    modalContent.innerHTML = `
+    const finishBtn = document.querySelector("#finishFacebookSetupBtn");
+
+    finishBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+}
+
+async function loadPendingFacebookPages() {
+  const modalContent = facebookModal.querySelector(".setup-modal__content");
+
+  if (!modalContent) return;
+
+  modalContent.innerHTML = `
       <div class="setup-modal__icon">
         <i class="bi bi-facebook"></i>
       </div>
@@ -275,172 +201,108 @@ const facebookStatus =
         Conectar página
       </button>
     `;
-  
-  
-    const pagesList =
-      document.querySelector(
-        "#facebookPagesList"
+
+  const pagesList = document.querySelector("#facebookPagesList");
+
+  const confirmBtn = document.querySelector("#confirmFacebookPageBtn");
+
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "facebook-connect-pending-pages",
+    );
+
+    if (error) {
+      console.error(error);
+
+      pagesList.textContent = "No se pudieron cargar las páginas.";
+
+      return;
+    }
+
+    const pages = data?.pages || [];
+
+    if (pages.length === 0) {
+      pagesList.textContent = "No encontramos páginas disponibles.";
+
+      return;
+    }
+
+    pagesList.innerHTML = "";
+
+    pages.forEach((page) => {
+      const option = document.createElement("label");
+
+      option.className = "facebook-page-option";
+
+      const radio = document.createElement("input");
+
+      radio.type = "radio";
+
+      radio.name = "facebookPage";
+
+      radio.value = page.page_id;
+
+      const name = document.createElement("span");
+
+      name.textContent = page.page_name;
+
+      option.appendChild(radio);
+
+      option.appendChild(name);
+
+      pagesList.appendChild(option);
+    });
+
+    pagesList.addEventListener("change", () => {
+      const selected = document.querySelector(
+        'input[name="facebookPage"]:checked',
       );
-  
-    const confirmBtn =
-      document.querySelector(
-        "#confirmFacebookPageBtn"
+
+      confirmBtn.disabled = !selected;
+    });
+
+    confirmBtn.addEventListener("click", async () => {
+      const selected = document.querySelector(
+        'input[name="facebookPage"]:checked',
       );
-  
-  
-    try {
-  
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.functions.invoke(
-          "facebook-connect-pending-pages"
-        );
-  
-  
-      if (error) {
-        console.error(error);
-  
-        pagesList.textContent =
-          "No se pudieron cargar las páginas.";
-  
-        return;
-      }
-  
-  
-      const pages =
-        data?.pages || [];
-  
-  
-      if (pages.length === 0) {
-  
-        pagesList.textContent =
-          "No encontramos páginas disponibles.";
-  
-        return;
-      }
-  
-  
-      pagesList.innerHTML = "";
-  
-  
-      pages.forEach((page) => {
-  
-        const option =
-          document.createElement("label");
-  
-        option.className =
-          "facebook-page-option";
-  
-  
-        const radio =
-          document.createElement("input");
-  
-        radio.type = "radio";
-  
-        radio.name =
-          "facebookPage";
-  
-        radio.value =
-          page.page_id;
-  
-  
-        const name =
-          document.createElement("span");
-  
-        name.textContent =
-          page.page_name;
-  
-  
-        option.appendChild(radio);
-  
-        option.appendChild(name);
-  
-        pagesList.appendChild(option);
-      });
-  
-  
-      pagesList.addEventListener(
-        "change",
-        () => {
-  
-          const selected =
-            document.querySelector(
-              'input[name="facebookPage"]:checked'
-            );
-  
-          confirmBtn.disabled =
-            !selected;
-        }
-      );
-  
-  
-      confirmBtn.addEventListener(
-        "click",
-        async () => {
-  
-          const selected =
-            document.querySelector(
-              'input[name="facebookPage"]:checked'
-            );
-  
-  
-          if (!selected) return;
-  
-  
-          const originalContent =
-            confirmBtn.innerHTML;
-  
-  
-          confirmBtn.disabled = true;
-  
-          confirmBtn.innerHTML = `
+
+      if (!selected) return;
+
+      const originalContent = confirmBtn.innerHTML;
+
+      confirmBtn.disabled = true;
+
+      confirmBtn.innerHTML = `
             <span class="spinner-border spinner-border-sm"></span>
             Conectando...
           `;
-  
-  
-          try {
-  
-            const {
-              data: connectData,
-              error: connectError
-            } =
-              await supabaseClient.functions.invoke(
-                "facebook-connect-select-page",
-                {
-                  body: {
-                    page_id:
-                      selected.value
-                  }
-                }
-              );
-  
-  
-            if (connectError) {
-  
-              console.error(
-                connectError
-              );
-  
-              confirmBtn.innerHTML =
-                "No se pudo conectar";
-  
-              return;
-            }
-  
-  
-            if (!connectData?.connected) {
-  
-              confirmBtn.innerHTML =
-                "No se pudo conectar";
-  
-              return;
-            }
-  
-  
-            modalContent.innerHTML = `
+
+      try {
+        const { data: connectData, error: connectError } =
+          await supabaseClient.functions.invoke(
+            "facebook-connect-select-page",
+            {
+              body: {
+                page_id: selected.value,
+              },
+            },
+          );
+
+        if (connectError) {
+          console.error(connectError);
+
+          confirmBtn.innerHTML = "No se pudo conectar";
+
+          return;
+        }
+
+        if (!connectData?.connected) {
+          confirmBtn.innerHTML = "No se pudo conectar";
+
+          return;
+        }
+
+        modalContent.innerHTML = `
               <div class="setup-modal__icon">
                 <i class="bi bi-check-circle"></i>
               </div>
@@ -463,64 +325,30 @@ const facebookStatus =
                 Continuar a VJOX
               </button>
             `;
-  
-  
-            document.querySelector(
-              "#connectedFacebookPageName"
-            ).textContent =
-              connectData.page.name;
-  
-  
-            document.querySelector(
-              "#finishFacebookSetupBtn"
-            ).addEventListener(
-              "click",
-              () => {
-  
-                window.location.href =
-                  "index.html";
-              }
-            );
-  
-  
-          } catch (error) {
-  
-            console.error(
-              "Error conectando página:",
-              error
-            );
-  
-            confirmBtn.innerHTML =
-              "No se pudo conectar";
-  
-  
-          } finally {
-  
-            if (
-              document.body.contains(
-                confirmBtn
-              )
-            ) {
-  
-              confirmBtn.disabled =
-                false;
-  
-              confirmBtn.innerHTML =
-                originalContent;
-            }
-          }
+
+        document.querySelector("#connectedFacebookPageName").textContent =
+          connectData.page.name;
+
+        document
+          .querySelector("#finishFacebookSetupBtn")
+          .addEventListener("click", () => {
+            window.location.href = "index.html";
+          });
+      } catch (error) {
+        console.error("Error conectando página:", error);
+
+        confirmBtn.innerHTML = "No se pudo conectar";
+      } finally {
+        if (document.body.contains(confirmBtn)) {
+          confirmBtn.disabled = false;
+
+          confirmBtn.innerHTML = originalContent;
         }
-      );
-  
-  
-    } catch (error) {
-  
-      console.error(
-        "Error cargando páginas:",
-        error
-      );
-  
-      pagesList.textContent =
-        "No se pudieron cargar las páginas.";
-    }
+      }
+    });
+  } catch (error) {
+    console.error("Error cargando páginas:", error);
+
+    pagesList.textContent = "No se pudieron cargar las páginas.";
   }
+}

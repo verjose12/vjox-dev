@@ -44,6 +44,22 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// if (logoutBtn) {
+//   logoutBtn.addEventListener("click", async (event) => {
+//     event.preventDefault();
+
+//     const { error } = await supabaseClient.auth.signOut();
+
+//     if (error) {
+//       console.error("Error al cerrar sesión:", error);
+//       return;
+//     }
+
+//     // window.location.href = "./auth/login.html";
+//     window.location.replace("./auth/login.html");
+//   });
+// }
+
 if (logoutBtn) {
   logoutBtn.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -55,8 +71,10 @@ if (logoutBtn) {
       return;
     }
 
-    // window.location.href = "./auth/login.html";
-    window.location.replace("./auth/login.html");
+    const loginUrl =
+      document.body.dataset.loginUrl || "./auth/login.html";
+
+    window.location.replace(loginUrl);
   });
 }
 

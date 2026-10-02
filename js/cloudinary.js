@@ -3,11 +3,14 @@ const CLOUD_NAME = "dvxorpdrd";
 const UPLOAD_PRESET = "Ventas";
 const CLOUDINARY_BASE_FOLDER ="vjox/users";
 
-async function uploadImageToCloudinary(file, userId) {
+async function uploadImageToCloudinary(
+  file, 
+  userId,  
+  module = "products") {
   const form = new FormData();
 
   const userFolder=
-  `${CLOUDINARY_BASE_FOLDER}/${userId}/products`;
+  `${CLOUDINARY_BASE_FOLDER}/${userId}/${module}`;
 
   form.append("file", file);
   form.append("upload_preset", UPLOAD_PRESET);

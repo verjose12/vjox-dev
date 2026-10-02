@@ -1,0 +1,633 @@
+/* =========================================================
+   VJOX REAL ESTATE
+   Vista individual de propiedad
+   property.css
+========================================================= */
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+
+.property-detail {
+  width: min(1100px, calc(100% - 32px));
+  margin: 32px auto 60px;
+}
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.property-detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.property-detail__badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 12px;
+}
+
+.property-detail__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 11px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  border: 1px solid #2a2d33;
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.property-detail__badge--status {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--primary);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+#propertyTitle {
+  margin: 0 0 8px;
+
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.property-detail__location {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin: 0;
+
+  color: var(--muted);
+}
+
+.property-detail__location i {
+  color: var(--primary);
+}
+
+.property-detail__price {
+  flex-shrink: 0;
+
+  color: var(--primary);
+
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+}
+
+/* =========================================================
+   GALERÍA
+========================================================= */
+
+.property-gallery {
+  margin-bottom: 24px;
+}
+
+.property-gallery__main {
+  width: 100%;
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 1px solid #2a2d33;
+  border-radius: 16px;
+}
+
+.property-gallery__main img {
+  display: block;
+
+  width: 100%;
+  height: 520px;
+
+  object-fit: cover;
+}
+
+/* ===== MINIATURAS ===== */
+
+.property-gallery__thumbnails {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+.property-gallery__thumbnail {
+  padding: 0;
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 2px solid transparent;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.property-gallery__thumbnail img {
+  display: block;
+
+  width: 100%;
+  height: 100px;
+
+  object-fit: cover;
+}
+
+.property-gallery__thumbnail:hover {
+  opacity: 0.85;
+}
+
+.property-gallery__thumbnail.is-active {
+  border-color: var(--primary);
+}
+
+/* SIN FOTOGRAFÍAS */
+
+.property-gallery__empty {
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  color: var(--muted);
+}
+
+.property-gallery__empty i {
+  font-size: 2rem;
+}
+
+/* =========================================================
+   CARACTERÍSTICAS
+========================================================= */
+
+.property-detail__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.property-detail__features > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 60px;
+
+  background: var(--card);
+
+  border: 1px solid #2a2d33;
+  border-radius: 12px;
+}
+
+.property-detail__features i {
+  color: var(--primary);
+  font-size: 1.15rem;
+}
+
+.property-detail__features strong {
+  font-size: 1rem;
+}
+
+.property-detail__features span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   DESCRIPCIÓN + UBICACIÓN
+========================================================= */
+
+.property-detail__content {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 16px;
+}
+
+.property-detail__section {
+  padding: 22px;
+}
+
+.property-detail__section h2 {
+  margin: 0 0 16px;
+
+  font-size: 1.2rem;
+}
+
+.property-detail__section h2 i {
+  color: var(--primary);
+}
+
+#propertyDescription {
+  margin: 0;
+
+  color: var(--muted);
+  line-height: 1.65;
+
+  white-space: pre-line;
+}
+
+#propertyFullLocation {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.property-detail__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  margin-top: 16px;
+}
+
+.property-detail__actions .btn {
+  width: auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .property-detail {
+    width: calc(100% - 20px);
+    margin: 20px auto 40px;
+  }
+
+  /* ENCABEZADO */
+  /* ENCABEZADO */
+
+  #propertyTitle {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+
+  .property-detail__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .property-detail__info {
+    min-width: 0;
+  }
+
+  .property-detail__location {
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  .property-detail__commercial {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .property-detail__price {
+    display: block;
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+
+  /* GALERÍA */
+
+  .property-gallery__main img {
+    height: 245px;
+  }
+
+  .property-gallery__thumbnails {
+    display: flex;
+    overflow-x: auto;
+
+    gap: 8px;
+
+    padding-bottom: 4px;
+
+    scrollbar-width: none;
+  }
+
+  .property-gallery__thumbnails::-webkit-scrollbar {
+    display: none;
+  }
+
+  .property-gallery__thumbnail {
+    flex: 0 0 90px;
+  }
+
+  .property-gallery__thumbnail img {
+    height: 70px;
+  }
+
+  /* CARACTERÍSTICAS */
+
+  .property-detail__features {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .property-detail__features > div {
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+    padding: 10px 4px;
+
+    text-align: center;
+  }
+
+  .property-detail__features span {
+    font-size: 0.7rem;
+  }
+
+  /* CONTENIDO */
+
+  .property-detail__content {
+    grid-template-columns: 1fr;
+  }
+
+  .property-detail__section {
+    padding: 16px;
+  }
+
+  /* ACCIONES */
+
+  .property-detail__actions .btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   VISOR FULLSCREEN
+========================================================= */
+
+.property-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.property-lightbox.is-open {
+  display: flex;
+}
+
+.property-lightbox__image {
+  display: block;
+
+  max-width: min(1100px, 90vw);
+  max-height: 88vh;
+
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.property-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(22, 23, 26, 0.9);
+  color: #fff;
+
+  border: 1px solid #333;
+  border-radius: 50%;
+
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.property-lightbox__nav {
+  position: absolute;
+  top: 50%;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  background: rgba(22, 23, 26, 0.85);
+  color: #fff;
+
+  border: 1px solid #333;
+  border-radius: 50%;
+
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.property-lightbox__nav--prev {
+  left: 20px;
+}
+
+.property-lightbox__nav--next {
+  right: 20px;
+}
+
+.property-lightbox__counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  padding: 6px 12px;
+
+  background: rgba(22, 23, 26, 0.9);
+  color: #fff;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+}
+
+/* Indicamos que la foto principal se puede abrir */
+
+.property-gallery__main img {
+  cursor: zoom-in;
+}
+
+@media (max-width: 700px) {
+  .property-lightbox {
+    padding: 8px;
+  }
+
+  .property-lightbox__image {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 6px;
+  }
+
+  .property-lightbox__close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .property-lightbox__nav {
+    width: 42px;
+    height: 42px;
+  }
+
+  .property-lightbox__nav--prev {
+    left: 8px;
+  }
+
+  .property-lightbox__nav--next {
+    right: 8px;
+  }
+}
+
+/* ===== VISOR DE IMAGEN ===== */
+
+.property-gallery__main img {
+  cursor: zoom-in;
+}
+
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.94);
+
+  cursor: zoom-out;
+}
+
+.image-viewer img {
+  display: block;
+
+  max-width: 95vw;
+  max-height: 92vh;
+
+  object-fit: contain;
+}
+
+.image-viewer__image {
+  display: block;
+
+  max-width: 95vw;
+  max-height: 92vh;
+
+  object-fit: contain;
+}
+
+.image-viewer__close,
+.image-viewer__nav {
+  position: absolute;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: rgba(22, 23, 26, 0.85);
+  color: #fff;
+
+  border: 1px solid #333;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.image-viewer__close {
+  top: 16px;
+  right: 16px;
+}
+
+.image-viewer__nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.image-viewer__nav--prev {
+  left: 16px;
+}
+
+.image-viewer__nav--next {
+  right: 16px;
+}
+
+.image-viewer__counter {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  padding: 6px 12px;
+
+  background: rgba(22, 23, 26, 0.85);
+  color: #fff;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+}
+
+.property-detail__commercial {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.property-detail__commercial .property-detail__badge {
+  align-self: flex-end;
+}

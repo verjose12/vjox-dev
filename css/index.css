@@ -1121,3 +1121,300 @@ body {
   appearance: textfield;
   -moz-appearance: textfield;
 }
+
+/* =========================
+   VJOX INMOBILIARIA
+   TARJETAS DE PROPIEDADES
+========================= */
+
+#propertyList {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(320px, 1fr)
+  );
+  gap: 18px;
+}
+
+
+/* .property-card {
+  min-width: 0;
+  overflow: hidden;
+
+  background: var(--card);
+  border: 1px solid #2a2d33;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+} */
+
+.property-card {
+  min-width: 0;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+}
+
+
+/* FOTO */
+
+.property-card__media {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+  background: #101114;
+}
+
+
+.property-card__image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+.property-card__image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: #4b5563;
+  font-size: 48px;
+}
+
+
+/* ESTADO */
+
+.property-card__status {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  padding: 6px 10px;
+
+  color: #d1fae5;
+  background: rgba(6, 78, 59, 0.9);
+
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  backdrop-filter: blur(8px);
+}
+
+
+/* VENTA / RENTA */
+
+.property-card__operation {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 6px 10px;
+
+  color: #ffffff;
+  background: rgba(15, 15, 16, 0.82);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  backdrop-filter: blur(8px);
+}
+
+
+/* CONTENIDO */
+
+.property-card__body {
+  padding: 16px;
+}
+
+
+.property-card__title {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+
+.property-card__price {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--accent);
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+
+.property-card__price small {
+  color: var(--muted);
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/* UBICACIÓN */
+
+.property-card__location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin: 10px 0 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+
+.property-card__location i {
+  color: var(--accent);
+}
+
+
+/* CARACTERÍSTICAS */
+
+.property-card__features {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+
+.property-card__features span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 6px 9px;
+
+  color: #e5e7eb;
+  background: #121316;
+
+  border: 1px solid #2a2d33;
+  border-radius: 8px;
+
+  font-size: 12px;
+}
+
+
+.property-card__features i {
+  color: var(--accent);
+}
+
+
+.property-card__features small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+
+/* ACCIONES */
+
+.property-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+
+.property-card__view-btn,
+.property-card__map-btn {
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.property-card__view-btn {
+  color: #041d0f;
+  background: var(--accent);
+
+  border: 1px solid #169c48;
+}
+
+
+.property-card__map-btn {
+  width: 44px;
+
+  color: #e5e7eb;
+  background: #1a1c20;
+
+  border: 1px solid #34373e;
+
+  text-decoration: none;
+}
+
+
+.property-card__view-btn:hover {
+  filter: brightness(1.06);
+}
+
+
+.property-card__map-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 640px) {
+
+  #propertyList {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .property-card__body {
+    padding: 14px;
+  }
+
+  .property-card__title {
+    font-size: 17px;
+  }
+
+  .property-card__price {
+    font-size: 19px;
+  }
+
+}

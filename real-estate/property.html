@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="Propiedad | VJOX" />
+
+    <meta
+      property="og:description"
+      content="Consulta fotografías y detalles de esta propiedad."
+    />
+
+    <meta property="og:type" content="website" />
+
+    <meta property="og:site_name" content="VJOX" />
+
+    <title>Propiedad | VJOX</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <link rel="stylesheet" href="../css/vjox-design.css" />
+
+    <link rel="stylesheet" href="css/property.css?v=1" />
+  </head>
+
+  <body>
+    <header class="vjox-header">
+      <strong>VJOX · Propiedad</strong>
+    </header>
+
+    <main class="property-detail">
+      <main class="property-detail">
+
+  <!-- ENCABEZADO -->
+  <section class="property-detail__header">
+
+    <div class="property-detail__info">
+      <h1 id="propertyTitle">Cargando propiedad...</h1>
+
+      <p
+        id="propertyLocation"
+        class="property-detail__location"
+      ></p>
+    </div>
+
+    <div class="property-detail__commercial">
+      <span id="propertyOperation"></span>
+
+      <strong
+        id="propertyPrice"
+        class="property-detail__price"
+      ></strong>
+    </div>
+
+  </section>
+
+  <!-- NAVEGACIÓN ENTRE PROPIEDADES -->
+  <div
+    id="propertyNav"
+    class="vjox-record-nav"
+  ></div>
+
+  <!-- GALERÍA -->
+  <section class="property-gallery">
+
+    <div
+      id="propertyMainImage"
+      class="property-gallery__main"
+    ></div>
+
+    <div
+      id="propertyThumbnails"
+      class="property-gallery__thumbnails"
+    ></div>
+
+  </section>
+
+      <!-- GALERÍA -->
+      <div class="property-media-card">
+        <section class="property-gallery">
+        <div id="propertyMainImage" class="property-gallery__main"></div>
+
+        <div id="propertyThumbnails" class="property-gallery__thumbnails"></div>
+      </section>
+
+      <!-- CARACTERÍSTICAS -->
+      <section class="card property-detail__features">
+        <div>
+          <i class="bi bi-door-open"></i>
+          <strong id="propertyBedrooms">--</strong>
+          <span>Recámaras</span>
+        </div>
+
+        <div>
+          <i class="bi bi-droplet"></i>
+          <strong id="propertyBathrooms">--</strong>
+          <span>Baños</span>
+        </div>
+
+        <div>
+          <i class="bi bi-car-front"></i>
+          <strong id="propertyParking">--</strong>
+          <span>Estacionamiento</span>
+        </div>
+      </section>
+      </div>
+
+      <!-- INFORMACIÓN -->
+      <section class="property-detail__content">
+        <article class="card property-detail__section">
+          <h2>Descripción</h2>
+
+          <p id="propertyDescription">Sin descripción.</p>
+        </article>
+
+        <article class="card property-detail__section">
+          <h2>
+            <i class="bi bi-geo-alt-fill"></i>
+            Ubicación
+          </h2>
+
+          <p id="propertyFullLocation"></p>
+
+          <a
+            id="propertyMapsButton"
+            class="btn btn--secondary"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="bi bi-geo-alt"></i>
+            Ver en Google Maps
+          </a>
+        </article>
+      </section>
+
+      <!-- CONTACTO -->
+      <section class="property-detail__actions">
+        <button type="button" id="propertyWhatsapp" class="btn btn--whatsapp">
+          <i class="bi bi-whatsapp"></i>
+          Compartir por WhatsApp
+        </button>
+      </section>
+    </main>
+    <footer>
+      Hecho con ♥ | VJOX
+
+      <p>
+        © 2026 VJOX Ventas. Desarrollado por Veronica J. Narciso. Todos los
+        derechos reservados.
+      </p>
+    </footer>
+
+    <!-- Usa aquí los mismos scripts que ya comprobamos -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/database.js"></script>
+    <script src="js/property.js"></script>
+  </body>
+</html>

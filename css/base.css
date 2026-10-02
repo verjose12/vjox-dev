@@ -19,3 +19,62 @@ body {
   color: var(--color-text);
 }
 
+/* =========================
+   HEADER VJOX
+========================= */
+
+.vjox-header {
+  padding: 16px;
+  border-bottom: 1px solid #222;
+}
+
+.vjox-record-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 12px 0 6px;
+
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vjox-record-nav a {
+  flex: 0 0 auto;
+  white-space: nowrap;
+
+  text-decoration: none;
+  color: #fff;
+
+  border: 1px solid #3a3d44;
+  background: #1a1c20;
+
+  padding: 9px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.vjox-record-nav a.active {
+  background: #25d366;
+  border-color: #128c7e;
+  color: #062d1e;
+  font-weight: 700;
+}
+
+/* =========================
+   FOOTER VJOX
+========================= */
+
+footer {
+  padding: 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
