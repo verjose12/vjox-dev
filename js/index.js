@@ -51,23 +51,6 @@ function formatPrice(n) {
   }
 }
 
-// function getProductPriceLabel(product) {
-//   if (product.price != null && product.price !== "") {
-//     return formatPrice(product.price);
-//   }
-
-//   const hasIndividualPrices =
-//     Array.isArray(product.perPhotoPrices) &&
-//     product.perPhotoPrices.some(
-//       price => price !== null && price !== ""
-//     );
-
-//   if (hasIndividualPrices) {
-//     return "Varios precios";
-//   }
-
-//   return "Sin precio";
-// }
 
 function getProductPriceLabel(product) {
   const photoPrices = Array.isArray(product.perPhotoPrices)

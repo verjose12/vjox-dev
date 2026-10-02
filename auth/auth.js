@@ -16,7 +16,7 @@ if (registerForm) {
       email,
       password,
       options: {
-        emailRedirectTo: "https://verjose12.github.io/vjox-dev/auth/login.html",
+        emailRedirectTo: "https://vjox.com.mx/auth/login.html",
 
         data: {
           name,
