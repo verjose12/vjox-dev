@@ -1,96 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Iniciar sesión | VJOX</title>
-  <link rel="stylesheet" href="../css/vjox-design.css">
-  <link rel="stylesheet" href="./auth.css" />
-  <link rel="manifest" href="../manifest.json">
-</head>
+    <title>Iniciar sesión | VJOX</title>
+    <link rel="stylesheet" href="../css/vjox-design.css" />
+    <link rel="stylesheet" href="./auth.css" />
+    <link rel="manifest" href="../manifest.json" />
+  </head>
 
-<body>
-  <main class="auth-page">
-
-    <section class="auth-card">
-
-      <div class="auth-brand">
-        <h1>VJOX</h1>
-        <p>Administra tus productos y publicaciones.</p>
-      </div>
-
-      <form id="loginForm" class="auth-form">
-
-        <div class="form-group">
-          <label for="loginEmail">
-            Correo electrónico
-          </label>
-
-          <input
-            id="loginEmail"
-            name="email"
-            type="email"
-            placeholder="correo@ejemplo.com"
-            autocomplete="email"
-            required
-          />
+  <body>
+    <main class="auth-page">
+      <section class="auth-card">
+        <div class="auth-brand">
+          <h1>VJOX</h1>
+          <p>Administra tus productos y publicaciones.</p>
         </div>
 
-        <div class="form-group">
-          <label for="loginPassword">
-            Contraseña
-          </label>
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="loginEmail"> Correo electrónico </label>
 
-          <input
-            id="loginPassword"
-            name="password"
-            type="password"
-            placeholder="Ingresa tu contraseña"
-            autocomplete="current-password"
-            minlength="6"
-            required
-          />
-        </div>
+            <input
+              id="loginEmail"
+              name="email"
+              type="email"
+              placeholder="correo@ejemplo.com"
+              autocomplete="email"
+              required
+            />
+          </div>
 
-        <button
-          id="loginButton"
-          class="auth-button"
-          type="submit"
-        >
-          Iniciar sesión
-        </button>
+          <div class="form-group">
+            <label for="loginPassword"> Contraseña </label>
+            
 
-        <p
-          id="loginStatus"
-          class="auth-status"
-          aria-live="polite"
-        ></p>
+            <div class="password-field">
+              <input
+                id="loginPassword"
+                name="password"
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                autocomplete="current-password"
+                minlength="6"
+                required
+              />
 
-      </form>
+              <button
+                type="button"
+                id="toggleLoginPassword"
+                class="password-toggle"
+                aria-label="Mostrar contraseña"
+              >
+                <svg
+                  id="eyeIcon"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  <line
+                    id="eyeSlash"
+                    x1="4"
+                    y1="4"
+                    x2="20"
+                    y2="20"
+                    style="display: none"
+                  />
+                </svg>
+              </button>
 
-      <p class="auth-link">
-        ¿Todavía no tienes cuenta?
+              <a href="./forgot-password.html" class="forgot-password">
+              ¿Olvidaste tu contraseña?
+            </a>
+            </div>
+          </div>
 
-        <a href="./register.html">
-          Crear una cuenta
-        </a>
-      </p>
+          <button id="loginButton" class="auth-button" type="submit">
+            Iniciar sesión
+          </button>
 
-      <a class="gallery-link" href="../index.html">
-        Explorar galería
-      </a>
+          <p id="loginStatus" class="auth-status" aria-live="polite"></p>
+        </form>
 
-    </section>
+        <p class="auth-link">
+          ¿Todavía no tienes cuenta?
 
-  </main>
+          <a href="./register.html"> Crear una cuenta </a>
+        </p>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/database.js"></script>
-  <script src="./auth.js"></script>
-</body>
+        <a class="gallery-link" href="../index.html"> Explorar galería </a>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/database.js"></script>
+    <script src="./auth.js"></script>
+  </body>
 </html>
