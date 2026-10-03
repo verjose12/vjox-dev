@@ -47,7 +47,8 @@ if (registerForm) {
 
     if (error) {
       console.error(error);
-      status.textContent = error.message;
+      status.textContent = getAuthErrorMessage(error);
+      status.classList.add("is-error");
       return;
     }
 
@@ -207,7 +208,17 @@ if (forgotPasswordForm) {
     if (error) {
       console.error("Error recuperando contraseña:", error);
 
-      status.textContent = "No pudimos enviar el enlace. Inténtalo nuevamente.";
+      if (
+        error.status === 429 ||
+        error.message?.toLowerCase().includes("rate limit")
+      ) {
+        status.textContent =
+          "Has solicitado varios enlaces recientemente. Espera un momento antes de intentarlo de nuevo.";
+      } else {
+        status.textContent =
+          "No pudimos enviar el enlace. Inténtalo nuevamente.";
+      }
+
       status.classList.add("is-error");
       return;
     }
@@ -216,6 +227,30 @@ if (forgotPasswordForm) {
       "Te enviamos un enlace para recuperar tu contraseña. Revisa tu correo.";
     status.classList.add("is-success");
   });
+}
+
+const recoveryParams = new URLSearchParams(window.location.hash.substring(1));
+
+const recoveryErrorCode = recoveryParams.get("error_code");
+
+if (recoveryErrorCode === "otp_expired") {
+  const updatePasswordForm = document.querySelector("#updatePasswordForm");
+  const status = document.querySelector("#updatePasswordStatus");
+  const requestNewRecovery = document.querySelector("#requestNewRecovery");
+
+  if (updatePasswordForm && status) {
+    updatePasswordForm.querySelectorAll("input, button").forEach((element) => {
+      element.disabled = true;
+    });
+
+    status.textContent =
+      "Este enlace de recuperación expiró o ya fue utilizado. Solicita uno nuevo.";
+    status.classList.add("is-error");
+  }
+
+  if (requestNewRecovery) {
+    requestNewRecovery.style.display = "block";
+  }
 }
 
 const updatePasswordForm = document.querySelector("#updatePasswordForm");

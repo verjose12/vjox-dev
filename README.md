@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.4.0
+**Versión:** 4.6.0
 
 **Estado:** En desarrollo activo.
 
@@ -20,17 +20,22 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 
 # Características actuales
 
-* Gestión de inventario.
-* Carga de imágenes en la nube mediante Cloudinary.
-* Base de datos en Supabase.
-* Galerías públicas para compartir productos.
+* Gestión de inventario de productos.
+* Gestión de propiedades para asesores inmobiliarios.
+* Experiencia adaptada según el giro del negocio.
+* Carga y administración de imágenes mediante Cloudinary.
+* Base de datos y autenticación mediante Supabase.
+* Arquitectura multiusuario con información independiente por usuario.
+* Galerías públicas para productos y propiedades.
 * Compartir productos mediante WhatsApp.
-* Publicación automática en Facebook mediante Meta Graph API.
 * Conexión y publicación de productos en Facebook mediante Meta Graph API.
+* Recuperación de contraseña mediante correo electrónico.
+* Correos de autenticación enviados mediante SMTP personalizado con Resend.
 * Progressive Web App (PWA).
 * Diseño adaptable para dispositivos móviles.
 * Generación de QR promocional permanente por vendedor.
 * Landing pública para acceso al catálogo mediante QR.
+* Estadísticas de visitas, escaneos QR y enlaces compartidos.
 * Generación de material promocional descargable para impresión.
 
 
@@ -109,6 +114,34 @@ VJOX mejora la integración con Facebook para permitir que cada vendedor adminis
 - 💰 Soporte para precio único, múltiples precios y productos sin precio.
 - 🖼️ Publicación con imagen, descripción y enlace a la galería pública.
 - 🎨 Integración completa con el Design System de VJOX.
+
+
+
+## Versión: 4.6.0 🏠 Inmobiliaria y recuperación de cuenta
+
+VJOX amplía su funcionamiento para adaptarse a diferentes giros de negocio e incorpora una primera versión funcional para asesores inmobiliarios.
+
+### 🏠 Módulo inmobiliario
+
+- Selección del giro del negocio.
+- Nuevo panel para administración de propiedades.
+- Registro de propiedades con información y fotografías.
+- Galería pública adaptada para propiedades.
+- Visualización del nombre de la propiedad en la galería.
+- Soporte para ubicación de propiedades.
+- Diseño integrado con la identidad visual de VJOX.
+
+### 🔐 Autenticación y recuperación de cuenta
+
+- Recuperación de contraseña desde el inicio de sesión.
+- Envío de enlaces de recuperación por correo electrónico.
+- Creación de una nueva contraseña mediante enlace seguro.
+- Manejo de enlaces expirados o utilizados.
+- Manejo de límites de solicitudes de recuperación.
+- Mensajes de autenticación más claros para el usuario.
+- Opción para mostrar u ocultar la contraseña.
+- SMTP personalizado mediante Resend y Supabase Auth.
+- Envío de correos utilizando el dominio `vjox.com.mx`.
 
 ---
 

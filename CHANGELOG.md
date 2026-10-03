@@ -397,13 +397,52 @@ Se agregó un nuevo sistema para que cada vendedor pueda generar y compartir un 
 - Mejor manejo de publicaciones con precios por fotografía.
 - Integración visual del módulo de Facebook con el sistema de diseño de VJOX.
 
+
+## [4.6.0] - 2026-10-02
+
+### Módulo inmobiliario
+
+VJOX amplía su arquitectura para admitir distintos giros de negocio, incorporando una primera versión funcional enfocada en asesores inmobiliarios.
+
+### Añadido
+
+- Nuevo módulo de propiedades para usuarios del sector inmobiliario.
+- Selección del giro del negocio para adaptar la experiencia de VJOX.
+- Panel de propiedades independiente del inventario tradicional de productos.
+- Registro de propiedades con información y fotografías.
+- Galería pública adaptada para mostrar propiedades.
+- Nombre de la propiedad visible dentro de la galería.
+- Soporte para ubicación de propiedades.
+- Navegación entre el panel inmobiliario y sus diferentes vistas.
+- Integración visual del módulo inmobiliario con el Design System de VJOX.
+
+### Autenticación y recuperación de cuenta
+
+- Se agregó la opción **"¿Olvidaste tu contraseña?"** al inicio de sesión.
+- Se agregó el flujo para solicitar un enlace de recuperación por correo electrónico.
+- Se agregó una vista para establecer una nueva contraseña.
+- Se configuró SMTP personalizado para los correos de autenticación.
+- Se integró Resend como proveedor de correo para Supabase Auth.
+- Se configuró el dominio `vjox.com.mx` para el envío autenticado de correos.
+- Los correos de autenticación pueden enviarse utilizando la identidad de VJOX.
+- Se agregó manejo de enlaces de recuperación expirados o utilizados.
+- Se agregó acceso directo para solicitar un nuevo enlace cuando el anterior ya no es válido.
+- Se mejoró el mensaje mostrado cuando se solicitan demasiados correos de recuperación.
+- Se mejoraron los mensajes de error del inicio de sesión y registro para evitar mostrar respuestas técnicas de Supabase.
+- Se agregó la opción para mostrar u ocultar la contraseña desde el formulario de inicio de sesión.
+
+### Mejorado
+
+- Se mejoró la experiencia inicial de los usuarios durante el acceso a VJOX.
+- Se mejoró el manejo visual de errores de autenticación.
+- Se actualizaron recursos de la PWA para reflejar la versión 4.6.0.
+
 ---
 
-## v4.6.0
+## v4.7.0
 
 Planeado
 
-- Dashboard.
 - Reportes.
 - Inventario avanzado.
 

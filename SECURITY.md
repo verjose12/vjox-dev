@@ -50,6 +50,7 @@ Las siguientes credenciales **nunca deben almacenarse en el código del cliente*
 * Service Role Key de Supabase.
 * Secretos de Edge Functions.
 * Claves privadas de terceros.
+* API Keys de proveedores de correo como Resend.
 
 Las credenciales sensibles deberán almacenarse únicamente como variables de entorno o secretos del servidor.
 
@@ -76,6 +77,7 @@ Actualmente el proyecto utiliza los siguientes servicios:
 * Cloudinary
 * Meta Graph API
 * GitHub Pages
+* Resend
 
 Cada uno de estos servicios mantiene sus propias políticas de seguridad y privacidad.
 
@@ -104,7 +106,6 @@ Conforme el proyecto evolucione se incorporarán medidas adicionales como:
 * Auditoría de accesos.
 * Cifrado de información sensible cuando sea necesario.
 * Gestión de sesiones activas.
-* Recuperación segura de cuentas.
 
 ---
 
@@ -116,11 +117,11 @@ VJOX Ventas
 
 Versión actual:
 
-4.5.0
+4.6.0
 
 Última actualización:
 
-28 de septiembre de 2026
+2 de octubre de 2026
 
 # Autora
 
