@@ -439,6 +439,18 @@ VJOX amplía su arquitectura para admitir distintos giros de negocio, incorporan
 
 ---
 
+## [4.6.1] - 2026-10-04
+
+### Added
+- Edición de propiedades inmobiliarias.
+- Gestión de fotografías durante la edición.
+- Eliminación de fotografías existentes antes de guardar.
+- Eliminación de fotografías nuevas antes de subirlas.
+
+### Changed
+- El formulario de propiedades ahora funciona tanto para crear como para editar.
+- Las fotografías existentes se conservan al actualizar una propiedad.
+
 ## v4.7.0
 
 Planeado

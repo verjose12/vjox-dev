@@ -6,9 +6,7 @@
 const form = document.querySelector("#propertyForm");
 
 const steps = [...document.querySelectorAll(".property-form-step")];
-const indicators = [
-  ...document.querySelectorAll("[data-step-indicator]"),
-];
+const indicators = [...document.querySelectorAll("[data-step-indicator]")];
 
 const nextButtons = [...document.querySelectorAll("[data-next-step]")];
 const prevButtons = [...document.querySelectorAll("[data-prev-step]")];
@@ -26,18 +24,75 @@ const propertyPhotosInput = document.querySelector("#propertyPhotos");
 const photoPreview = document.querySelector("#photoPreview");
 
 let currentStep = 1;
+let existingImageUrls = [];
+let newPhotoFiles = [];
 
+const params = new URLSearchParams(window.location.search);
+const propertyId = params.get("id");
+
+const isEditing = Boolean(propertyId);
 
 // ============================================================
 // INICIO
 // ============================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   updateOperationPrice();
   updateMapButton();
   showStep(1);
+
+  if (isEditing) {
+    await loadPropertyForEdit();
+  }
 });
 
+async function loadPropertyForEdit() {
+  const property = await getPropertyById(propertyId);
+
+  if (!property) {
+    alert("No se pudo cargar la propiedad.");
+    window.location.href = "./index.html";
+    return;
+  }
+
+  existingImageUrls = property.image_urls || [];
+  renderExistingPhotos(existingImageUrls);
+
+  document.querySelector("#title").value = property.title || "";
+
+  document.querySelector("#price").value = property.price ?? "";
+
+  const operationInput = document.querySelector(
+    `input[name="operationType"][value="${property.operation_type}"]`,
+  );
+
+  if (operationInput) {
+    operationInput.checked = true;
+  }
+
+  document.querySelector("#propertyType").value =
+    property.property_type || "house";
+
+  document.querySelector("#neighborhood").value = property.neighborhood || "";
+
+  document.querySelector("#city").value = property.city || "";
+
+  document.querySelector("#locationUrl").value = property.location_url || "";
+
+  document.querySelector("#bedrooms").value = property.bedrooms ?? "";
+
+  document.querySelector("#bathrooms").value = property.bathrooms ?? "";
+
+  document.querySelector("#parkingSpaces").value =
+    property.parking_spaces ?? "";
+
+  document.querySelector("#description").value = property.description || "";
+
+  document.querySelector("#status").value = property.status || "available";
+
+  updateOperationPrice();
+  updateMapButton();
+}
 
 // ============================================================
 // WIZARD
@@ -66,7 +121,6 @@ function showStep(stepNumber) {
   });
 }
 
-
 // ============================================================
 // SIGUIENTE
 // ============================================================
@@ -83,7 +137,6 @@ nextButtons.forEach((button) => {
   });
 });
 
-
 // ============================================================
 // ATRÁS
 // ============================================================
@@ -96,7 +149,6 @@ prevButtons.forEach((button) => {
   });
 });
 
-
 // ============================================================
 // VALIDAR PASO ACTUAL
 // ============================================================
@@ -106,9 +158,7 @@ function validateCurrentStep() {
     `.property-form-step[data-step="${currentStep}"]`,
   );
 
-  const requiredFields = [
-    ...currentSection.querySelectorAll("[required]"),
-  ];
+  const requiredFields = [...currentSection.querySelectorAll("[required]")];
 
   for (const field of requiredFields) {
     if (!field.checkValidity()) {
@@ -119,7 +169,6 @@ function validateCurrentStep() {
 
   return true;
 }
-
 
 // ============================================================
 // VENTA / RENTA
@@ -140,11 +189,8 @@ function updateOperationPrice() {
   }
 
   priceUnit.textContent =
-    selectedOperation.value === "rent"
-      ? "MXN/mes"
-      : "MXN";
+    selectedOperation.value === "rent" ? "MXN/mes" : "MXN";
 }
-
 
 // ============================================================
 // GOOGLE MAPS
@@ -160,9 +206,7 @@ function updateMapButton() {
   try {
     const url = new URL(value);
 
-    validUrl =
-      url.protocol === "http:" ||
-      url.protocol === "https:";
+    validUrl = url.protocol === "http:" || url.protocol === "https:";
   } catch {
     validUrl = false;
   }
@@ -177,23 +221,27 @@ function updateMapButton() {
   openMapBtn.setAttribute("aria-disabled", "false");
 }
 
-
 // ============================================================
 // PREVIEW DE FOTOGRAFÍAS
 // ============================================================
 
 propertyPhotosInput.addEventListener("change", () => {
-  renderPhotoPreview(propertyPhotosInput.files);
+  newPhotoFiles = [...propertyPhotosInput.files];
+
+  renderAllPhotos();
 });
 
-function renderPhotoPreview(files) {
-  photoPreview.innerHTML = "";
+function renderAllPhotos() {
+  renderExistingPhotos(existingImageUrls);
+  renderNewPhotoPreview(newPhotoFiles);
+}
 
+function renderNewPhotoPreview(files) {
   if (!files?.length) {
     return;
   }
 
-  [...files].forEach((file) => {
+  files.forEach((file, index) => {
     if (!file.type.startsWith("image/")) {
       return;
     }
@@ -205,19 +253,71 @@ function renderPhotoPreview(files) {
     const objectUrl = URL.createObjectURL(file);
 
     image.src = objectUrl;
-    image.alt = "Vista previa de la propiedad";
+    image.alt = "Nueva fotografía de la propiedad";
 
-    image.addEventListener(
-      "load",
-      () => URL.revokeObjectURL(objectUrl),
-      { once: true },
-    );
+    image.addEventListener("load", () => URL.revokeObjectURL(objectUrl), {
+      once: true,
+    });
+
+    // BOTÓN QUITAR FOTO NUEVA
+    const removeButton = document.createElement("button");
+
+    removeButton.type = "button";
+    removeButton.className = "property-photo-preview__remove";
+    removeButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+    removeButton.title = "Quitar fotografía";
+    removeButton.setAttribute("aria-label", "Quitar fotografía");
+
+    removeButton.addEventListener("click", () => {
+      newPhotoFiles.splice(index, 1);
+
+      renderAllPhotos();
+    });
 
     item.appendChild(image);
+    item.appendChild(removeButton);
+
     photoPreview.appendChild(item);
   });
 }
 
+function renderExistingPhotos(imageUrls) {
+  photoPreview.innerHTML = "";
+
+  if (!imageUrls?.length) {
+    return;
+  }
+
+  imageUrls.forEach((url) => {
+    const item = document.createElement("div");
+    item.className = "property-photo-preview__item";
+
+    const image = document.createElement("img");
+
+    image.src = url;
+    image.alt = "Fotografía actual de la propiedad";
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "property-photo-preview__remove";
+    removeButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+    removeButton.title = "Quitar fotografía";
+    removeButton.setAttribute("aria-label", "Quitar fotografía");
+
+    removeButton.addEventListener("click", () => {
+      existingImageUrls = existingImageUrls.filter(
+        (existingUrl) => existingUrl !== url,
+      );
+
+      renderAllPhotos();
+    });
+
+    item.appendChild(image);
+    item.appendChild(removeButton);
+
+    photoPreview.appendChild(item);
+  });
+}
 
 // ============================================================
 // SUBMIT
@@ -234,7 +334,6 @@ form.addEventListener("submit", async (event) => {
   const statusEl = document.querySelector("#propertyStatus");
 
   try {
-
     // ==========================================
     // 1. USUARIO
     // ==========================================
@@ -249,139 +348,104 @@ form.addEventListener("submit", async (event) => {
     } = await supabaseClient.auth.getUser();
 
     if (userError || !user) {
-      throw new Error(
-        "No se pudo obtener el usuario autenticado."
-      );
+      throw new Error("No se pudo obtener el usuario autenticado.");
     }
-
 
     // ==========================================
     // 2. SUBIR FOTOGRAFÍAS
     // ==========================================
 
-    const imageUrls = [];
+    const imageUrls = isEditing ? [...existingImageUrls] : [];
 
-    const files = [
-      ...propertyPhotosInput.files
-    ];
+    const files = newPhotoFiles;
 
     for (let i = 0; i < files.length; i++) {
+      statusEl.textContent = `Subiendo fotografía ${i + 1} de ${files.length}...`;
 
-      statusEl.textContent =
-        `Subiendo fotografía ${i + 1} de ${files.length}...`;
+      const compressedFile = await compressImage(files[i]);
 
-      const compressedFile =
-        await compressImage(files[i]);
-
-      const imageUrl =
-        await uploadImageToCloudinary(
-          compressedFile,
-          user.id,
-          "properties"
-        );
+      const imageUrl = await uploadImageToCloudinary(
+        compressedFile,
+        user.id,
+        "properties",
+      );
 
       imageUrls.push(imageUrl);
     }
-
 
     // ==========================================
     // 3. LEER FORMULARIO
     // ==========================================
 
     const operationType = document.querySelector(
-      'input[name="operationType"]:checked'
+      'input[name="operationType"]:checked',
     )?.value;
 
     const property = {
-      user_id: user.id,
+      ...(isEditing ? {} : { user_id: user.id }),
 
-      title:
-        document.querySelector("#title")
-          .value
-          .trim(),
+      title: document.querySelector("#title").value.trim(),
 
-      price:
-        Number(
-          document.querySelector("#price").value
-        ),
+      price: Number(document.querySelector("#price").value),
 
       operation_type: operationType,
 
-      property_type:
-        document.querySelector("#propertyType")
-          .value,
+      property_type: document.querySelector("#propertyType").value,
 
-      neighborhood:
-        document.querySelector("#neighborhood")
-          .value
-          .trim(),
+      neighborhood: document.querySelector("#neighborhood").value.trim(),
 
-      city:
-        document.querySelector("#city")
-          .value
-          .trim(),
+      city: document.querySelector("#city").value.trim(),
 
-      location_url:
-        document.querySelector("#locationUrl")
-          .value
-          .trim() || null,
+      location_url: document.querySelector("#locationUrl").value.trim() || null,
 
-      bedrooms:
-        numberOrNull("#bedrooms"),
+      bedrooms: numberOrNull("#bedrooms"),
 
-      bathrooms:
-        numberOrNull("#bathrooms"),
+      bathrooms: numberOrNull("#bathrooms"),
 
-      parking_spaces:
-        numberOrNull("#parkingSpaces"),
+      parking_spaces: numberOrNull("#parkingSpaces"),
 
-      description:
-        document.querySelector("#description")
-          .value
-          .trim() || null,
+      description: document.querySelector("#description").value.trim() || null,
 
-      status:
-        document.querySelector("#status")
-          .value,
+      status: document.querySelector("#status").value,
 
       image_urls: imageUrls,
     };
-
 
     // ==========================================
     // 4. GUARDAR EN SUPABASE
     // ==========================================
 
-    statusEl.textContent =
-      "Guardando propiedad...";
+    statusEl.textContent = isEditing
+      ? "Actualizando propiedad..."
+      : "Guardando propiedad...";
 
-    const savedProperty =
-      await saveProperty(property);
+    let savedProperty;
+
+    if (isEditing) {
+      savedProperty = await updateProperty(propertyId, property);
+    } else {
+      savedProperty = await saveProperty(property);
+    }
 
     if (!savedProperty) {
       throw new Error(
-        "Supabase no pudo guardar la propiedad."
+        isEditing
+          ? "Supabase no pudo actualizar la propiedad."
+          : "Supabase no pudo guardar la propiedad.",
       );
     }
-
 
     // ==========================================
     // 5. TERMINADO
     // ==========================================
 
-    statusEl.textContent =
-      "Propiedad guardada correctamente.";
+    statusEl.textContent = "Propiedad guardada correctamente.";
 
     setTimeout(() => {
       window.location.href = "./index.html";
     }, 700);
-
   } catch (error) {
-
-    console.error(
-      "Error guardando propiedad:",
-      error
-    );
+    console.error("Error guardando propiedad:", error);
 
     statusEl.textContent =
       "No se pudo guardar la propiedad. Intenta nuevamente.";
@@ -391,10 +455,7 @@ form.addEventListener("submit", async (event) => {
 });
 
 function numberOrNull(selector) {
-  const value = document
-    .querySelector(selector)
-    .value
-    .trim();
+  const value = document.querySelector(selector).value.trim();
 
   if (value === "") {
     return null;
@@ -402,7 +463,5 @@ function numberOrNull(selector) {
 
   const number = Number(value);
 
-  return Number.isFinite(number)
-    ? number
-    : null;
+  return Number.isFinite(number) ? number : null;
 }

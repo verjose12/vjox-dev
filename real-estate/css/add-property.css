@@ -3,7 +3,6 @@
    ADD PROPERTY · REAL ESTATE
 ============================================================ */
 
-
 /* =========================
    PAGE
 ========================= */
@@ -30,7 +29,6 @@
 .property-form-header p {
   margin: 0;
 }
-
 
 /* =========================
    PROGRESS
@@ -109,7 +107,6 @@
   background: var(--color-primary);
 }
 
-
 /* =========================
    STEPS
 ========================= */
@@ -138,7 +135,6 @@
 .required {
   color: var(--color-primary);
 }
-
 
 /* =========================
    OPERATION
@@ -201,7 +197,6 @@
   outline-offset: 2px;
 }
 
-
 /* =========================
    PRICE
 ========================= */
@@ -257,7 +252,6 @@
   box-shadow: none;
 }
 
-
 /* =========================
    MAPS
 ========================= */
@@ -310,7 +304,6 @@
   pointer-events: none;
 }
 
-
 /* =========================
    FEATURES
 ========================= */
@@ -320,7 +313,6 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
 }
-
 
 /* =========================
    PHOTOS
@@ -379,7 +371,6 @@
   gap: var(--space-1);
 }
 
-
 /* =========================
    PHOTO PREVIEW
 ========================= */
@@ -397,6 +388,7 @@
 }
 
 .property-photo-preview__item {
+  position: relative;
   overflow: hidden;
 
   aspect-ratio: 4 / 3;
@@ -404,6 +396,31 @@
   background: var(--color-surface-soft);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+}
+
+.property-photo-preview__remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  display: grid;
+  place-items: center;
+
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+
+  border: 0;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.property-photo-preview__remove:hover {
+  background: var(--color-danger);
 }
 
 .property-photo-preview__item img {
@@ -414,7 +431,6 @@
 
   object-fit: cover;
 }
-
 
 /* =========================
    NAVIGATION
@@ -441,13 +457,11 @@
   text-align: center;
 }
 
-
 /* =========================
    MOBILE
 ========================= */
 
 @media (max-width: 600px) {
-
   .property-form-page {
     padding: var(--space-3);
   }
@@ -484,5 +498,4 @@
   .property-form-navigation {
     grid-template-columns: 1fr 1fr;
   }
-
 }

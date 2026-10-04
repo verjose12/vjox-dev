@@ -351,6 +351,9 @@ propertyList.addEventListener("click", (event) => {
   if (action === "gallery") {
     window.location.href = `property.html?id=${propertyId}`;
   }
+  if (action === "edit") {
+    window.location.href = `add-property.html?id=${propertyId}`;
+  }
 });
 
 // ============================================================
