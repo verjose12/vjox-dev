@@ -8,6 +8,7 @@
     <title>VJOX · Inmobiliaria</title>
 
     <link rel="stylesheet" href="../css/vjox-design.css" />
+    <link rel="stylesheet" href="./css/real-estate-modals.css?v=1.0" />
     <link rel="stylesheet" href="../css/index.css?v=2.0.5" />
 
     <link
@@ -17,7 +18,6 @@
   </head>
 
   <body data-login-url="../auth/login.html">
-
     <header>
       <button
         id="openSideMenuBtn"
@@ -35,14 +35,9 @@
       <span class="version">v4.6.1</span>
     </header>
 
-
     <!-- Overlay menú -->
 
-    <div
-      id="sideMenuOverlay"
-      class="side-menu-overlay hidden"
-    ></div>
-
+    <div id="sideMenuOverlay" class="side-menu-overlay hidden"></div>
 
     <!-- Menú lateral -->
 
@@ -52,18 +47,11 @@
       aria-label="Menú principal"
       aria-hidden="true"
     >
-
       <div class="side-menu__header">
-
         <div>
-          <strong class="side-menu__brand">
-            VJOX Inmobiliaria
-          </strong>
+          <strong class="side-menu__brand"> VJOX Inmobiliaria </strong>
 
-          <span
-            id="sideMenuBusinessName"
-            class="side-menu__subtitle"
-          >
+          <span id="sideMenuBusinessName" class="side-menu__subtitle">
             Mi negocio
           </span>
         </div>
@@ -76,88 +64,51 @@
         >
           <i class="bi bi-x-lg"></i>
         </button>
-
       </div>
 
-
       <nav class="side-menu__nav">
+        <p class="side-menu__section-title">Principal</p>
 
-        <p class="side-menu__section-title">
-          Principal
-        </p>
-
-        <a
-          href="./index.html"
-          class="side-menu__link active"
-        >
+        <a href="./index.html" class="side-menu__link active">
           <i class="bi bi-houses"></i>
           <span>Propiedades</span>
         </a>
 
-        <a
-          href="#"
-          class="side-menu__link"
-          id="openAnalyticsBtn"
-        >
+        <a href="#" class="side-menu__link" id="openAnalyticsBtn">
           <i class="bi bi-bar-chart"></i>
           <span>Estadísticas</span>
         </a>
 
-        <a
-          href="./add-property.html"
-          class="side-menu__link"
-        >
+        <a href="./add-property.html" class="side-menu__link">
           <i class="bi bi-plus-circle"></i>
           <span>Agregar propiedad</span>
         </a>
 
+        <p class="side-menu__section-title">Herramientas</p>
 
-        <p class="side-menu__section-title">
-          Herramientas
-        </p>
-
-        <a
-          href="#"
-          class="side-menu__link"
-          id="shareCatalogBtn"
-        >
+        <a href="#" class="side-menu__link" id="shareCatalogBtn">
           <i class="bi bi-share"></i>
           <span>Compartir catálogo</span>
         </a>
 
-        <a
-          href="#"
-          class="side-menu__link"
-          id="openQrPromoBtn"
-        >
+        <a href="#" class="side-menu__link" id="openQrPromoBtn">
           <i class="bi bi-qr-code"></i>
           <span>QR promocional</span>
         </a>
 
-        <a
-          href="#"
-          class="side-menu__link"
-          id="facebookMenuBtn"
-        >
+        <a href="#" class="side-menu__link" id="facebookMenuBtn">
           <i class="bi bi-facebook"></i>
           <span>Publicar en Facebook</span>
         </a>
 
-
-        <p class="side-menu__section-title">
-          Configuración
-        </p>
+        <p class="side-menu__section-title">Configuración</p>
 
         <a href="#" class="side-menu__link">
           <i class="bi bi-gear"></i>
           <span>Configuración</span>
         </a>
 
-        <a
-          href="#"
-          class="side-menu__link"
-          id="logoutBtn"
-        >
+        <a href="#" class="side-menu__link" id="logoutBtn">
           <i class="bi bi-box-arrow-right"></i>
           <span>Cerrar sesión</span>
         </a>
@@ -166,113 +117,70 @@
           <i class="bi bi-info-circle"></i>
           <span>Acerca de VJOX</span>
         </a>
-
       </nav>
-
     </aside>
-
 
     <!-- Inventario inmobiliario -->
 
     <main class="inventory-page">
-
       <section class="card">
-
         <div class="inventory-header">
           <div>
             <h2>Propiedades</h2>
 
-            <p class="muted">
-              Administra y comparte tus propiedades.
-            </p>
+            <p class="muted">Administra y comparte tus propiedades.</p>
           </div>
         </div>
-
 
         <!-- Resumen -->
 
         <div class="inventory-summary">
-
           <article class="summary-card">
-
             <i class="bi bi-houses summary-icon"></i>
 
-            <span class="summary-card__label">
-              Venta
-            </span>
+            <span class="summary-card__label"> Venta </span>
 
-            <strong
-              id="totalProperties"
-              class="summary-card__value"
-            >
+            <strong id="totalProperties" class="summary-card__value">
               0
             </strong>
-
           </article>
 
-
           <article class="summary-card">
-
             <i class="bi bi-house-check summary-icon"></i>
 
-            <span class="summary-card__label">
-              Renta
-            </span>
+            <span class="summary-card__label"> Renta </span>
 
-            <strong
-              id="availableProperties"
-              class="summary-card__value"
-            >
+            <strong id="availableProperties" class="summary-card__value">
               0
             </strong>
-
           </article>
-
 
           <article class="summary-card">
-
             <i class="bi bi-key summary-icon"></i>
 
-            <span class="summary-card__label">
-              Vendidas / Rentadas
-            </span>
+            <span class="summary-card__label"> Vendidas / Rentadas </span>
 
-            <strong
-              id="closedProperties"
-              class="summary-card__value"
-            >
+            <strong id="closedProperties" class="summary-card__value">
               0
             </strong>
-
           </article>
-
         </div>
-
 
         <!-- Buscador -->
 
         <div class="inventory-search">
-
           <input
             id="searchInput"
             type="text"
             placeholder="🔍 Buscar propiedades..."
           />
-
         </div>
-
 
         <div id="status" class="muted"></div>
 
-        <div
-          id="propertyList"
-          class="grid list"
-        ></div>
-
+        <div id="propertyList" class="grid list"></div>
       </section>
-
     </main>
-
 
     <!-- Botón flotante -->
 
@@ -285,36 +193,76 @@
       +
     </a>
 
+    <div id="deletePropertyModal" class="modal hidden">
+      <div class="delete-property-modal">
+        <div class="delete-property-modal__header">
+          <div>
+            <span class="delete-property-modal__eyebrow">ELIMINAR</span>
+            <h3>Eliminar propiedad</h3>
+          </div>
+
+          <button
+            id="closeDeletePropertyModal"
+            class="delete-property-modal__close"
+            type="button"
+            aria-label="Cerrar"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="delete-property-modal__property">
+          <i class="bi bi-trash3"></i>
+
+          <div>
+            <strong id="deletePropertyName">Propiedad</strong>
+            <small>Esta acción no se puede deshacer.</small>
+          </div>
+        </div>
+
+        <button
+          id="confirmDeletePropertyBtn"
+          class="delete-property-modal__danger"
+          type="button"
+        >
+          <i class="bi bi-trash3"></i>
+          Eliminar propiedad
+        </button>
+
+        <button
+          id="cancelDeletePropertyBtn"
+          class="delete-property-modal__cancel"
+          type="button"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
 
     <footer>
       Hecho con ♥ por VJOX • Gestión Inmobiliaria.
 
       <p>
-        © 2026 VJOX. Desarrollado por Veronica J. Narciso.
-        Todos los derechos reservados.
+        © 2026 VJOX. Desarrollado por Veronica J. Narciso. Todos los derechos
+        reservados.
       </p>
     </footer>
-
 
     <!-- Supabase -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
     <!-- Servicios compartidos -->
 
     <script src="../js/database.js"></script>
-
 
     <!-- Sesión e interfaz -->
 
     <script src="../js/auth-guard.js"></script>
     <script src="../js/menu.js?v=3"></script>
 
-
     <!-- Inmobiliaria -->
 
     <script src="./js/index.js?v=1.0"></script>
-
   </body>
 </html>

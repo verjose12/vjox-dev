@@ -7,6 +7,20 @@ const propertyList = document.querySelector("#propertyList");
 const statusEl = document.querySelector("#status");
 const searchInput = document.querySelector("#searchInput");
 
+const deletePropertyModal = document.querySelector("#deletePropertyModal");
+const deletePropertyName = document.querySelector("#deletePropertyName");
+const closeDeletePropertyModal = document.querySelector(
+  "#closeDeletePropertyModal",
+);
+const cancelDeletePropertyBtn = document.querySelector(
+  "#cancelDeletePropertyBtn",
+);
+const confirmDeletePropertyBtn = document.querySelector(
+  "#confirmDeletePropertyBtn",
+);
+
+let propertyPendingDelete = null;
+
 const totalPropertiesEl = document.querySelector("#totalProperties");
 const availablePropertiesEl = document.querySelector("#availableProperties");
 const closedPropertiesEl = document.querySelector("#closedProperties");
@@ -338,7 +352,7 @@ function createPropertyCard(property) {
   return card;
 }
 
-propertyList.addEventListener("click", (event) => {
+propertyList.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-action]");
 
   if (!button) return;
@@ -354,27 +368,82 @@ propertyList.addEventListener("click", (event) => {
   if (action === "edit") {
     window.location.href = `add-property.html?id=${propertyId}`;
   }
+
+  if (action === "delete") {
+    const property = properties.find(
+      (item) => String(item.id) === String(propertyId),
+    );
+
+    if (!property) {
+      return;
+    }
+
+    propertyPendingDelete = property;
+
+    deletePropertyName.textContent = property.title || "esta propiedad";
+
+    deletePropertyModal.classList.remove("hidden");
+  }
+});
+
+function closeDeleteModal() {
+  deletePropertyModal.classList.add("hidden");
+  propertyPendingDelete = null;
+}
+
+closeDeletePropertyModal.addEventListener("click", closeDeleteModal);
+
+cancelDeletePropertyBtn.addEventListener("click", closeDeleteModal);
+
+deletePropertyModal.addEventListener("click", (event) => {
+  if (event.target === deletePropertyModal) {
+    closeDeleteModal();
+  }
+});
+
+confirmDeletePropertyBtn.addEventListener("click", async () => {
+  if (!propertyPendingDelete) {
+    return;
+  }
+
+  const propertyId = propertyPendingDelete.id;
+
+  confirmDeletePropertyBtn.disabled = true;
+  confirmDeletePropertyBtn.textContent = "Eliminando...";
+
+  const deleted = await deleteProperty(propertyId);
+
+  if (!deleted) {
+    alert("No se pudo eliminar la propiedad.");
+
+    confirmDeletePropertyBtn.disabled = false;
+    confirmDeletePropertyBtn.innerHTML =
+      '<i class="bi bi-trash3"></i> Eliminar propiedad';
+
+    return;
+  }
+
+  properties = properties.filter(
+    (item) => String(item.id) !== String(propertyId),
+  );
+
+  renderProperties(properties);
+  updateSummary(properties);
+
+  statusEl.textContent = properties.length
+    ? ""
+    : "Todavía no tienes propiedades registradas.";
+
+  confirmDeletePropertyBtn.disabled = false;
+  confirmDeletePropertyBtn.innerHTML =
+    '<i class="bi bi-trash3"></i> Eliminar propiedad';
+
+  closeDeleteModal();
 });
 
 // ============================================================
 // RESUMEN
 // ============================================================
-
-// function updateSummary(items) {
-//   const total = items.length;
-
-//   const available = items.filter(
-//     (property) => property.status === "available",
-//   ).length;
-
-//   const closed = items.filter(
-//     (property) => property.status === "sold" || property.status === "rented",
-//   ).length;
-
-//   totalPropertiesEl.textContent = total;
-//   availablePropertiesEl.textContent = available;
-//   closedPropertiesEl.textContent = closed;
-// }
 
 function updateSummary(items) {
   const forSale = items.filter(
