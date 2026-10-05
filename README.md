@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.6.3
+**Versión:** 4.7.0
 
 **Estado:** En desarrollo activo.
 
@@ -37,6 +37,11 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 * Landing pública para acceso al catálogo mediante QR.
 * Estadísticas de visitas, escaneos QR y enlaces compartidos.
 * Generación de material promocional descargable para impresión.
+
+* Periodo de prueba gratuito de 7 días para nuevas cuentas.
+* Sistema de suscripciones con control automático de vigencia.
+* Planes diferenciados para Productos e Inmobiliaria.
+* Renovación de suscripción mediante contacto por WhatsApp.
 
 
 
@@ -152,7 +157,19 @@ VJOX amplía su funcionamiento para adaptarse a diferentes giros de negocio e in
 - Mensajes con operación, precio, ubicación y enlace directo a la propiedad.
 - Separación de la lógica de compartir en `real-estate/js/share.js`.
 
+## Versión: 4.7.0 💳 Suscripciones
 
+VJOX incorpora su primera versión funcional del sistema de suscripciones y comienza la etapa de comercialización de la plataforma.
+
+- Periodo de prueba gratuito de 7 días.
+- Control de acceso mediante fecha de vencimiento.
+- Protección automática de vistas privadas al finalizar la prueba o suscripción.
+- Conservación de productos, propiedades y datos después del vencimiento.
+- VJOX Productos: $350 MXN al mes.
+- VJOX Inmobiliario: $800 MXN al mes.
+- Renovación mediante contacto directo por WhatsApp.
+- Reactivación de cuentas mediante suscripción vigente.
+- Cuentas beta excluidas de expiración.
 ---
 
 
@@ -173,6 +190,7 @@ VJOX amplía su funcionamiento para adaptarse a diferentes giros de negocio e in
 * Cloudinary
 * Meta Graph API
 * Facebook Login / OAuth
+* Resend
 
 ## Herramientas
 
@@ -197,7 +215,7 @@ El objetivo a largo plazo es evolucionar hacia una plataforma SaaS que permita a
 
 * Mejoras del módulo inmobiliario.
 * Dashboard y reportes avanzados.
-* Suscripciones y pagos.
+* Automatización de pagos y renovaciones.
 * Funciones premium.
 * Mejoras de inventario.
 * Evolución de la plataforma SaaS.

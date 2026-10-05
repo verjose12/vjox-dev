@@ -486,7 +486,49 @@ VJOX amplía su arquitectura para admitir distintos giros de negocio, incorporan
 - Limpieza de elementos duplicados en la estructura de `property.html`.
 - Preparación de la arquitectura de compartir del módulo inmobiliario para futuras integraciones.
 
-## v4.7.0
+
+## [4.7.0] - 2026-10-05
+
+### Sistema de suscripciones
+
+VJOX incorpora su primera versión funcional del modelo de suscripción, permitiendo ofrecer periodos de prueba y controlar el acceso a la plataforma según la vigencia de cada cuenta.
+
+### Añadido
+
+- Periodo de prueba gratuito de 7 días para nuevas cuentas.
+- Campos `trial_ends_at` y `subscription_ends_at` en los perfiles de usuario.
+- Validación automática de vigencia al acceder a las vistas privadas.
+- Nueva pantalla de renovación de suscripción.
+- Plan VJOX Productos por $350 MXN al mes.
+- Plan VJOX Inmobiliario por $800 MXN al mes.
+- Solicitud de renovación mediante WhatsApp.
+- Identificación de la cuenta mediante nombre del negocio y correo electrónico.
+- Soporte para cuentas beta sin fecha de expiración.
+- Reactivación del acceso mediante una suscripción vigente.
+
+### Mejorado
+
+- `auth-guard.js` ahora valida tanto autenticación como vigencia de acceso.
+- Las vistas privadas de Productos e Inmobiliaria respetan el estado de la prueba o suscripción.
+- La fecha de vencimiento determina el acceso sin depender únicamente del campo `plan`.
+
+### Seguridad y datos
+
+- El vencimiento de una prueba o suscripción no elimina productos, propiedades ni información del usuario.
+- Los usuarios vencidos conservan sus datos mientras el acceso administrativo permanece restringido.
+- Las galerías públicas continúan disponibles para los enlaces previamente compartidos.
+- Las cuentas beta permanecen habilitadas para pruebas y seguimiento del desarrollo.
+
+### Pruebas
+
+- Acceso verificado con periodo de prueba vigente.
+- Bloqueo automático verificado con periodo de prueba vencido.
+- Reactivación verificada mediante `subscription_ends_at`.
+- Precio de $800 verificado para cuentas inmobiliarias.
+- Precio de $350 verificado para cuentas de productos.
+- Flujo de renovación mediante WhatsApp verificado.
+
+## v4.8.0
 
 Planeado
 
@@ -499,10 +541,8 @@ Planeado
 
 Planeado
 
-- Sistema SaaS.
-- Suscripciones.
-- Pagos.
-- Planes.
+- Pagos automatizados.
+- Planes avanzados.
 - Multiempresa.
-
+- Funciones premium.
 ---

@@ -1,0 +1,149 @@
+/* =====================================================
+   VJOX - SUBSCRIPTION
+   Pantalla de suscripción / prueba vencida
+===================================================== */
+
+.subscription-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-6);
+}
+
+/* =========================
+   CARD
+========================= */
+
+.subscription-card {
+  width: 100%;
+  max-width: 460px;
+
+  padding: var(--space-7) var(--space-6);
+
+  text-align: center;
+}
+
+/* =========================
+   ICONO
+========================= */
+
+.subscription-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto var(--space-4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-circle);
+
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+
+  font-size: 30px;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.subscription-badge {
+  display: inline-block;
+
+  margin-bottom: var(--space-3);
+
+  color: var(--color-primary);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+
+  letter-spacing: 0.12em;
+}
+
+/* =========================
+   TEXTO
+========================= */
+
+.subscription-card h1 {
+  margin: 0 0 var(--space-3);
+
+  font-size: var(--font-size-xl);
+}
+
+.subscription-description,
+.subscription-message {
+  margin: 0;
+
+  color: var(--color-text-muted);
+
+  line-height: 1.5;
+}
+
+/* =========================
+   PLAN
+========================= */
+
+.subscription-plan {
+  margin: var(--space-6) 0;
+  padding: var(--space-5);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-2);
+
+  background: var(--color-surface-soft);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.subscription-plan span {
+  font-weight: var(--font-weight-medium);
+}
+
+.subscription-plan strong {
+  color: var(--color-primary);
+
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extra-bold);
+}
+
+.subscription-plan small {
+  color: var(--color-text-muted);
+}
+
+/* =========================
+   ACCIONES
+========================= */
+
+.subscription-message {
+  margin-bottom: var(--space-5);
+}
+
+#renewSubscriptionBtn {
+  margin-bottom: var(--space-2);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .subscription-page {
+    padding: var(--space-4);
+  }
+
+  .subscription-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .subscription-card h1 {
+    font-size: var(--font-size-lg);
+  }
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Suscripción | VJOX</title>
+
+    <link rel="stylesheet" href="css/vjox-design.css" />
+    <link rel="stylesheet" href="css/subscription.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+
+  <body>
+    <main class="subscription-page">
+      <!-- <section class="subscription-card"> -->
+      <section class="card subscription-card">
+        <div class="subscription-icon">
+          <i class="bi bi-clock-history"></i>
+        </div>
+
+        <span class="subscription-badge">VJOX</span>
+
+        <h1>Tu periodo de prueba terminó</h1>
+
+        <p class="subscription-description">
+          Esperamos que VJOX te haya ayudado a organizar y compartir tu negocio.
+          Tus datos permanecen guardados.
+        </p>
+
+        <div class="subscription-plan">
+          <span id="planName">Cargando tu plan...</span>
+
+          <strong id="planPrice"></strong>
+
+          <small>MXN al mes</small>
+        </div>
+
+        <p class="subscription-message">
+          Activa tu suscripción para continuar utilizando VJOX.
+        </p>
+
+        <button
+          id="renewSubscriptionBtn"
+          type="button"
+          class="btn btn--primary btn--full btn--lg"
+        >
+          <i class="bi bi-whatsapp"></i>
+          Renovar suscripción
+        </button>
+
+        <button id="logoutBtn" type="button" class="btn btn--ghost btn--full">
+          Cerrar sesión
+        </button>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/database.js"></script>
+    <script src="auth/subscription.js"></script>
+  </body>
+</html>
