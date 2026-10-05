@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.6.2
+**Versión:** 4.6.3
 
 **Estado:** En desarrollo activo.
 
@@ -142,6 +142,16 @@ VJOX amplía su funcionamiento para adaptarse a diferentes giros de negocio e in
 - Opción para mostrar u ocultar la contraseña.
 - SMTP personalizado mediante Resend y Supabase Auth.
 - Envío de correos utilizando el dominio `vjox.com.mx`.
+
+
+## Versión: 4.6.3 💬 Compartir propiedades
+
+- Contacto directo con la asesora mediante WhatsApp desde la vista de propiedad.
+- Número de WhatsApp obtenido dinámicamente desde el perfil del usuario.
+- Compartir propiedades por WhatsApp desde el panel inmobiliario.
+- Mensajes con operación, precio, ubicación y enlace directo a la propiedad.
+- Separación de la lógica de compartir en `real-estate/js/share.js`.
+
 
 ---
 

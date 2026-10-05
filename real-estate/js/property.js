@@ -15,12 +15,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  renderProperty(property);
+  const sellerProfile = await getPublicProfile(property.user_id);
+
+  if (!sellerProfile) {
+    showPropertyError("No se pudo cargar la información de la asesora.");
+    return;
+  }
+
+  renderProperty(property, sellerProfile);
 
   await renderPropertyNavigation(propertyId, property.user_id);
 });
 
-function renderProperty(property) {
+function renderProperty(property, sellerProfile) {
   // =========================
   // INFORMACIÓN PRINCIPAL
   // =========================
@@ -98,6 +105,41 @@ function renderProperty(property) {
     mapsButton.href = property.location_url;
   } else {
     mapsButton.style.display = "none";
+  }
+
+  // =========================
+  // WHATSAPP
+  // =========================
+
+  const whatsappButton = document.getElementById("propertyWhatsapp");
+
+  if (whatsappButton) {
+    whatsappButton.addEventListener("click", () => {
+      const phone = sellerProfile?.whatsapp_phone;
+
+      if (!phone) {
+        alert("Esta asesora todavía no ha configurado su WhatsApp.");
+        return;
+      }
+
+      let cleanPhone = phone.replace(/\D/g, "");
+
+      if (cleanPhone.length === 10) {
+        cleanPhone = `52${cleanPhone}`;
+      }
+
+      const message = encodeURIComponent(
+        `Hola Me interesa esta propiedad:
+
+          ${property.title} Ver propiedad:
+          
+          ${window.location.href}`,
+      );
+
+      const whatsappUrl = `https://wa.me/${cleanPhone}?text=${message}`;
+
+      window.open(whatsappUrl, "_blank");
+    });
   }
 
   // =========================

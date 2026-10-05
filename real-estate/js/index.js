@@ -362,6 +362,19 @@ propertyList.addEventListener("click", async (event) => {
 
   if (!propertyId) return;
 
+  if (action === "whatsapp") {
+    const property = properties.find(
+      (item) => String(item.id) === String(propertyId),
+    );
+
+    if (!property) {
+      return;
+    }
+
+    sharePropertyWhatsApp(property);
+    return;
+  }
+
   if (action === "gallery") {
     window.location.href = `property.html?id=${propertyId}`;
   }

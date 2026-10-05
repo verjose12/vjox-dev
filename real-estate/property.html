@@ -34,80 +34,55 @@
     </header>
 
     <main class="property-detail">
-      <main class="property-detail">
+      <!-- ENCABEZADO -->
+      <section class="property-detail__header">
+        <div class="property-detail__info">
+          <h1 id="propertyTitle">Cargando propiedad...</h1>
 
-  <!-- ENCABEZADO -->
-  <section class="property-detail__header">
+          <p id="propertyLocation" class="property-detail__location"></p>
+        </div>
 
-    <div class="property-detail__info">
-      <h1 id="propertyTitle">Cargando propiedad...</h1>
+        <div class="property-detail__commercial">
+          <span id="propertyOperation"></span>
 
-      <p
-        id="propertyLocation"
-        class="property-detail__location"
-      ></p>
-    </div>
+          <strong id="propertyPrice" class="property-detail__price"></strong>
+        </div>
+      </section>
 
-    <div class="property-detail__commercial">
-      <span id="propertyOperation"></span>
-
-      <strong
-        id="propertyPrice"
-        class="property-detail__price"
-      ></strong>
-    </div>
-
-  </section>
-
-  <!-- NAVEGACIÓN ENTRE PROPIEDADES -->
-  <div
-    id="propertyNav"
-    class="vjox-record-nav"
-  ></div>
-
-  <!-- GALERÍA -->
-  <section class="property-gallery">
-
-    <div
-      id="propertyMainImage"
-      class="property-gallery__main"
-    ></div>
-
-    <div
-      id="propertyThumbnails"
-      class="property-gallery__thumbnails"
-    ></div>
-
-  </section>
+      <!-- NAVEGACIÓN ENTRE PROPIEDADES -->
+      <div id="propertyNav" class="vjox-record-nav"></div>
 
       <!-- GALERÍA -->
       <div class="property-media-card">
         <section class="property-gallery">
-        <div id="propertyMainImage" class="property-gallery__main"></div>
+          <div id="propertyMainImage" class="property-gallery__main"></div>
 
-        <div id="propertyThumbnails" class="property-gallery__thumbnails"></div>
-      </section>
+          <div
+            id="propertyThumbnails"
+            class="property-gallery__thumbnails"
+          ></div>
+        </section>
 
-      <!-- CARACTERÍSTICAS -->
-      <section class="card property-detail__features">
-        <div>
-          <i class="bi bi-door-open"></i>
-          <strong id="propertyBedrooms">--</strong>
-          <span>Recámaras</span>
-        </div>
+        <!-- CARACTERÍSTICAS -->
+        <section class="card property-detail__features">
+          <div>
+            <i class="bi bi-door-open"></i>
+            <strong id="propertyBedrooms">--</strong>
+            <span>Recámaras</span>
+          </div>
 
-        <div>
-          <i class="bi bi-droplet"></i>
-          <strong id="propertyBathrooms">--</strong>
-          <span>Baños</span>
-        </div>
+          <div>
+            <i class="bi bi-droplet"></i>
+            <strong id="propertyBathrooms">--</strong>
+            <span>Baños</span>
+          </div>
 
-        <div>
-          <i class="bi bi-car-front"></i>
-          <strong id="propertyParking">--</strong>
-          <span>Estacionamiento</span>
-        </div>
-      </section>
+          <div>
+            <i class="bi bi-car-front"></i>
+            <strong id="propertyParking">--</strong>
+            <span>Estacionamiento</span>
+          </div>
+        </section>
       </div>
 
       <!-- INFORMACIÓN -->
@@ -143,7 +118,7 @@
       <section class="property-detail__actions">
         <button type="button" id="propertyWhatsapp" class="btn btn--whatsapp">
           <i class="bi bi-whatsapp"></i>
-          Compartir por WhatsApp
+          Contacta por WhatsApp
         </button>
       </section>
     </main>

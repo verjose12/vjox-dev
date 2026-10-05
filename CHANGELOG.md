@@ -451,6 +451,41 @@ VJOX amplía su arquitectura para admitir distintos giros de negocio, incorporan
 - El formulario de propiedades ahora funciona tanto para crear como para editar.
 - Las fotografías existentes se conservan al actualizar una propiedad.
 
+
+## [4.6.2] - 2026-10-04
+
+### Añadido
+
+- Eliminación de propiedades desde el panel inmobiliario.
+- Modal propio de confirmación para eliminar una propiedad.
+- Actualización automática del panel y contadores después de eliminar.
+
+### Mejorado
+
+- Se reemplazó la confirmación nativa del navegador por una interfaz integrada con el diseño de VJOX.
+- Se mejoró el flujo de administración de propiedades desde las tarjetas del panel.
+
+---
+
+## [4.6.3] - 2026-10-05
+
+### WhatsApp inmobiliario
+
+### Añadido
+
+- Contacto directo por WhatsApp desde la vista pública de una propiedad.
+- El número de WhatsApp se obtiene dinámicamente del perfil de la asesora.
+- Mensaje de contacto con nombre y enlace directo de la propiedad.
+- Opción para compartir propiedades por WhatsApp desde el panel inmobiliario.
+- Nuevo módulo `real-estate/js/share.js` para centralizar la lógica de compartir propiedades.
+- Mensaje de propiedad con tipo de operación, precio, ubicación y enlace a fotografías y detalles.
+
+### Mejorado
+
+- Separación entre **Contactar por WhatsApp** y **Compartir por WhatsApp**.
+- Limpieza de elementos duplicados en la estructura de `property.html`.
+- Preparación de la arquitectura de compartir del módulo inmobiliario para futuras integraciones.
+
 ## v4.7.0
 
 Planeado
