@@ -39,7 +39,7 @@
 
       <h1>VJOX · Agregar propiedad</h1>
 
-      <span class="version">v4.7.0</span>
+      <span class="version">v4.7.1</span>
     </header>
 
     <!-- =========================
@@ -123,12 +123,16 @@
     ========================================= -->
 
         <div class="property-form-header">
-          <div>
-            <h2>Agregar propiedad</h2>
-            <p class="muted">
+          <span class="property-form-header__spacer" aria-hidden="true"></span>
+
+          <div class="property-form-header__title">
+            <h2 id="propertyFormTitle">Agregar propiedad</h2>
+            <p id="propertyFormSubtitle" class="muted">
               Completa la información para agregarla a tu inventario.
             </p>
           </div>
+
+          <a href="./index.html" class="property-form-cancel"> Cancelar </a>
         </div>
 
         <!-- ========================================
@@ -277,12 +281,7 @@
             <div class="form-group">
               <label for="city"> Ciudad </label>
 
-              <input
-                id="city"
-                name="city"
-                type="text"
-                value="Ciudad Juárez"
-              />
+              <input id="city" name="city" type="text" value="Ciudad Juárez" />
             </div>
 
             <!-- Ubicación -->

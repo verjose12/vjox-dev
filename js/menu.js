@@ -38,6 +38,12 @@ closeSideMenuBtn.addEventListener("click", closeSideMenu);
 
 sideMenuOverlay.addEventListener("click", closeSideMenu);
 
+sideMenu.querySelectorAll(".side-menu__link").forEach((link) => {
+  link.addEventListener("click", () => {
+    closeSideMenu();
+  });
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeSideMenu();
@@ -71,8 +77,7 @@ if (logoutBtn) {
       return;
     }
 
-    const loginUrl =
-      document.body.dataset.loginUrl || "./auth/login.html";
+    const loginUrl = document.body.dataset.loginUrl || "./auth/login.html";
 
     window.location.replace(loginUrl);
   });

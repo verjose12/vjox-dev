@@ -528,6 +528,18 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Precio de $350 verificado para cuentas de productos.
 - Flujo de renovación mediante WhatsApp verificado.
 
+## [4.7.1] - 2026-10-05
+
+### Mejorado
+
+- El menú lateral ahora se cierra automáticamente al seleccionar una opción.
+- La mejora de navegación se aplica de forma compartida en los módulos de Productos e Inmobiliaria.
+- Se agregó la opción **Cancelar** al formulario de propiedades.
+- El formulario inmobiliario ahora diferencia visualmente entre agregar y editar una propiedad.
+- Al editar una propiedad, el encabezado cambia a **Editar propiedad**.
+- Al editar una propiedad, el botón final cambia a **Guardar cambios**.
+- Se mejoró la consistencia visual entre los formularios de Productos e Inmobiliaria.
+
 ## v4.8.0
 
 Planeado

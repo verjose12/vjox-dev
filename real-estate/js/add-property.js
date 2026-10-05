@@ -32,6 +32,9 @@ const propertyId = params.get("id");
 
 const isEditing = Boolean(propertyId);
 
+const propertyFormTitle = document.querySelector("#propertyFormTitle");
+const propertyFormSubtitle = document.querySelector("#propertyFormSubtitle");
+
 // ============================================================
 // INICIO
 // ============================================================
@@ -42,6 +45,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   showStep(1);
 
   if (isEditing) {
+    propertyFormTitle.textContent = "Editar propiedad";
+    propertyFormSubtitle.textContent =
+      "Modifica la información de esta propiedad.";
+
+    const savePropertyBtn = document.querySelector("#savePropertyBtn");
+
+    savePropertyBtn.innerHTML = `
+    <i class="bi bi-check-lg"></i>
+    Guardar cambios
+  `;
+
     await loadPropertyForEdit();
   }
 });

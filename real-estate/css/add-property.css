@@ -499,3 +499,25 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.property-form-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 1rem;
+}
+
+.property-form-cancel {
+  justify-self: end;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.property-form-header__title {
+  text-align: center;
+}
+
+.property-form-header__spacer {
+  justify-self: end;
+}

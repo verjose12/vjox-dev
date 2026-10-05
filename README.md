@@ -170,9 +170,18 @@ VJOX incorpora su primera versión funcional del sistema de suscripciones y comi
 - Renovación mediante contacto directo por WhatsApp.
 - Reactivación de cuentas mediante suscripción vigente.
 - Cuentas beta excluidas de expiración.
+
+## Versión: 4.7.1 ✨ Mejoras de interfaz y navegación
+
+- Cierre automático del menú lateral al seleccionar una opción.
+- Mejoras de navegación compartidas entre Productos e Inmobiliaria.
+- Opción para cancelar el registro de una propiedad.
+- Diferenciación visual entre agregar y editar propiedades.
+- Botón **Guardar cambios** durante la edición de propiedades.
+- Mayor consistencia visual entre los formularios de VJOX.
+
+
 ---
-
-
 
 
 # Tecnologías utilizadas
