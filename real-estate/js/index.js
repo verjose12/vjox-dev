@@ -538,3 +538,36 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+// ============================================================
+// FUNCIONES EN CONSTRUCCIÓN
+// ============================================================
+
+// ============================================================
+// FUNCIONES EN CONSTRUCCIÓN
+// ============================================================
+
+// ============================================================
+// FUNCIONES EN CONSTRUCCIÓN
+// ============================================================
+
+const underConstructionButtons = [
+  document.querySelector("#openAnalyticsBtn"),
+  document.querySelector("#shareCatalogBtn"),
+  document.querySelector("#openQrPromoBtn"),
+  document.querySelector("#facebookMenuBtn"),
+  document.querySelector("#settingsMenuBtn"),
+];
+
+underConstructionButtons.forEach((button) => {
+  button?.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      alert("🚧 Función en construcción.\nEstará disponible próximamente.");
+    },
+    true,
+  );
+});
