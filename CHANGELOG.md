@@ -540,6 +540,22 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Al editar una propiedad, el botón final cambia a **Guardar cambios**.
 - Se mejoró la consistencia visual entre los formularios de Productos e Inmobiliaria.
 
+## [4.7.2] - 2026-10-08
+
+### Agregado
+- Filtros interactivos de propiedades en Venta y Renta.
+- Indicador visual del filtro seleccionado.
+
+### Mejorado
+- Integración del buscador con los filtros de propiedades.
+- Actualización del listado al eliminar propiedades.
+- Contadores separados para propiedades disponibles
+  en venta, renta y propiedades cerradas.
+
+### Preparado
+- Tarjeta de Vendidas / Rentadas para una futura
+  implementación del filtro de historial.
+
 ## v4.8.0
 
 Planeado

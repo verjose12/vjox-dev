@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/vjox-design.css" />
     <link rel="stylesheet" href="./css/real-estate-modals.css?v=1.0" />
     <link rel="stylesheet" href="../css/index.css?v=2.0.5" />
+    <link rel="stylesheet" href="./css/property-filters.css?v=1" />
 
     <link
       rel="stylesheet"
@@ -32,7 +33,7 @@
 
       <h1>VJOX · Propiedades</h1>
 
-      <span class="version">v4.7.1</span>
+      <span class="version">v4.7.2</span>
     </header>
 
     <!-- Overlay menú -->
@@ -135,34 +136,37 @@
         <!-- Resumen -->
 
         <div class="inventory-summary">
-          <article class="summary-card">
+          <!-- VENTA -->
+          <button
+            type="button"
+            class="summary-card"
+            id="filterSaleBtn"
+            aria-pressed="false"
+          >
             <i class="bi bi-houses summary-icon"></i>
+            <span class="summary-card__label">Venta</span>
+            <strong id="totalProperties" class="summary-card__value">0</strong>
+          </button>
 
-            <span class="summary-card__label"> Venta </span>
-
-            <strong id="totalProperties" class="summary-card__value">
-              0
-            </strong>
-          </article>
-
-          <article class="summary-card">
+          <!-- RENTA -->
+          <button
+            type="button"
+            class="summary-card"
+            id="filterRentBtn"
+            aria-pressed="false"
+          >
             <i class="bi bi-house-check summary-icon"></i>
+            <span class="summary-card__label">Renta</span>
+            <strong id="availableProperties" class="summary-card__value"
+              >0</strong
+            >
+          </button>
 
-            <span class="summary-card__label"> Renta </span>
-
-            <strong id="availableProperties" class="summary-card__value">
-              0
-            </strong>
-          </article>
-
+          <!-- VENDIDAS / RENTADAS (SIN ACTIVAR) -->
           <article class="summary-card">
             <i class="bi bi-key summary-icon"></i>
-
-            <span class="summary-card__label"> Vendidas / Rentadas </span>
-
-            <strong id="closedProperties" class="summary-card__value">
-              0
-            </strong>
+            <span class="summary-card__label">Vendidas / Rentadas</span>
+            <strong id="closedProperties" class="summary-card__value">0</strong>
           </article>
         </div>
 

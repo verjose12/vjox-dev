@@ -28,6 +28,94 @@ const closedPropertiesEl = document.querySelector("#closedProperties");
 let properties = [];
 
 // ============================================================
+// FILTROS DE PROPIEDADES
+// ============================================================
+
+const filterSaleBtn = document.querySelector("#filterSaleBtn");
+const filterRentBtn = document.querySelector("#filterRentBtn");
+
+let activePropertyFilter = null;
+
+// Filtra las propiedades según su operación
+function filterByOperation(items, operation) {
+  if (!operation) return items;
+
+  return items.filter(
+    (property) =>
+      property.operation_type === operation && property.status === "available",
+  );
+}
+
+// Aplica el filtro activo y actualiza la lista
+// Filtra las propiedades por texto
+function filterBySearch(items, query) {
+  if (!query) return items;
+
+  return items.filter((property) => {
+    const searchableText = [
+      property.title,
+      property.neighborhood,
+      property.city,
+      property.property_type,
+      property.operation_type,
+      property.status,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(query);
+  });
+}
+
+// Combina los filtros activos
+function applyFilters() {
+  const query = searchInput.value.trim().toLowerCase();
+
+  const byOperation = filterByOperation(properties, activePropertyFilter);
+
+  const filtered = filterBySearch(byOperation, query);
+
+  renderProperties(filtered);
+
+  statusEl.textContent =
+    !filtered.length && properties.length
+      ? "No se encontraron propiedades con estos filtros."
+      : "";
+}
+
+// Activar o desactivar el filtro de Venta
+// Actualiza visualmente los botones
+function updateFilterButtons() {
+  filterSaleBtn.setAttribute(
+    "aria-pressed",
+    String(activePropertyFilter === "sale"),
+  );
+
+  filterRentBtn.setAttribute(
+    "aria-pressed",
+    String(activePropertyFilter === "rent"),
+  );
+}
+
+// Activa o desactiva un filtro
+function togglePropertyFilter(operation) {
+  activePropertyFilter = activePropertyFilter === operation ? null : operation;
+
+  updateFilterButtons();
+  applyFilters();
+}
+
+// Botón Venta
+filterSaleBtn.addEventListener("click", () => {
+  togglePropertyFilter("sale");
+});
+
+// Botón Renta
+filterRentBtn.addEventListener("click", () => {
+  togglePropertyFilter("rent");
+});
+// ============================================================
 // INICIO
 // ============================================================
 
@@ -69,8 +157,8 @@ async function loadProperties() {
 
   properties = data || [];
 
-  renderProperties(properties);
   updateSummary(properties);
+  applyFilters();
 
   statusEl.textContent = properties.length
     ? ""
@@ -459,14 +547,19 @@ confirmDeletePropertyBtn.addEventListener("click", async () => {
 // ============================================================
 
 function updateSummary(items) {
+  // Propiedades disponibles para venta
   const forSale = items.filter(
-    (property) => property.operation_type === "sale",
+    (property) =>
+      property.operation_type === "sale" && property.status === "available",
   ).length;
 
+  // Propiedades disponibles para renta
   const forRent = items.filter(
-    (property) => property.operation_type === "rent",
+    (property) =>
+      property.operation_type === "rent" && property.status === "available",
   ).length;
 
+  // Propiedades vendidas o rentadas
   const closed = items.filter(
     (property) => property.status === "sold" || property.status === "rented",
   ).length;
@@ -480,33 +573,7 @@ function updateSummary(items) {
 // BUSCADOR
 // ============================================================
 
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.trim().toLowerCase();
-
-  if (!query) {
-    renderProperties(properties);
-    return;
-  }
-
-  const filteredProperties = properties.filter((property) => {
-    const searchableText = [
-      property.title,
-      // property.location_text,
-      property.neighborhood,
-      property.city,
-      property.property_type,
-      property.operation_type,
-      property.status,
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-
-    return searchableText.includes(query);
-  });
-
-  renderProperties(filteredProperties);
-});
+searchInput.addEventListener("input", applyFilters);
 
 // ============================================================
 // STATUS

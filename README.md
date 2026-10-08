@@ -180,6 +180,10 @@ VJOX incorpora su primera versión funcional del sistema de suscripciones y comi
 - Botón **Guardar cambios** durante la edición de propiedades.
 - Mayor consistencia visual entre los formularios de VJOX.
 
+## Versión: 4.7.2 filtrado propiedades
+- Filtrado de propiedades disponibles por Venta y Renta.
+- Búsqueda combinada con filtros.
+- Contadores de propiedades disponibles y cerradas.
 
 ---
 
