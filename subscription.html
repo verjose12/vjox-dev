@@ -40,6 +40,15 @@
           <small>MXN al mes</small>
         </div>
 
+        <button
+          id="viewSubscriptionBenefitsBtn"
+          type="button"
+          class="subscription-benefits-link"
+        >
+          <i class="bi bi-info-circle"></i>
+          Ver beneficios y condiciones
+        </button>
+
         <p class="subscription-message">
           Activa tu suscripción para continuar utilizando VJOX.
         </p>
@@ -58,6 +67,55 @@
         </button>
       </section>
     </main>
+
+    <!-- MODAL: BENEFICIOS Y CONDICIONES -->
+    <div
+      id="subscriptionBenefitsModal"
+      class="subscription-modal"
+      aria-hidden="true"
+    >
+      <section
+        class="subscription-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="subscriptionModalTitle"
+        tabindex="-1"
+      >
+        <div class="subscription-modal__header">
+          <div>
+            <span class="subscription-modal__eyebrow">
+              VJOX · SUSCRIPCIONES
+            </span>
+
+            <h2 id="subscriptionModalTitle">Beneficios y condiciones</h2>
+          </div>
+
+          <button
+            id="closeSubscriptionBenefitsBtn"
+            type="button"
+            class="subscription-modal__close"
+            aria-label="Cerrar"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div
+          id="subscriptionBenefitsContent"
+          class="subscription-modal__content"
+        >
+          <p>Consulta los beneficios de tu plan VJOX.</p>
+        </div>
+
+        <button
+          id="acceptSubscriptionBenefitsBtn"
+          type="button"
+          class="btn btn--primary btn--full"
+        >
+          Entendido
+        </button>
+      </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 

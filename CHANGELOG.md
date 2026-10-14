@@ -499,7 +499,7 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Campos `trial_ends_at` y `subscription_ends_at` en los perfiles de usuario.
 - Validación automática de vigencia al acceder a las vistas privadas.
 - Nueva pantalla de renovación de suscripción.
-- Plan VJOX Productos por $350 MXN al mes.
+- Plan VJOX Productos por $50 MXN al mes.
 - Plan VJOX Inmobiliario por $800 MXN al mes.
 - Solicitud de renovación mediante WhatsApp.
 - Identificación de la cuenta mediante nombre del negocio y correo electrónico.
@@ -525,7 +525,7 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Bloqueo automático verificado con periodo de prueba vencido.
 - Reactivación verificada mediante `subscription_ends_at`.
 - Precio de $800 verificado para cuentas inmobiliarias.
-- Precio de $350 verificado para cuentas de productos.
+- Precio de $50 verificado para cuentas de productos.
 - Flujo de renovación mediante WhatsApp verificado.
 
 ## [4.7.1] - 2026-10-05
@@ -555,6 +555,19 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 ### Preparado
 - Tarjeta de Vendidas / Rentadas para una futura
   implementación del filtro de historial.
+
+## [4.7.3] - 2026-10-13
+
+### Suscripciones y Plan Fundadores
+- Prueba gratuita de 10 días para nuevos usuarios.
+- Identificación automática de fundadores mediante Supabase.
+- Precios dinámicos según periodo y tipo de usuario.
+- Nuevo modal de beneficios y condiciones.
+- Actualización de tarifas en pantalla y WhatsApp.
+- Mejoras responsive en la pantalla de suscripción.
+
+
+
 
 ## v4.8.0
 

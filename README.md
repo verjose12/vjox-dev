@@ -165,7 +165,7 @@ VJOX incorpora su primera versión funcional del sistema de suscripciones y comi
 - Control de acceso mediante fecha de vencimiento.
 - Protección automática de vistas privadas al finalizar la prueba o suscripción.
 - Conservación de productos, propiedades y datos después del vencimiento.
-- VJOX Productos: $350 MXN al mes.
+- VJOX Productos: $50 MXN al mes.
 - VJOX Inmobiliario: $800 MXN al mes.
 - Renovación mediante contacto directo por WhatsApp.
 - Reactivación de cuentas mediante suscripción vigente.
@@ -184,6 +184,28 @@ VJOX incorpora su primera versión funcional del sistema de suscripciones y comi
 - Filtrado de propiedades disponibles por Venta y Renta.
 - Búsqueda combinada con filtros.
 - Contadores de propiedades disponibles y cerradas.
+
+
+
+##  Versión: 4.7.3 Suscripciones VJOX
+
+VJOX ofrece 10 días de prueba gratuita y planes mensuales.
+
+| Plan | Precio mensual |
+|---|---:|
+| Productos (oct-dic 2026) | $49.99 MXN |
+| Productos Fundadores (desde enero 2027) | $150 MXN |
+| Productos General (desde enero 2027) | $350 MXN |
+| Inmobiliaria | $799.99 MXN |
+
+La promoción de $49.99 aplica a todos los usuarios de Productos hasta diciembre de 2026.
+
+Los usuarios de Productos registrados entre octubre y diciembre de 2026 obtienen el beneficio de fundador.
+
+Las suscripciones se gestionan mediante Supabase y la renovación se solicita por WhatsApp.
+
+La publicación directa en Facebook permanece pendiente de aprobación por Meta.
+
 
 ---
 
