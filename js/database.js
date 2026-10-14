@@ -82,7 +82,6 @@ async function deleteProduct(productId) {
   return true;
 }
 
-// async function updateProductPhotos(productId, imageUrls, newStock) {
 async function updateProductPhotos(
   productId,
   imageUrls,
@@ -92,11 +91,6 @@ async function updateProductPhotos(
 ) {
   const { data, error } = await supabaseClient
     .from("products")
-
-    // .update({
-    //   image_urls: imageUrls,
-    //   stock: newStock
-    // })
     .update({
       image_urls: imageUrls,
       stock: newStock,
@@ -109,6 +103,30 @@ async function updateProductPhotos(
 
   if (error) {
     console.error("Error actualizando producto:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// ============================================================
+// VJOX - ACTUALIZAR PRECIOS DE PRODUCTO
+// ============================================================
+
+async function updateProductPrices(productId, price, perPhoto, perPhotoPrices) {
+  const { data, error } = await supabaseClient
+    .from("products")
+    .update({
+      price: price,
+      per_photo: perPhoto,
+      per_photo_prices: perPhotoPrices,
+    })
+    .eq("id", productId)
+    .select("*")
+    .single();
+
+  if (error) {
+    console.error("Error actualizando precios:", error);
     return null;
   }
 

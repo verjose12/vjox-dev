@@ -51,27 +51,24 @@ function formatPrice(n) {
   }
 }
 
-
 function getProductPriceLabel(product) {
-  const photoPrices = Array.isArray(product.perPhotoPrices)
-    ? product.perPhotoPrices.filter((price) => price !== null && price !== "")
-    : [];
+  if (product.perPhoto) {
+    const photoPrices = Array.isArray(product.perPhotoPrices)
+      ? product.perPhotoPrices.filter((price) => price !== null && price !== "")
+      : [];
 
-  // Si tiene precios individuales, usamos esos para decidir
-  if (photoPrices.length > 0) {
-    const uniquePrices = [
-      ...new Set(photoPrices.map((price) => Number(price))),
-    ];
-
-    if (uniquePrices.length === 1) {
-      return formatPrice(uniquePrices[0]);
+    if (photoPrices.length === 0) {
+      return "Sin precio";
     }
 
-    return "Varios precios";
+    const uniquePrices = [...new Set(photoPrices.map(Number))];
+
+    return uniquePrices.length === 1
+      ? formatPrice(uniquePrices[0])
+      : "Varios precios";
   }
 
-  // Si no hay precios individuales, usamos el precio general
-  if (product.price != null && product.price !== "") {
+  if (product.price !== null && product.price !== "") {
     return formatPrice(product.price);
   }
 
@@ -160,6 +157,30 @@ function renderModalPhotos() {
     });
 
     photoCard.appendChild(img);
+
+    // Campo de precio para cada fotografía
+
+    const priceLabel = document.createElement("label");
+    priceLabel.textContent = "Precio";
+
+    const priceInput = document.createElement("input");
+    priceInput.type = "number";
+    priceInput.className = "edit-photo-price";
+    priceInput.min = "0";
+    priceInput.step = "0.01";
+    priceInput.placeholder = "Sin precio";
+
+    const currentPrice = product.perPhoto
+      ? product.perPhotoPrices?.[index]
+      : product.price;
+    priceInput.value =
+      currentPrice !== null && currentPrice !== undefined ? currentPrice : "";
+
+    priceInput.dataset.photoIndex = index;
+
+    priceLabel.appendChild(priceInput);
+    photoCard.appendChild(priceLabel);
+
     photoCard.appendChild(deleteButton);
 
     modalPhotos.appendChild(photoCard);
@@ -346,7 +367,7 @@ async function addPhotosToProduct() {
 
     for (const file of selectedFiles) {
       // const imageUrl = await uploadImageToCloudinary(file);
-      const imageUrl =await uploadImageToCloudinary(file, product.userId);
+      const imageUrl = await uploadImageToCloudinary(file, product.userId);
 
       newUrls.push(imageUrl);
     }
@@ -407,6 +428,65 @@ async function addPhotosToProduct() {
   }
 }
 
+async function saveProductPriceChanges() {
+  const product = state.editingProduct;
+  if (!product) return;
+
+  const inputs = Array.from(modalPhotos.querySelectorAll(".edit-photo-price"));
+
+  const prices = inputs.map((input) =>
+    input.value.trim() === "" ? null : Number(input.value),
+  );
+
+  // Validar que los precios sean correctos
+  if (
+    prices.some(
+      (price) => price !== null && (!Number.isFinite(price) || price < 0),
+    )
+  ) {
+    setStatus("Revisa los precios ingresados.", true);
+    return;
+  }
+
+  // Detectar si existen precios diferentes
+  const uniquePrices = new Set(prices);
+  const perPhoto = uniquePrices.size > 1;
+
+  // Si todos son iguales, usamos precio general
+  const generalPrice = perPhoto ? product.price : (prices[0] ?? null);
+
+  finishEditBtn.disabled = true;
+
+  try {
+    const updated = await updateProductPrices(
+      product.id,
+      generalPrice,
+      perPhoto,
+      perPhoto ? prices : [],
+    );
+
+    if (!updated) {
+      setStatus("No se pudieron guardar los precios.", true);
+      return;
+    }
+
+    product.price = updated.price;
+    product.perPhoto = updated.per_photo;
+    product.perPhotoPrices = updated.per_photo_prices || [];
+
+    updateInventorySummary();
+    renderList();
+    closeProductEditor();
+
+    setStatus("Precios actualizados correctamente.");
+  } catch (error) {
+    console.error(error);
+    setStatus("Ocurrió un error al guardar los precios.", true);
+  } finally {
+    finishEditBtn.disabled = false;
+  }
+}
+
 function closeProductEditor() {
   editModal.classList.add("hidden");
   state.editingProduct = null;
@@ -414,7 +494,7 @@ function closeProductEditor() {
 //eventos del modal
 closeModalBtn.addEventListener("click", closeProductEditor);
 
-finishEditBtn.addEventListener("click", closeProductEditor);
+finishEditBtn.addEventListener("click", saveProductPriceChanges);
 
 editModal.addEventListener("click", (event) => {
   if (event.target === editModal) {

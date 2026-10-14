@@ -556,7 +556,7 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Tarjeta de Vendidas / Rentadas para una futura
   implementación del filtro de historial.
 
-## [4.7.3] - 2026-10-13
+## [4.7.4] - 2026-10-13
 
 ### Suscripciones y Plan Fundadores
 - Prueba gratuita de 10 días para nuevos usuarios.
@@ -565,6 +565,20 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Nuevo modal de beneficios y condiciones.
 - Actualización de tarifas en pantalla y WhatsApp.
 - Mejoras responsive en la pantalla de suscripción.
+### Edición de precios de productos
+
+### Añadido
+- Campos para editar el precio debajo de cada fotografía del producto desde el inventario.
+- Guardado de los precios modificados en Supabase mediante el botón **Terminar**.
+- Detección automática de precios diferentes para cambiar de precio general a precios individuales.
+- Conversión automática a precio general cuando todas las fotografías tienen el mismo importe.
+
+### Mejorado
+- Actualización del precio mostrado en las tarjetas del inventario después de editar.
+- Recálculo del valor total del inventario al guardar los cambios.
+- Compatibilidad de la edición de precios con fotografías agregadas a productos existentes.
+
+
 
 
 

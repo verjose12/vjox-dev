@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.7.0
+**Versión:** 4.7.4
 
 **Estado:** En desarrollo activo.
 
@@ -205,6 +205,15 @@ Los usuarios de Productos registrados entre octubre y diciembre de 2026 obtienen
 Las suscripciones se gestionan mediante Supabase y la renovación se solicita por WhatsApp.
 
 La publicación directa en Facebook permanece pendiente de aprobación por Meta.
+
+## Versión: 4.7.4 💰 Edición de precios de productos
+
+- Edición de precios desde el inventario, debajo de cada fotografía.
+- Cambio automático entre precio general y precios individuales según los importes ingresados.
+- Guardado en Supabase al pulsar **Terminar**.
+- Actualización de los precios mostrados y del valor total del inventario.
+- Edición compatible con productos a los que se agregan nuevas fotografías.
+
 
 
 ---
