@@ -153,6 +153,18 @@ function createQrPromoModal() {
   `;
 
   document.body.appendChild(modal);
+  // Adaptar los textos para Inmobiliaria
+  const isRealEstate = window.location.pathname
+    .split("/")
+    .includes("real-estate");
+
+  if (isRealEstate) {
+    modal.querySelector(".qr-promo-modal__description").textContent =
+      "Comparte este código para que tus clientes descubran tus propiedades en VJOX.";
+
+    modal.querySelector(".qr-promo-info span").textContent =
+      "Puedes actualizar tus propiedades, precios y disponibilidad sin cambiar este QR.";
+  }
 }
 
 /* =========================
@@ -199,7 +211,15 @@ async function buildPermanentQrUrl() {
     throw new Error("No hay un usuario autenticado.");
   }
 
-  const qrUrl = new URL("viewer_qr.html", window.location.href);
+  // const qrUrl = new URL("viewer_qr.html", window.location.href);
+  const isRealEstate = window.location.pathname
+    .split("/")
+    .includes("real-estate");
+
+  const qrUrl = new URL(
+    isRealEstate ? "../viewer_qr.html" : "viewer_qr.html",
+    window.location.href,
+  );
 
   qrUrl.searchParams.set("user", user.id);
   qrUrl.searchParams.set("source", "qr");
@@ -233,6 +253,7 @@ function generateQrCode(qrUrl) {
 }
 
 let currentQrUrl = "";
+let currentQrBusinessName = "VJOX";
 
 function showQrFallback(message, url = "") {
   const messageElement = document.querySelector("#qrPromoMessage");
@@ -283,6 +304,9 @@ function getQrImageSource() {
 }
 
 async function createPrintableQrPoster() {
+  const isRealEstate = window.location.pathname
+    .split("/")
+    .includes("real-estate");
   const qrSource = getQrImageSource();
 
   if (!qrSource) {
@@ -325,7 +349,11 @@ async function createPrintableQrPoster() {
   ctx.fillStyle = "#ffffff";
   ctx.font = "800 64px system-ui, -apple-system, Segoe UI, sans-serif";
 
-  ctx.fillText("¿Vienes aburrido?", canvas.width / 2, 300);
+  ctx.fillText(
+    isRealEstate ? "¿Buscas casa?" : "¡Descubre algo nuevo!",
+    canvas.width / 2,
+    300,
+  );
 
   // =========================
   // DESCRIPCIÓN
@@ -334,9 +362,19 @@ async function createPrintableQrPoster() {
   ctx.fillStyle = "#8a8f98";
   ctx.font = "500 42px system-ui, -apple-system, Segoe UI, sans-serif";
 
-  ctx.fillText("Mira productos y ofertas", canvas.width / 2, 390);
+  ctx.fillText(
+    isRealEstate ? "Explora las propiedades" : "Explora nuestro catálogo",
+    canvas.width / 2,
+    390,
+  );
 
-  ctx.fillText("durante tu viaje", canvas.width / 2, 445);
+  ctx.fillText(
+    isRealEstate
+      ? `disponibles en ${currentQrBusinessName}`
+      : "y encuentra lo que buscas",
+    canvas.width / 2,
+    445,
+  );
 
   // =========================
   // QR
@@ -381,7 +419,9 @@ async function createPrintableQrPoster() {
   ctx.font = "400 27px system-ui, -apple-system, Segoe UI, sans-serif";
 
   ctx.fillText(
-    "Productos, precios y disponibilidad pueden cambiar",
+    isRealEstate
+      ? "Propiedades, precios y disponibilidad pueden cambiar"
+      : "Productos, precios y disponibilidad pueden cambiar",
     canvas.width / 2,
     1430,
   );
@@ -421,6 +461,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const qrUrl = await buildPermanentQrUrl();
+      const {
+        data: { user },
+      } = await supabaseClient.auth.getUser();
+
+      if (!user) {
+        throw new Error("No se encontró el usuario.");
+      }
+
+      const { data: profile, error: profileError } = await supabaseClient
+        .from("profiles")
+        .select("business_name")
+        .eq("id", user.id)
+        .single();
+
+      if (profileError) {
+        console.warn("No se pudo obtener el nombre del negocio:", profileError);
+      }
+
+      currentQrBusinessName = profile?.business_name?.trim() || "VJOX";
 
       console.log("VJOX QR — enlace permanente:", qrUrl);
 

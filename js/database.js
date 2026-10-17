@@ -257,6 +257,23 @@ async function getPropertyById(propertyId) {
   return data;
 }
 
+// Obtener propiedades disponibles para el catálogo público
+async function getPublicAvailableProperties(userId) {
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .select("id, user_id, title")
+    .eq("user_id", userId)
+    .eq("status", "available")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error obteniendo propiedades públicas:", error);
+    return null;
+  }
+
+  return data;
+}
+
 // Actualizar propiedad
 
 async function updateProperty(propertyId, property) {

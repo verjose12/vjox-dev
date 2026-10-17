@@ -150,14 +150,27 @@ async function shareCatalog() {
     console.error("Error registrando compartir:", analyticsError);
   }
 
-  const catalogUrl = new URL("viewer_qr.html", window.location.href);
+  // Detectar desde qué módulo se está compartiendo
+  const isRealEstate = window.location.pathname
+    .split("/")
+    .includes("real-estate");
+
+  // Construir el enlace hacia la landing compartida
+  const catalogUrl = new URL(
+    isRealEstate ? "../viewer_qr.html" : "viewer_qr.html",
+    window.location.href,
+  );
 
   catalogUrl.searchParams.set("user", user.id);
   catalogUrl.searchParams.set("source", "share");
 
   const shareData = {
-    title: "Mi catálogo VJOX",
-    text: "Mira los productos disponibles en mi catálogo.",
+    title: isRealEstate ? "Mi catálogo inmobiliario VJOX" : "Mi catálogo VJOX",
+
+    text: isRealEstate
+      ? "Explora las propiedades disponibles en mi catálogo."
+      : "Mira los productos disponibles en mi catálogo.",
+
     url: catalogUrl.toString(),
   };
 

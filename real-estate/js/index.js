@@ -620,8 +620,6 @@ function escapeHtml(value) {
 
 const underConstructionButtons = [
   document.querySelector("#openAnalyticsBtn"),
-  document.querySelector("#shareCatalogBtn"),
-  document.querySelector("#openQrPromoBtn"),
   document.querySelector("#facebookMenuBtn"),
   document.querySelector("#settingsMenuBtn"),
 ];

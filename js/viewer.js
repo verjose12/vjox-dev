@@ -216,30 +216,6 @@ function renderGallery(product, sellerProfile) {
     pricesElement.textContent = `Precio: ${formatPrice(product.price)}`;
   }
 
-  //   askButton.addEventListener("click", () => {
-
-  //     const selectedPhotoNumber = selectedImageIndex + 1;
-
-  //     const selectedPhotoUrl = new URL(window.location.href);
-  //     selectedPhotoUrl.searchParams.set("photo", selectedPhotoNumber);
-
-  //     const message = encodeURIComponent(
-  //       `Hola 👋
-
-  // Me interesa este producto:
-
-  // ${product.title}
-
-  // 📸 Fotografía seleccionada:
-  // ${selectedPhotoUrl.toString()}`
-  //     );
-
-  //     const base = DEFAULT_PHONE
-  //       ? `https://wa.me/${DEFAULT_PHONE}?text=`
-  //       : "https://api.whatsapp.com/send?text=";
-
-  //     window.open(base + message, "_blank");
-  //   });
 
   askButton.addEventListener("click", () => {
     const phone = sellerProfile?.whatsapp_phone;

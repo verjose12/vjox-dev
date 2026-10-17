@@ -579,11 +579,40 @@ VJOX incorpora su primera versión funcional del modelo de suscripción, permiti
 - Compatibilidad de la edición de precios con fotografías agregadas a productos existentes.
 
 
+## [4.8.0] - 2026-10-16
+
+### Catálogos públicos y QR multi-giro
+
+VJOX amplía las herramientas de promoción y
+compartición de catálogos al módulo inmobiliario.
+
+### Añadido
+
+- Función Compartir catálogo para Inmobiliaria.
+- Generación de QR promocional para asesores inmobiliarios.
+- Póster QR personalizado con el nombre del negocio.
+- Consulta de propiedades disponibles para el catálogo público.
+- Identificación automática del giro mediante business_type.
+
+### Mejorado
+
+- Landing viewer_qr.html reutilizable para Productos e Inmobiliaria.
+- Textos dinámicos según el giro del negocio.
+- Validación de disponibilidad antes de habilitar el acceso al catálogo.
+- Mensajes promocionales genéricos para diferentes lugares de exhibición.
+- Rutas de compartir y QR compatibles con ambos módulos.
+- Reutilización de trigger_qr.js y menu.js.
+- Conservación de estadísticas de enlaces compartidos y escaneos QR.
+
+### Pendiente
+
+- Implementación de URL públicas amigables mediante gallery_slug.
+- Reportes avanzados.
+- Inventario avanzado.
 
 
 
-
-## v4.8.0
+## v4.9.0
 
 Planeado
 

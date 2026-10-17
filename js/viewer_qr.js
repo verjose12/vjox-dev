@@ -31,6 +31,43 @@ function setQRMessage(message, isError = false) {
     : "var(--color-text-muted)";
 }
 
+function updateQRLanding(businessType) {
+  const isRealEstate = businessType === "real_estate";
+
+  const eyebrow = document.querySelector("#qrEyebrow");
+  const title = document.querySelector("#qrTitle");
+  const description = document.querySelector("#qrDescription");
+  const button = document.querySelector("#openCatalogBtn");
+
+  if (eyebrow) {
+    eyebrow.textContent = isRealEstate
+      ? "ENCUENTRA TU PRÓXIMO HOGAR"
+      : "DESCUBRE ALGO NUEVO";
+  }
+
+  if (title) {
+    title.textContent = isRealEstate
+      ? "Tu próximo hogar podría estar aquí"
+      : "Productos que podrían interesarte";
+  }
+
+  if (description) {
+    description.textContent = isRealEstate
+      ? "Explora las propiedades disponibles en este catálogo y contacta directamente al asesor inmobiliario para recibir más información."
+      : "Explora el catálogo, descubre productos disponibles y contacta directamente al vendedor.";
+  }
+
+  if (button) {
+    button.innerHTML = isRealEstate
+      ? 'Explorar propiedades <span aria-hidden="true">→</span>'
+      : 'Ver catálogo <span aria-hidden="true">→</span>';
+  }
+
+  document.title = isRealEstate
+    ? "Descubre propiedades | VJOX"
+    : "Descubre productos | VJOX";
+}
+
 async function initQRViewer() {
   const openCatalogBtn = document.querySelector("#openCatalogBtn");
 
@@ -65,27 +102,75 @@ async function initQRViewer() {
       return;
     }
 
+    // Identificar el giro del negocio
+    const businessType = sellerProfile.business_type || "products";
+
+    const isRealEstate = businessType === "real_estate";
+
+    console.log("VJOX — Giro del catálogo:", businessType);
+
+    updateQRLanding(businessType);
+
     // 3. Buscar los productos actuales del vendedor
-    const products = await getProductsByUser(userId);
+    // const products = await getProductsByUser(userId);
 
-    if (!products || products.length === 0) {
-      setQRMessage(
-        "Este catálogo no tiene productos disponibles por el momento.",
-      );
-      return;
+    // if (!products || products.length === 0) {
+    //   setQRMessage(
+    //     "Este catálogo no tiene productos disponibles por el momento.",
+    //   );
+    //   return;
+    // }
+
+    // // 4. Elegimos un producto ACTUAL como entrada
+    // const entryProduct = products[0];
+
+    // // 5. Construimos el enlace usando el flujo
+    // //    que viewer.html ya entiende
+    // const catalogUrl = buildCatalogEntryLink(entryProduct.id, userId);
+
+    let catalogUrl;
+
+    if (isRealEstate) {
+      // Catálogo inmobiliario
+      const properties = await getPublicAvailableProperties(userId);
+
+      if (!properties || properties.length === 0) {
+        setQRMessage(
+          "Este catálogo no tiene propiedades disponibles por el momento.",
+        );
+        return;
+      }
+
+      const entryProperty = properties[0];
+
+      const url = new URL("real-estate/property.html", window.location.href);
+      url.searchParams.set("id", entryProperty.id);
+
+      catalogUrl = url.toString();
+    } else {
+      // Catálogo de productos: conservamos su funcionamiento actual
+      const products = await getProductsByUser(userId);
+
+      if (!products || products.length === 0) {
+        setQRMessage(
+          "Este catálogo no tiene productos disponibles por el momento.",
+        );
+        return;
+      }
+
+      const entryProduct = products[0];
+      catalogUrl = buildCatalogEntryLink(entryProduct.id, userId);
     }
-
-    // 4. Elegimos un producto ACTUAL como entrada
-    const entryProduct = products[0];
-
-    // 5. Construimos el enlace usando el flujo
-    //    que viewer.html ya entiende
-    const catalogUrl = buildCatalogEntryLink(entryProduct.id, userId);
 
     // 6. Ya podemos permitir entrar
     openCatalogBtn.disabled = false;
-
     setQRMessage("");
+
+    const catalogStatus = document.querySelector("#qrCatalogStatus");
+
+    if (catalogStatus) {
+      catalogStatus.hidden = false;
+    }
 
     // openCatalogBtn.addEventListener("click", () => {
     //   window.location.href = catalogUrl;

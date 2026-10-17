@@ -1,4 +1,4 @@
-const CACHE_NAME = "vjox-cache-v4.7.4";
+const CACHE_NAME = "vjox-cache-v4.8.0";
 
 const APP_FILES = [
   "./",

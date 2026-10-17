@@ -10,7 +10,7 @@ Su objetivo es reducir el tiempo que un vendedor dedica a preparar publicaciones
 
 # Estado del proyecto
 
-**Versión:** 4.7.4
+**Versión:** 4.8.0
 
 **Estado:** En desarrollo activo.
 
@@ -38,7 +38,7 @@ Actualmente el proyecto se encuentra en una etapa de profesionalización, prepar
 * Estadísticas de visitas, escaneos QR y enlaces compartidos.
 * Generación de material promocional descargable para impresión.
 
-* Periodo de prueba gratuito de 7 días para nuevas cuentas.
+* Periodo de prueba gratuito de 10 días para nuevas cuentas.
 * Sistema de suscripciones con control automático de vigencia.
 * Planes diferenciados para Productos e Inmobiliaria.
 * Renovación de suscripción mediante contacto por WhatsApp.
@@ -215,6 +215,21 @@ La publicación directa en Facebook permanece pendiente de aprobación por Meta.
 - Edición compatible con productos a los que se agregan nuevas fotografías.
 
 
+## Versión: 4.8.0 🔳 Catálogos y QR multi-giro
+
+VJOX permite compartir catálogos públicos y generar
+códigos QR promocionales tanto para Productos como
+para Inmobiliaria.
+
+- Compartir catálogo desde ambos módulos.
+- Landing pública que identifica automáticamente el giro.
+- Acceso a propiedades disponibles desde el catálogo inmobiliario.
+- Generación de códigos QR permanentes por usuario.
+- Descarga de pósteres promocionales en formato PNG.
+- Póster inmobiliario personalizado con el nombre del negocio.
+- Textos promocionales adaptados a cada giro.
+- Opciones para copiar y compartir enlaces.
+- Reutilización de componentes JavaScript y estilos existentes.
 
 ---
 
